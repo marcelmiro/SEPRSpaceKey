@@ -226,7 +226,7 @@ public class MainGame implements Screen {
 		camera.zoom = 0.25f;
 	}
 
-	// Increments ET Fortress' damage each second by 0.2, by using Gdx's delta variable
+	// Increments ET Fortress' damage each second by 0.2 and range by 0.25, by using Gdx's delta variable
 	private static void updateFortDamage(float delta) {
 		timer += delta;
 		if (timer >= 1) {

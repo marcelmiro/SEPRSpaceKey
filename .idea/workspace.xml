@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="14a4131f-ada7-4c18-9568-1cdbf3828006" name="Default Changelist" comment="">
+    <list default="true" id="e8a00dfc-5030-4a71-8d93-7ea318bbdc00" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/io/github/jordan00789/sepr/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/io/github/jordan00789/sepr/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/io/github/jordan00789/sepr/Fortress.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/io/github/jordan00789/sepr/Fortress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/io/github/jordan00789/sepr/Firetruck.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/io/github/jordan00789/sepr/Firetruck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/io/github/jordan00789/sepr/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/io/github/jordan00789/sepr/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/io/github/jordan00789/sepr/Projectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/io/github/jordan00789/sepr/Projectile.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,15 +13,10 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$">
-      <ProjectState />
-    </projectState>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1WnH7eAP7gaxtJAMCagUGBZaQom" />
+  <component name="ProjectId" id="1WnTkZVJi7I2RRnpyph9ILNi8pq" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -44,12 +38,12 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="14a4131f-ada7-4c18-9568-1cdbf3828006" name="Default Changelist" comment="" />
-      <created>1579778272689</created>
+      <changelist id="e8a00dfc-5030-4a71-8d93-7ea318bbdc00" name="Default Changelist" comment="" />
+      <created>1579784503304</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1579778272689</updated>
-      <workItem from="1579778277053" duration="4351000" />
+      <updated>1579784503304</updated>
+      <workItem from="1579784506779" duration="124000" />
     </task>
     <servers />
   </component>

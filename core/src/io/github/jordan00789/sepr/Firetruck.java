@@ -86,7 +86,9 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 * @return The truck's current direction
 	 */
 	public float getDirection() {
-		return direction;
+		float xpos = Gdx.input.getX() - Gdx.graphics.getWidth();
+		float ypos = Gdx.input.getY() - Gdx.graphics.getHeight();
+		return 0;
 	}
 
 	/**
