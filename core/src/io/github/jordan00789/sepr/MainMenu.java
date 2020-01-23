@@ -10,12 +10,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class MainMenu implements Screen {
 
-    final Kroy game;
-    OrthographicCamera camera;
+    private final Kroy game;
+    private OrthographicCamera camera;
 
     private Texture menuImage;
 
-    public MainMenu(final Kroy game) {
+    MainMenu(final Kroy game) {
         this.game = game;
 
         camera = new OrthographicCamera();

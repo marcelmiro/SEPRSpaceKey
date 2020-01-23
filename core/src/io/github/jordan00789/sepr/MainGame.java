@@ -22,7 +22,6 @@ public class MainGame implements Screen {
 	static Firetruck truck2;
 	static Firetruck currentTruck;
 	private Fortress fortress1, fortress2, fortress3;
-	private Entity nullEntity;
 	private Texture map;
 	private Pixmap pmap = new Pixmap(Gdx.files.internal("map.png"));
 	static Pixmap speedMap;
@@ -51,7 +50,7 @@ public class MainGame implements Screen {
 		map = new Texture("map.png");
 	}
 
-	public static String getPixelColour(float x, float y) {
+	static String getPixelColour(float x, float y) {
 		int pixcolour;
 		pixcolour = MainGame.speedMap.getPixel(Math.round(x), Gdx.graphics.getHeight() - Math.round(y));
 		String col = "#" + Integer.toHexString(pixcolour & 15790320);
@@ -81,7 +80,7 @@ public class MainGame implements Screen {
 
 		// This entity is used to fill the end of the entity array.
 		// The last entity in entities is not rendered due to a UI bug.
-		nullEntity = new Entity(1, new Texture("badlogic.jpg"));
+		Entity nullEntity = new Entity(1, new Texture("badlogic.jpg"));
 		initEntity(nullEntity, 1000, 500);
 	}
 
@@ -98,8 +97,8 @@ public class MainGame implements Screen {
 		// camTruck is located at the centre of the screen. It is not rendered, but used
 		// to switch to the full map view.
 		camTruck = new Firetruck(1, 1, new Texture("badlogic.jpg"));
-		camTruck.setX((Gdx.graphics.getWidth() / 2) - 256);
-		camTruck.setY((Gdx.graphics.getHeight() / 2) - 256);
+		camTruck.setX((Gdx.graphics.getWidth() / 2f) - 256);
+		camTruck.setY((Gdx.graphics.getHeight() / 2f) - 256);
 
 		changeToTruck(truck1);
 	}
@@ -150,11 +149,11 @@ public class MainGame implements Screen {
 			e.draw(batch);
 			// Moves the entity to the screen centre when it is destroyed.
 			if (e.isDestroyed()) {
-				e.setPosition((Gdx.graphics.getWidth() / 2) - e.getOriginX(),
-						(Gdx.graphics.getHeight() / 2) - e.getOriginY());
+				e.setPosition((Gdx.graphics.getWidth() / 2f) - e.getOriginX(),
+						(Gdx.graphics.getHeight() / 2f) - e.getOriginY());
 			}
 		});
-		entities.removeIf(e -> e.isDestroyed());
+		entities.removeIf(Entity::isDestroyed);
 		// TODO This line is inefficient, may need refactoring
 		if (!entities.contains(fortress1) && !entities.contains(fortress2) && !entities.contains(fortress3)) {
 			game.setScreen(new MainWin(game));
@@ -218,9 +217,11 @@ public class MainGame implements Screen {
 	 * @param t The truck to switch to
 	 */
 	private void changeToTruck(Firetruck t) {
+		/*
 		if (currentTruck != null) {
 			// currentTruck.setColor(Color.WHITE);
 		}
+		*/
 		currentTruck = t;
 		// currentTruck.setColor(Color.RED);
 		camera.zoom = 0.25f;

@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class Kroy extends Game {
-    public SpriteBatch batch;
-    public BitmapFont font;
+    SpriteBatch batch;
+    BitmapFont font;
 
     public void create() {
         batch = new SpriteBatch();

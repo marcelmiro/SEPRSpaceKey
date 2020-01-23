@@ -12,12 +12,9 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	private int water;
 	private int maxWater;
 	private float acceleration = 2;
-	private float deceleration = 0.5f;
 	private float direction = 0;
 	private float velocity = 0;
 	public ArrayList<Projectile> drops = new ArrayList<Projectile>();
-	private static float range = 2f;
-	private static float flowRate = 40f;
 	private float piConstant = (float) Math.PI / 180;
 
 	/**
@@ -108,7 +105,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 *
 	 * @return The truck's current velocity
 	 */
-	public float getVelocity() {
+	private float getVelocity() {
 		return velocity;
 	}
 
@@ -177,6 +174,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 */
 	@Override
 	public void update(float delta) {
+		float deceleration = 0.5f;
 		if (velocity > 0.01f) {
 			velocity -= deceleration;
 		} else if (velocity < -0.01f) {
@@ -190,7 +188,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		if (velocity > maxSpeed || velocity < -maxSpeed) {
 			velocity = maxSpeed;
 		}
-		drops.removeIf(drop -> drop.isDisposable());
+		drops.removeIf(Projectile::isDisposable);
 		drops.forEach(drop -> drop.update(delta));
 
 		setPosition((float) (getX() + (Math.sin(Math.toRadians(direction)) * delta * velocity)),
@@ -279,6 +277,8 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	public void attack() {
 		if (drops.size() < 200 && water > 0) {
 			takeWater(1);
+			float flowRate = 40f;
+			float range = 2f;
 			Projectile drop = new Projectile(
 					(getX() + getOriginX() / 2) + ((float) Math.sin(direction * piConstant) * 10),
 					(getY() + getOriginY() / 2) + ((float) Math.cos(direction * piConstant) * 10), getDirection(),

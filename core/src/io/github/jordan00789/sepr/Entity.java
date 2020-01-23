@@ -58,7 +58,7 @@ public class Entity extends Sprite {
 	public void takeDamage(int damage) {
 		health -= damage;
 	}
-	public void takeDamage(float damage) { health -= damage; }
+	void takeDamage(float damage) { health -= damage; }
 
 	/**
 	 * Returns true if the entity has a health value less than or equal to 0.
@@ -83,7 +83,7 @@ public class Entity extends Sprite {
 	 * @param e The entity to calculate the direction of
 	 * @return The direction of the entity
 	 */
-	public float directionTo(Entity e) {
+	float directionTo(Entity e) {
 		return directionTo(e.getX() + (e.getOriginX() / 2), e.getY() + (e.getOriginY() / 2));
 	}
 
@@ -104,18 +104,18 @@ public class Entity extends Sprite {
 	 * @param e The entity to calculate the distance to
 	 * @return The distance to the entity
 	 */
-	public float distanceTo(Entity e) {
+	float distanceTo(Entity e) {
 		return distanceTo(e.getX() + (e.getOriginX()), e.getY() + (e.getOriginY()));
 	}
 
 	/**
 	 * Calculate the distance from the entity to a point.
 	 *
-	 * @param x The x-coordinate of the point
-	 * @param y The y-coordinate of the point
+	 * @param farx The x-coordinate of the point
+	 * @param fary The y-coordinate of the point
 	 * @return The distance to the point
 	 */
-	public float distanceTo(float farx, float fary) {
+	private float distanceTo(float farx, float fary) {
 		return (float) Math
 				.sqrt(Math.pow((fary - (getY() + getOriginY())), 2) + Math.pow((farx - (getX() + getOriginX())), 2));
 	}

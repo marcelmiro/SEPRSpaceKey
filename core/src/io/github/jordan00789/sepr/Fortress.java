@@ -7,10 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Fortress extends Entity implements Attack {
 
-    public ArrayList<Projectile> goos = new ArrayList<Projectile>();
-    private float piConstant = (float) Math.PI / 180;
-    int fortressNumber;
-    boolean ableToAttack = true;
+    private ArrayList<Projectile> goos = new ArrayList<Projectile>();
+    private int fortressNumber;
+    private boolean ableToAttack = true;
 
     /**
      * Creates a Fortress sprite using the texture provided, with the specified
@@ -30,9 +29,10 @@ public class Fortress extends Entity implements Attack {
      *
      * @param e The entity to aim at.
      */
-    public void attack(Entity e, int n) {
+    private void attack(Entity e, int n) {
         if (e != null) {
             if (ableToAttack) {
+                float piConstant = (float) Math.PI / 180;
                 Projectile goo = new Projectile((getX() + 384) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
                         (getY() + 384 + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
                         1f, new Texture("goo.png"));
@@ -78,7 +78,7 @@ public class Fortress extends Entity implements Attack {
             }
             ableToAttack = false;
         }
-        goos.removeIf(goo -> goo.isDisposable());
+        goos.removeIf(Projectile::isDisposable);
         goos.forEach(goo -> goo.update(delta));
 
         if (goos.size() < 1) {

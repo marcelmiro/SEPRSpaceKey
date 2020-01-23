@@ -10,11 +10,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class MainLose implements Screen {
-    final Kroy game;
-    OrthographicCamera camera;
-    Texture endImage = new Texture("loseImage.png");
+    private final Kroy game;
+    private OrthographicCamera camera;
+    private Texture endImage = new Texture("loseImage.png");
 
-    public MainLose(final Kroy game) {
+    MainLose(final Kroy game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

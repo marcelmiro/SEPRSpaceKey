@@ -19,9 +19,8 @@ import com.badlogic.gdx.utils.Align;
 
 public class FiretruckMenu {
 
-	public static Stage stage;
-	private static Table backgroundTable, iconTable, barTableTruck1, barTableTruck2;
-	static ArrayList<ProgressBar> progressBars = new ArrayList<ProgressBar>();
+	private static Stage stage;
+	private static ArrayList<ProgressBar> progressBars = new ArrayList<ProgressBar>();
 
 	// Creates an image button from a texture by defining a drawable texture region.
 	private static ImageButton createImageButton(Texture tex) {
@@ -96,28 +95,28 @@ public class FiretruckMenu {
 	 * healthBar and healthBar2. Add actors to their respective tables. Then add the
 	 * tables to the stage.
 	 */
-	public static void create() {
+	static void create() {
 
 		stage = new Stage();
 
-		backgroundTable = new Table();
+		Table backgroundTable = new Table();
 		backgroundTable.setWidth(stage.getWidth());
 		// things added to the table are added to the left and at the top
 		backgroundTable.align(Align.left | Align.top);
 		backgroundTable.setPosition(0, (float) (Gdx.graphics.getHeight() / 2.5));
 
-		iconTable = new Table();
+		Table iconTable = new Table();
 		iconTable.setWidth(stage.getWidth());
 		// things added to the table are added to the left and at the top
 		iconTable.align(Align.left | Align.top);
 		iconTable.setPosition(0, (float) (Gdx.graphics.getHeight() / 3));
 
-		barTableTruck1 = new Table();
+		Table barTableTruck1 = new Table();
 		barTableTruck1.setWidth(10f);
 		barTableTruck1.align(Align.left | Align.top);
 		barTableTruck1.setPosition(10, (float) (Gdx.graphics.getHeight() / 3.2));
 
-		barTableTruck2 = new Table();
+		Table barTableTruck2 = new Table();
 		barTableTruck2.setWidth(10f);
 		barTableTruck2.align(Align.center | Align.left);
 		barTableTruck2.setPosition(10, (float) (Gdx.graphics.getHeight() / 4.8));
