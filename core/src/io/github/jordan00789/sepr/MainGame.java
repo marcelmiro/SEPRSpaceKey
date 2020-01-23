@@ -12,21 +12,25 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.Input.Keys;
 
 public class MainGame implements Screen {
-	final Kroy game;
-	OrthographicCamera camera;
-	float entityScale;
+	private final Kroy game;
+	private OrthographicCamera camera;
+	private float entityScale;
 
 	// Entities
-	Firetruck camTruck;
+	private Firetruck camTruck;
 	static Firetruck truck1;
 	static Firetruck truck2;
-	public static Firetruck currentTruck;
-	Fortress fortress1, fortress2, fortress3;
-	Entity nullEntity;
-	Texture map;
-	Pixmap pmap = new Pixmap(Gdx.files.internal("map.png"));
-	public static Pixmap speedMap;
-	public static ArrayList<Entity> entities = new ArrayList<Entity>();
+	static Firetruck currentTruck;
+	private Fortress fortress1, fortress2, fortress3;
+	private Entity nullEntity;
+	private Texture map;
+	private Pixmap pmap = new Pixmap(Gdx.files.internal("map.png"));
+	static Pixmap speedMap;
+	static ArrayList<Entity> entities = new ArrayList<Entity>();
+
+	private static float timer = 0;
+	private static float fortDamage = 5;
+	private static float fortProjectileSpeed = 50;
 
 	public MainGame(final Kroy game) {
 		this.game = game;
@@ -161,6 +165,7 @@ public class MainGame implements Screen {
 			dispose();
 		}
 
+		updateFortDamage(delta);
 		FiretruckMenu.update(delta);
 
 		batch.end();
@@ -221,6 +226,19 @@ public class MainGame implements Screen {
 		camera.zoom = 0.25f;
 	}
 
+	// Increments ET Fortress' damage each second by 0.2, by using Gdx's delta variable
+	private static void updateFortDamage(float delta) {
+		timer += delta;
+		if (timer >= 1) {
+			if (fortDamage < 100) { fortDamage = Math.round((fortDamage + .2) * 10) / 10f; }
+			if (fortProjectileSpeed < 100) { fortProjectileSpeed = Math.round((fortProjectileSpeed + .25) * 100) / 100f; }
+			timer = 0;
+		}
+	}
+
+	static float getFortDamage() { return fortDamage; }
+	static float getFortProjectileSpeed() { return fortProjectileSpeed; }
+
 	@Override
 	public void resize(int width, int height) {
 		camera.setToOrtho(false, width, height);
@@ -230,27 +248,17 @@ public class MainGame implements Screen {
 		fortress1.setPosition((0.53f * width) - 512, (0.26f * height) - 512);
 		fortress2.setPosition((0.29f * width) - 512, (0.66f * height) - 512);
 		fortress3.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
-
 	}
 
 	@Override
-	public void show() {
-	}
-
+	public void show() {}
 	@Override
-	public void hide() {
-	}
-
+	public void hide() {}
 	@Override
-	public void pause() {
-	}
-
+	public void pause() {}
 	@Override
-	public void resume() {
-	}
-
+	public void resume() {}
 	@Override
-	public void dispose() {
-	}
+	public void dispose() {}
 
 }

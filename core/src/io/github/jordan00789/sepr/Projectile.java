@@ -77,7 +77,7 @@ public class Projectile extends Entity implements Moveable {
             e = MainGame.entities.get(i);
             if (!disposable) {
                 if (distanceTo(e) < 10f) {
-                    e.takeDamage(5);
+                    e.takeDamage(MainGame.getFortDamage());
                     takeDamage(1);
                     disposable = true;
                     break;

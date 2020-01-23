@@ -58,6 +58,7 @@ public class Entity extends Sprite {
 	public void takeDamage(int damage) {
 		health -= damage;
 	}
+	public void takeDamage(float damage) { health -= damage; }
 
 	/**
 	 * Returns true if the entity has a health value less than or equal to 0.
