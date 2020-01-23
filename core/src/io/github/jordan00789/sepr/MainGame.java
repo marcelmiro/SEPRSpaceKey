@@ -21,7 +21,7 @@ public class MainGame implements Screen {
 	static Firetruck truck1;
 	static Firetruck truck2;
 	static Firetruck currentTruck;
-	private Fortress fortress1, fortress2, fortress3;
+	private Fortress fortress1, fortress2, fortress3, fortress4, fortress5, fortress6;
 	private Texture map;
 	private Pixmap pmap = new Pixmap(Gdx.files.internal("map.png"));
 	static Pixmap speedMap;
@@ -77,6 +77,9 @@ public class MainGame implements Screen {
 
 		fortress3 = new Fortress(200, new Texture("minster.png"), 3);
 		initEntity(fortress3, (0.47f * width), (0.82f * height));
+
+		fortress4 = new Fortress(200, new Texture("university.png"), 4);
+		initEntity(fortress4, (0.7f * width), (0.2f * height));
 
 		// This entity is used to fill the end of the entity array.
 		// The last entity in entities is not rendered due to a UI bug.
@@ -155,7 +158,7 @@ public class MainGame implements Screen {
 		});
 		entities.removeIf(Entity::isDestroyed);
 		// TODO This line is inefficient, may need refactoring
-		if (!entities.contains(fortress1) && !entities.contains(fortress2) && !entities.contains(fortress3)) {
+		if (!entities.contains(fortress1) && !entities.contains(fortress2) && !entities.contains(fortress3) && !entities.contains(fortress4) && !entities.contains(fortress5) && !entities.contains(fortress6)) {
 			game.setScreen(new MainWin(game));
 			dispose();
 		}
@@ -249,6 +252,9 @@ public class MainGame implements Screen {
 		fortress1.setPosition((0.53f * width) - 512, (0.26f * height) - 512);
 		fortress2.setPosition((0.29f * width) - 512, (0.66f * height) - 512);
 		fortress3.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
+		fortress4.setPosition((0.55f * width) - 512, (0.55f * height) - 512);
+		//fortress5.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
+		//fortress6.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
 	}
 
 	@Override
