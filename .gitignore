@@ -126,4 +126,8 @@ Thumbs.db
 !/ios-moe/xcode/*.xcodeproj/project.pbxproj
 /ios-moe/xcode/native/
 
-.idea/
+/.idea
+/.idea/
+/.idea/workspace.xml
+/.idea/usage.statistics.xml
+/.idea/tasks.xml
