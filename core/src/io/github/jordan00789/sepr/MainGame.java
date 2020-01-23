@@ -171,16 +171,16 @@ public class MainGame implements Screen {
 	 */
 	private void takeInputs() {
 
-		if (Gdx.input.isKeyPressed(Keys.UP)) {
+		if (Gdx.input.isKeyPressed(Keys.W)) {
 			currentTruck.goForward();
 		}
-		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+		if (Gdx.input.isKeyPressed(Keys.S)) {
 			currentTruck.goBackward();
 		}
-		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+		if (Gdx.input.isKeyPressed(Keys.A)) {
 			currentTruck.turnLeft();
 		}
-		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		if (Gdx.input.isKeyPressed(Keys.D)) {
 			currentTruck.turnRight();
 		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {

@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Desktop" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="io.github.jordan00789.sepr.desktop.DesktopLauncher" />
+    <module name="SpaceKey.desktop.main" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
