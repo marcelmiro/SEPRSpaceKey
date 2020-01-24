@@ -76,9 +76,10 @@ public class Fortress extends Entity implements Attack {
                     }
                     break;
                 case 4:
-                    for (int i = 0; i <= 359; i += 45) {
-                        attack(MainGame.currentTruck, i);
-                    }
+                    attack(MainGame.currentTruck, 0);
+                    attack(MainGame.currentTruck, -30);
+                    attack(MainGame.currentTruck, 30);
+                    break;
             }
             ableToAttack = false;
         }

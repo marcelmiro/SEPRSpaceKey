@@ -79,7 +79,7 @@ public class MainGame implements Screen {
 		initEntity(fortress3, (0.47f * width), (0.82f * height));
 
 		fortress4 = new Fortress(200, new Texture("university.png"), 4);
-		initEntity(fortress4, (0.7f * width), (0.2f * height));
+		initEntity(fortress4, (.97f * width), (.65f * height));
 
 		// This entity is used to fill the end of the entity array.
 		// The last entity in entities is not rendered due to a UI bug.
@@ -115,7 +115,8 @@ public class MainGame implements Screen {
 	 * @param y The y-coordinate of the entity
 	 */
 	private void initEntity(Entity e, float x, float y) {
-		e.setScale(entityScale);
+		//e.setScale(entityScale);
+		e.setScale(e.equals(fortress4) ? 0.17f : entityScale);
 		e.setOriginCenter();
 		e.setPosition(x - e.getOriginX(), y - e.getOriginY());
 		entities.add(e);
@@ -252,7 +253,7 @@ public class MainGame implements Screen {
 		fortress1.setPosition((0.53f * width) - 512, (0.26f * height) - 512);
 		fortress2.setPosition((0.29f * width) - 512, (0.66f * height) - 512);
 		fortress3.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
-		fortress4.setPosition((0.55f * width) - 512, (0.55f * height) - 512);
+		fortress4.setPosition((.97f * width) - 512, (.65f * height) - 512);
 		//fortress5.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
 		//fortress6.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
 	}
