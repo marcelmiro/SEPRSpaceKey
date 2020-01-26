@@ -243,7 +243,6 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		case ("#6040f0"):// walls
 			setVelocity(0f);
 			return 0f;
-			/**
 		case ("#6050f0"):// walls 2
 			setVelocity(0f);
 			return 0f;
@@ -253,7 +252,6 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		case ("#c0f0f0"):// water 2
 			setVelocity(0f);
 			return 0f;
-			 **/
 		case ("#8070f0"):
 			if (water == maxWater) {
 				setColor(Color.WHITE);
