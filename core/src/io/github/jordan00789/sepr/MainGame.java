@@ -1,15 +1,16 @@
 package io.github.jordan00789.sepr;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.Input.Keys;
+
+import java.util.ArrayList;
 
 public class MainGame implements Screen {
 	private final Kroy game;
@@ -191,7 +192,7 @@ public class MainGame implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.D)) {
 			currentTruck.turnRight();
 		}
-		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			currentTruck.attack();
 		}
 		switchTrucks();

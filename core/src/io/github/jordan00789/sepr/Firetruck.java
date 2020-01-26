@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	private float acceleration = 2;
 	private float direction = 0;
 	private float velocity = 0;
-	public ArrayList<Projectile> drops = new ArrayList<>();
+	public ArrayList<Projectile> drops = new ArrayList<Projectile>();
 	private float piConstant = (float) Math.PI / 180;
 
 	/**
@@ -84,9 +85,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 * @return The truck's current direction
 	 */
 	public float getDirection() {
-		float xpos = Gdx.input.getX() - Gdx.graphics.getWidth();
-		float ypos = Gdx.input.getY() - Gdx.graphics.getHeight();
-		return (float) Math.tan(ypos/xpos);
+		return this.direction;
 	}
 
 	/**
@@ -277,9 +276,13 @@ public class Firetruck extends Entity implements Attack, Moveable {
 			takeWater(1);
 			float flowRate = 40f;
 			float range = 2f;
+			float xdirection = Gdx.input.getX() - Gdx.graphics.getWidth() / 2;
+			float ydirection = Gdx.input.getY() - Gdx.graphics.getHeight() / 2;
+			Vector2 directionVector = new Vector2 (xdirection,ydirection);
+			float shootDirection = directionVector.angle() + 90;
 			Projectile drop = new Projectile(
-					(getX() + getOriginX() / 2) + ((float) Math.sin(direction * piConstant) * 10),
-					(getY() + getOriginY() / 2) + ((float) Math.cos(direction * piConstant) * 10), getDirection(),
+					(getX() + getOriginX() / 2) + ((float) Math.sin(shootDirection * piConstant) * 10),
+					(getY() + getOriginY() / 2) + ((float) Math.cos(shootDirection * piConstant) * 10), shootDirection,
 					flowRate + velocity, range, new Texture("drop.png"));
 			drops.add(drop);
 		}
