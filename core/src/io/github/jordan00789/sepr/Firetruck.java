@@ -15,7 +15,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	private float acceleration = 2;
 	private float direction = 0;
 	private float velocity = 0;
-	public ArrayList<Projectile> drops = new ArrayList<Projectile>();
+	public ArrayList<Projectile> drops = new ArrayList<>();
 	private float piConstant = (float) Math.PI / 180;
 
 	/**
