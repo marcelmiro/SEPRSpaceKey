@@ -2,8 +2,8 @@ package io.github.jordan00789.sepr;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import java.time.Instant;
 import java.time.Duration;
+import java.time.Instant;
 
 public class Projectile extends Entity implements Moveable {
 
@@ -12,6 +12,7 @@ public class Projectile extends Entity implements Moveable {
     private float lifeTime;
     private Instant startTime;
     private boolean disposable = false;
+    private String type;
 
     /**
      * Initialises a projectile using the provided parameters
@@ -23,10 +24,11 @@ public class Projectile extends Entity implements Moveable {
      * @param lifeTime  The life time of the projectile
      * @param texture   The projectile texture
      */
-    public Projectile(float x, float y, float direction, float velocity, float lifeTime, Texture texture) {
+    public Projectile(float x, float y, float direction, float velocity, float lifeTime, Texture texture, String type) {
         super(1, texture);
         this.setPosition(x, y);
         this.setScale(0.05f);
+        this.type = type;
         this.direction = direction;
         setRotation(180 - direction);
         this.velocity = velocity;
@@ -76,7 +78,7 @@ public class Projectile extends Entity implements Moveable {
         for (int i = 0; i < MainGame.entities.size(); i++) {
             e = MainGame.entities.get(i);
             if (!disposable) {
-                if (distanceTo(e) < 10f) {
+                if (distanceTo(e) < 10f && ((e instanceof Firetruck && this.type == "goo") || (e instanceof Fortress && this.type == "water" ))) {
                     e.takeDamage(MainGame.getFortDamage());
                     takeDamage(1);
                     disposable = true;

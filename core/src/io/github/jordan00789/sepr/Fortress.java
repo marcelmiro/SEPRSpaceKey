@@ -1,9 +1,9 @@
 package io.github.jordan00789.sepr;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+
+import java.util.ArrayList;
 
 public class Fortress extends Entity implements Attack {
 
@@ -35,7 +35,7 @@ public class Fortress extends Entity implements Attack {
                 float piConstant = (float) Math.PI / 180;
                 Projectile goo = new Projectile((getX() + 384) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
                         (getY() + 384 + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
-                        1f, new Texture("goo.png"));
+                        1f, new Texture("goo.png"),"goo");
                 goos.add(goo);
 
             }

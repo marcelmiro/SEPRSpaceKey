@@ -283,7 +283,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 			Projectile drop = new Projectile(
 					(getX() + getOriginX() / 2) + ((float) Math.sin(shootDirection * piConstant) * 10),
 					(getY() + getOriginY() / 2) + ((float) Math.cos(shootDirection * piConstant) * 10), shootDirection,
-					flowRate + velocity, range, new Texture("drop.png"));
+					flowRate + velocity, range, new Texture("drop.png"), "water");
 			drops.add(drop);
 		}
 		if (water == 0) {
