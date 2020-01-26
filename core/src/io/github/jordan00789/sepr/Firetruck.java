@@ -1,11 +1,12 @@
 package io.github.jordan00789.sepr;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+
+import java.util.ArrayList;
+
 
 public class Firetruck extends Entity implements Attack, Moveable {
 
@@ -83,12 +84,9 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 * @return The truck's current direction
 	 */
 	public float getDirection() {
-		/*
 		float xpos = Gdx.input.getX() - Gdx.graphics.getWidth();
 		float ypos = Gdx.input.getY() - Gdx.graphics.getHeight();
-		return 0;
-		*/
-		return direction;
+		return (float) Math.tan(ypos/xpos);
 	}
 
 	/**
