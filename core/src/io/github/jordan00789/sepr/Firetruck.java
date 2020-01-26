@@ -183,7 +183,11 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		float maxSpeed = speedLimit();
 		// Checks the truck isn't breaking the speed limit.
 		if (velocity > maxSpeed || velocity < -maxSpeed) {
-			velocity = maxSpeed;
+			if (velocity > 0) {
+				velocity = maxSpeed;
+			} else if (velocity < 0) {
+				velocity = -maxSpeed;
+			}
 		}
 		drops.removeIf(Projectile::isDisposable);
 		drops.forEach(drop -> drop.update(delta));
@@ -218,12 +222,18 @@ public class Firetruck extends Entity implements Attack, Moveable {
 					Math.round(getX() + getOriginX() + ((float) Math.sin(direction * piConstant) * 9)),
 					Gdx.graphics.getHeight()
 							- Math.round(getY() + getOriginY() + ((float) Math.cos(direction * piConstant) * 9)));
-		} else {
+		} else if (velocity > 0){
 			pixcolour = MainGame.speedMap.getPixel(
 					Math.round(getX() + getOriginX() - ((float) Math.sin(direction * piConstant) * 9)),
 					Gdx.graphics.getHeight()
 							- Math.round(getY() + getOriginY() - ((float) Math.cos(direction * piConstant) * 9)));
+		}	 else {
+			pixcolour = MainGame.speedMap.getPixel(
+					Math.round(getX() + getOriginX()),
+					Gdx.graphics.getHeight()
+							- Math.round(getY() + getOriginY()));
 		}
+
 		// Convert 32-bit RGBA8888 integer to 3-bit hex code, using a mask.
 		// Note: col is GBR instead of RGB
 		String col = "#" + Integer.toHexString(pixcolour & 15790320);

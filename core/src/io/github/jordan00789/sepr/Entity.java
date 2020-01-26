@@ -9,16 +9,6 @@ public class Entity extends Sprite {
 	private int maxHealth;
 
 	/**
-	 * Creates a new entity with the specified texture and a default health of 1.
-	 *
-	 * @param texture The texture given to the entity sprite
-	 */
-	public Entity(Texture texture) {
-		super(texture);
-		this.health = 1;
-	}
-
-	/**
 	 * Creates a new entity with the specified texture and health.
 	 *
 	 * @param health  The amount of health the Fortress has
