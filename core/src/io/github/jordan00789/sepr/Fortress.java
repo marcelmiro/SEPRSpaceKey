@@ -28,6 +28,7 @@ public class Fortress extends Entity implements Attack {
      * Attempts to attack the specified entity, should be currentFiretruck.
      *
      * @param e The entity to aim at.
+     * @param n The offset of the projectile from the entity in degrees
      */
     private void attack(Entity e, int n) {
         if (e != null) {
@@ -77,8 +78,8 @@ public class Fortress extends Entity implements Attack {
                     break;
                 case 4:
                     attack(MainGame.currentTruck, 0);
-                    attack(MainGame.currentTruck, -30);
                     attack(MainGame.currentTruck, 30);
+                    attack(MainGame.currentTruck, -30);
                     break;
             }
             ableToAttack = false;
