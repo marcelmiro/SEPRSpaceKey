@@ -21,11 +21,11 @@ public class MainGame implements Screen {
 	static Firetruck truck1;
 	static Firetruck truck2;
 	static Firetruck currentTruck;
-	private Fortress fortress1, fortress2, fortress3, fortress4, fortress5, fortress6;
 	private Texture map;
 	private Pixmap pmap = new Pixmap(Gdx.files.internal("map_2.png"));
 	static Pixmap speedMap;
 	static ArrayList<Entity> entities = new ArrayList<Entity>();
+	private static ArrayList<Fortress> listFort	;
 
 	private static float timer = 0;
 	private static float fortDamage = 5;
@@ -43,7 +43,7 @@ public class MainGame implements Screen {
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		loadTrucks();
-		loadFortresses();
+		loadForts();
 		FiretruckMenu.create();
 
 		map = new Texture("map_2.png");
@@ -57,36 +57,6 @@ public class MainGame implements Screen {
 			col = col.substring(0, 7);
 		}
 		return col;
-	}
-
-	/**
-	 * Separate method to load the fortresses.
-	 */
-	private void loadFortresses() {
-		// Screen width and height.
-		int width = Gdx.graphics.getWidth();
-		int height = Gdx.graphics.getHeight();
-
-		// We used relative coordinates so that multiple resolutions are supported.
-		fortress1 = new Fortress(200, new Texture("ctower.png"), 1);
-		initEntity(fortress1, (0.53f * width), (0.26f * height));
-
-		fortress2 = new Fortress(200, new Texture("station.png"), 2);
-		initEntity(fortress2, (0.22f * width), (0.54f * height));
-
-		fortress3 = new Fortress(200, new Texture("minster.png"), 3);
-		initEntity(fortress3, (0.47f * width), (0.82f * height));
-
-		fortress4 = new Fortress(300, new Texture("university.png"), 4);
-		initEntity(fortress4, (.9f * width), (.9f * height));
-
-		fortress5 = new Fortress(200, new Texture("museum.png"), 5);
-		initEntity(fortress5, (.31f * width), (.78f * height));
-
-		// This entity is used to fill the end of the entity array.
-		// The last entity in entities is not rendered due to a UI bug.
-		Entity nullEntity = new Entity(1, new Texture("badlogic.jpg"));
-		initEntity(nullEntity, 1000, 500);
 	}
 
 	/**
@@ -106,6 +76,31 @@ public class MainGame implements Screen {
 		camTruck.setY((Gdx.graphics.getHeight() / 2f) - 256);
 
 		changeToTruck(truck1);
+	}
+
+	/**
+	 * Separate method to load the fortresses.
+	 */
+	private void loadForts() {
+		// Screen width and height.
+		int width = Gdx.graphics.getWidth();
+		int height = Gdx.graphics.getHeight();
+
+		listFort = new ArrayList<Fortress>();
+		listFort.add(new Fortress(.53f, .26f,150, new Texture("ctower.png")));
+		listFort.add(new Fortress(.22f, .54f,200, new Texture("station.png")));
+		listFort.add(new Fortress(.47f, .82f,300, new Texture("minster.png")));
+		listFort.add(new Fortress(.93f, .07f,250, new Texture("university.png")));
+		listFort.add(new Fortress(.25f, .86f,200, new Texture("museum.png")));
+
+		for (Fortress fort : listFort) {
+			initEntity(fort, fort.getPosX() * width, fort.getPosY() * height);
+		}
+
+		// This entity is used to fill the end of the entity array.
+		// The last entity in entities is not rendered due to a UI bug.
+		Entity nullEntity = new Entity(1, new Texture("badlogic.jpg"));
+		initEntity(nullEntity, 1000, 500);
 	}
 
 	/**
@@ -158,13 +153,12 @@ public class MainGame implements Screen {
 						(Gdx.graphics.getHeight() / 2f) - e.getOriginY());
 			}
 		});
+
 		entities.removeIf(Entity::isDestroyed);
-		// TODO This line is inefficient, may need refactoring
-		if (!entities.contains(fortress1) && !entities.contains(fortress2) && !entities.contains(fortress3) && !entities.contains(fortress4) && !entities.contains(fortress5) && !entities.contains(fortress6)) {
+		if (checkWin()) {
 			game.setScreen(new MainWin(game));
 			dispose();
-		}
-		if (!entities.contains(truck1) && !entities.contains(truck2)) {
+		}else if (checkLoose()) {
 			game.setScreen(new MainLose(game));
 			dispose();
 		}
@@ -173,6 +167,19 @@ public class MainGame implements Screen {
 		FiretruckMenu.update(delta);
 
 		batch.end();
+	}
+
+	/**
+	 * Checks if all forts are destroyed and returns true if so.
+	 */
+	private static boolean checkWin() {
+		for (Fortress fort : listFort) {
+			if (entities.contains(fort)) { return false; }
+		}
+		return true;
+	}
+	private static boolean checkLoose() {
+		return (!entities.contains(truck1) && !entities.contains(truck2));
 	}
 
 	/**
@@ -251,12 +258,10 @@ public class MainGame implements Screen {
 		speedMap.drawPixmap(pmap, 0, 0, pmap.getWidth(), pmap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
 		// getOriginX() and getOriginY() is 512 for all fortresses
-		fortress1.setPosition((0.53f * width) - 512, (0.26f * height) - 512);
-		fortress2.setPosition((0.22f * width) - 512, (0.54f * height) - 512);
-		fortress3.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
-		fortress4.setPosition((.9f * width) - 512, (.1f * height) - 512);
-		fortress5.setPosition((0.31f * width) - 512, (0.78f * height) - 512);
-		//fortress6.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
+
+		for (Fortress fort : listFort) {
+			fort.setPosition((fort.getPosX() * width) - 512, (fort.getPosY() * height) - 512);
+		}
 	}
 
 	@Override

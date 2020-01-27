@@ -10,6 +10,7 @@ public class Fortress extends Entity implements Attack {
     private ArrayList<Projectile> goos = new ArrayList<Projectile>();
     private int fortressNumber;
     private boolean ableToAttack = true;
+    private float posX, posY;
 
     /**
      * Creates a Fortress sprite using the texture provided, with the specified
@@ -22,6 +23,13 @@ public class Fortress extends Entity implements Attack {
     public Fortress(int health, Texture texture, int n) {
         super(health, texture);
         this.fortressNumber = n;
+    }
+    public Fortress(float x, float y, int health, Texture texture) {
+        super(health, texture);
+        this.posX = x;
+        this.posY = y;
+
+        this.fortressNumber = 1;
     }
 
     /**
@@ -116,4 +124,6 @@ public class Fortress extends Entity implements Attack {
         return (float) ((180 / Math.PI) * Math.atan2(x - (getX() + 384), y - (getY() + 384)));
     }
 
+    public float getPosX() { return this.posX; }
+    public float getPosY() { return this.posY; }
 }
