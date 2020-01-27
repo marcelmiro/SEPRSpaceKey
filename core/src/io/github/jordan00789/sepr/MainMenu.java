@@ -20,7 +20,7 @@ public class MainMenu implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        menuImage = new Texture("splashscreen.png");
+        menuImage = new Texture("splashscreen_2.png");
     }
 
     @Override
