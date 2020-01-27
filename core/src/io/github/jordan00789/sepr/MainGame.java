@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class MainGame implements Screen {
 	private final Kroy game;
 	private OrthographicCamera camera;
-	private float entityScale;
 
 	// Entities
 	private Firetruck camTruck;
@@ -24,7 +23,7 @@ public class MainGame implements Screen {
 	static Firetruck currentTruck;
 	private Fortress fortress1, fortress2, fortress3, fortress4, fortress5, fortress6;
 	private Texture map;
-	private Pixmap pmap = new Pixmap(Gdx.files.internal("map.png"));
+	private Pixmap pmap = new Pixmap(Gdx.files.internal("map_2.png"));
 	static Pixmap speedMap;
 	static ArrayList<Entity> entities = new ArrayList<Entity>();
 
@@ -43,12 +42,11 @@ public class MainGame implements Screen {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		entityScale = 0.05f;
 		loadTrucks();
 		loadFortresses();
 		FiretruckMenu.create();
 
-		map = new Texture("map.png");
+		map = new Texture("map_2.png");
 	}
 
 	static String getPixelColour(float x, float y) {
@@ -74,13 +72,16 @@ public class MainGame implements Screen {
 		initEntity(fortress1, (0.53f * width), (0.26f * height));
 
 		fortress2 = new Fortress(200, new Texture("station.png"), 2);
-		initEntity(fortress2, (0.29f * width), (0.66f * height));
+		initEntity(fortress2, (0.22f * width), (0.54f * height));
 
 		fortress3 = new Fortress(200, new Texture("minster.png"), 3);
 		initEntity(fortress3, (0.47f * width), (0.82f * height));
 
-		fortress4 = new Fortress(200, new Texture("university.png"), 4);
-		initEntity(fortress4, (.97f * width), (.65f * height));
+		fortress4 = new Fortress(300, new Texture("university.png"), 4);
+		initEntity(fortress4, (.9f * width), (.9f * height));
+
+		fortress5 = new Fortress(200, new Texture("museum.png"), 5);
+		initEntity(fortress5, (.31f * width), (.78f * height));
 
 		// This entity is used to fill the end of the entity array.
 		// The last entity in entities is not rendered due to a UI bug.
@@ -92,7 +93,7 @@ public class MainGame implements Screen {
 	 * Separate method to load the trucks.
 	 */
 	private void loadTrucks() {
-		truck1 = new Firetruck(100, 80, new Texture("truck1.png"));
+			truck1 = new Firetruck(100, 100, new Texture("truck1.png"));
 		initEntity(truck1, 309, 290);
 
 		truck2 = new Firetruck(50, 200, new Texture("truck2.png"));
@@ -116,8 +117,7 @@ public class MainGame implements Screen {
 	 * @param y The y-coordinate of the entity
 	 */
 	private void initEntity(Entity e, float x, float y) {
-		//e.setScale(entityScale);
-		e.setScale(e.equals(fortress4) ? 0.17f : entityScale);
+		e.setScale(0.05f);
 		e.setOriginCenter();
 		e.setPosition(x - e.getOriginX(), y - e.getOriginY());
 		entities.add(e);
@@ -252,10 +252,10 @@ public class MainGame implements Screen {
 				Gdx.graphics.getHeight());
 		// getOriginX() and getOriginY() is 512 for all fortresses
 		fortress1.setPosition((0.53f * width) - 512, (0.26f * height) - 512);
-		fortress2.setPosition((0.29f * width) - 512, (0.66f * height) - 512);
+		fortress2.setPosition((0.22f * width) - 512, (0.54f * height) - 512);
 		fortress3.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
-		fortress4.setPosition((.97f * width) - 512, (.65f * height) - 512);
-		//fortress5.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
+		fortress4.setPosition((.9f * width) - 512, (.1f * height) - 512);
+		fortress5.setPosition((0.31f * width) - 512, (0.78f * height) - 512);
 		//fortress6.setPosition((0.47f * width) - 512, (0.82f * height) - 512);
 	}
 
