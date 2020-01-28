@@ -10,7 +10,7 @@ public class Fortress extends Entity implements Attack {
     private ArrayList<Projectile> goos = new ArrayList<Projectile>();
     private int fortressNumber;
     private boolean ableToAttack = true;
-    private float posX, posY;
+    private float posX, posY, damage;
 
     /**
      * Creates a Fortress sprite using the texture provided, with the specified
@@ -22,13 +22,17 @@ public class Fortress extends Entity implements Attack {
      */
     public Fortress(int health, Texture texture, int n) {
         super(health, texture);
+        this.posX = 0;
+        this.posY = 0;
         this.fortressNumber = n;
+        this.damage = 20;
+        System.out.println("Fortress created incorrectly");
     }
-    public Fortress(float x, float y, int health, Texture texture) {
+    public Fortress(float x, float y, int health, Texture texture, float damage) {
         super(health, texture);
         this.posX = x;
         this.posY = y;
-
+        this.damage = damage;
         this.fortressNumber = 1;
     }
 
@@ -44,7 +48,7 @@ public class Fortress extends Entity implements Attack {
                 float piConstant = (float) Math.PI / 180;
                 Projectile goo = new Projectile((getX() + 384) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
                         (getY() + 384 + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
-                        1f, new Texture("goo.png"),"goo");
+                        1f, new Texture("goo.png"),"goo", damage);
                 goos.add(goo);
 
             }

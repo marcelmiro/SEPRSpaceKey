@@ -18,6 +18,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	private float velocity = 0;
 	public ArrayList<Projectile> drops = new ArrayList<Projectile>();
 	private float piConstant = (float) Math.PI / 180;
+	private float damage;
 
 	/**
 	 * Creates a Firetruck sprite using the texture provided, with the specified
@@ -27,9 +28,10 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 * @param maxWater The maximum amount of water in the truck
 	 * @param texture  The texture given to the Firetruck sprite
 	 */
-	public Firetruck(int health, int maxWater, Texture texture) {
+	public Firetruck(int health, int maxWater, Texture texture, float damage) {
 		super(health, texture);
 		this.maxWater = water = maxWater;
+		this.damage = damage;
 	}
 
 	/**
@@ -209,7 +211,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 *
 	 * @return Speed limit
 	 */
-	private float speedLimit() {
+	public float speedLimit() {
 		int pixcolour;
 		// Checks either front or back of the truck sprite depending on whether the
 		// truck is moving forwards or backwards
@@ -223,7 +225,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 					Math.round(getX() + getOriginX() - ((float) Math.sin(direction * piConstant) * 9)),
 					Gdx.graphics.getHeight()
 							- Math.round(getY() + getOriginY() - ((float) Math.cos(direction * piConstant) * 9)));
-		}	 else {
+		} else {
 			pixcolour = MainGame.speedMap.getPixel(
 					Math.round(getX() + getOriginX()),
 					Gdx.graphics.getHeight()
@@ -263,7 +265,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 			}
 			refill();
 			setHealth((int) (getHealth() + 1));
-			return 30f;
+			return 29f;
 		case ("#0"):// off of map
 			setVelocity(0f);
 			return 0f;
@@ -289,7 +291,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 			Projectile drop = new Projectile(
 					(getX() + getOriginX() / 2) + ((float) Math.sin(shootDirection * piConstant) * 10),
 					(getY() + getOriginY() / 2) + ((float) Math.cos(shootDirection * piConstant) * 10), shootDirection,
-					flowRate + velocity, range, new Texture("drop.png"), "water");
+					flowRate + velocity, range, new Texture("drop.png"), "water", this.damage);
 			drops.add(drop);
 		}
 		if (water == 0) {

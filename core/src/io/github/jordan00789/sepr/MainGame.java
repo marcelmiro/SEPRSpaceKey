@@ -28,7 +28,7 @@ public class MainGame implements Screen {
 	private static ArrayList<Fortress> listFort	;
 
 	private static float timer = 0;
-	private static float fortDamage = 20;
+	private static float fortDamage = 0;
 	private static float fortProjectileSpeed = 50;
 	private static final double damageIncrease = 0.05;
 	private static final double speedIncrease = 0.2;
@@ -65,15 +65,15 @@ public class MainGame implements Screen {
 	 * Separate method to load the trucks.
 	 */
 	private void loadTrucks() {
-			truck1 = new Firetruck(100, 100, new Texture("truck1.png"));
+		truck1 = new Firetruck(100, 100, new Texture("truck1.png"), 2);
 		initEntity(truck1, 309, 290);
 
-		truck2 = new Firetruck(50, 200, new Texture("truck2.png"));
+		truck2 = new Firetruck(50, 200, new Texture("truck2.png"), 2);
 		initEntity(truck2, 285, 260);
 
 		// camTruck is located at the centre of the screen. It is not rendered, but used
 		// to switch to the full map view.
-		camTruck = new Firetruck(1, 1, new Texture("badlogic.jpg"));
+		camTruck = new Firetruck(-10, 1, new Texture("badlogic.jpg"), 0);
 		camTruck.setX((Gdx.graphics.getWidth() / 2f) - 256);
 		camTruck.setY((Gdx.graphics.getHeight() / 2f) - 256);
 
@@ -89,11 +89,11 @@ public class MainGame implements Screen {
 		int height = Gdx.graphics.getHeight();
 
 		listFort = new ArrayList<Fortress>();
-		listFort.add(new Fortress(.53f, .26f,150, new Texture("ctower.png")));
-		listFort.add(new Fortress(.22f, .54f,200, new Texture("station.png")));
-		listFort.add(new Fortress(.47f, .82f,300, new Texture("minster.png")));
-		listFort.add(new Fortress(.93f, .07f,250, new Texture("university.png")));
-		listFort.add(new Fortress(.25f, .86f,200, new Texture("museum.png")));
+		listFort.add(new Fortress(.53f, .26f,150, new Texture("ctower.png"), 20));
+		listFort.add(new Fortress(.22f, .54f,200, new Texture("station.png"), 20));
+		listFort.add(new Fortress(.47f, .82f,300, new Texture("minster.png"), 20));
+		listFort.add(new Fortress(.93f, .07f,250, new Texture("university.png"), 20));
+		listFort.add(new Fortress(.25f, .86f,200, new Texture("museum.png"), 20));
 
 		for (Fortress fort : listFort) {
 			initEntity(fort, fort.getPosX() * width, fort.getPosY() * height);
@@ -101,8 +101,8 @@ public class MainGame implements Screen {
 
 		// This entity is used to fill the end of the entity array.
 		// The last entity in entities is not rendered due to a UI bug.
-		Entity nullEntity = new Entity(1, new Texture("badlogic.jpg"));
-		initEntity(nullEntity, 1000, 500);
+		//Entity nullEntity = new Entity(1, new Texture("badlogic.jpg"));
+		//initEntity(nullEntity, 1000, 500);
 	}
 
 	/**
@@ -211,10 +211,10 @@ public class MainGame implements Screen {
 	 * Check for inputs to switch between trucks.
 	 */
 	private void switchTrucks() {
-		if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
+		if (Gdx.input.isKeyPressed(Keys.NUM_1) && (currentTruck.speedLimit() == 29f)) {
 			changeToTruck(truck1);
 		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
+		if (Gdx.input.isKeyPressed(Keys.NUM_2 ) && (currentTruck.speedLimit() == 29f)) {
 			changeToTruck(truck2);
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {

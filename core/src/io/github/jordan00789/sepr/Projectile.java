@@ -13,6 +13,7 @@ public class Projectile extends Entity implements Moveable {
     private Instant startTime;
     private boolean disposable = false;
     private final String type;
+    private float damage;
 
     /**
      * Initialises a projectile using the provided parameters
@@ -24,7 +25,7 @@ public class Projectile extends Entity implements Moveable {
      * @param lifeTime  The life time of the projectile
      * @param texture   The projectile texture
      */
-    public Projectile(float x, float y, float direction, float velocity, float lifeTime, Texture texture, String type) {
+    public Projectile(float x, float y, float direction, float velocity, float lifeTime, Texture texture, String type, float damage) {
         super(1, texture);
         this.setPosition(x, y);
         this.setScale(0.05f);
@@ -34,6 +35,7 @@ public class Projectile extends Entity implements Moveable {
         this.velocity = velocity;
         this.lifeTime = lifeTime;
         startTime = Instant.now();
+        this.damage = damage;
 
         // System.out.printf("Projectile: x=%f, y=%f, direction=%f, v=%f,
         // lifetime=%f%n", x,y,direction,velocity,lifeTime);
@@ -79,7 +81,11 @@ public class Projectile extends Entity implements Moveable {
             e = MainGame.entities.get(i);
             if (!disposable) {
                 if (distanceTo(e) < 10f && ((e instanceof Firetruck && this.type == "goo") || (e instanceof Fortress && this.type == "water" ))) {
-                    e.takeDamage(MainGame.getFortDamage());
+                    if (type == "goo") {
+                        e.takeDamage(MainGame.getFortDamage() + this.damage);
+                    } else {
+                        e.takeDamage(this.damage);
+                    }
                     takeDamage(1);
                     disposable = true;
                     break;
