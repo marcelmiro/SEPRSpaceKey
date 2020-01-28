@@ -14,20 +14,19 @@ import java.util.ArrayList;
 
 public class MainGame implements Screen {
 	private final Kroy game;
-	private OrthographicCamera camera;
+	private static OrthographicCamera camera;
 
 	// Entities
 	private Firetruck camTruck;
-	static Firetruck truck1;
-	static Firetruck truck2;
-	static Firetruck prevTruck;
+	private static Firetruck prevTruck;
 	static Firetruck currentTruck;
 	private Texture map;
-	private Pixmap pmap = new Pixmap(Gdx.files.internal("map_3.png"));
+	private Pixmap pMap = new Pixmap(Gdx.files.internal("map_3.png"));
 	static Pixmap speedMap;
-	static ArrayList<Entity> entities = new ArrayList<Entity>();
-	private static ArrayList<Fortress> listFort	;
-	private static float timer = 0;
+	static ArrayList<Entity> entities = new ArrayList<>();
+	private static ArrayList<Fortress> listFort;
+	static ArrayList<Firetruck> listTruck;
+	private static float timer = 0, timer2 = 0;
 	private static float fortDamage = 0;
 	private static float fortProjectileSpeed = 50;
 	private static final double damageIncrease = 0.05;
@@ -37,8 +36,8 @@ public class MainGame implements Screen {
 		this.game = game;
 
 		// This is a pixmap used to get the pixel RGBA values at specified coordinates.
-		speedMap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), pmap.getFormat());
-		speedMap.drawPixmap(pmap, 0, 0, pmap.getWidth(), pmap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
+		speedMap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), pMap.getFormat());
+		speedMap.drawPixmap(pMap, 0, 0, pMap.getWidth(), pMap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
 
 		camera = new OrthographicCamera();
@@ -65,19 +64,21 @@ public class MainGame implements Screen {
 	 * Separate method to load the trucks.
 	 */
 	private void loadTrucks() {
-		truck1 = new Firetruck(100, 100, new Texture("truck1.png"), 2);
-		initEntity(truck1, 309, 290);
+	    listTruck = new ArrayList<>();
+	    listTruck.add(new Firetruck(309, 290, 100, 100, new Texture("truck1.png"), 2));
+	    listTruck.add(new Firetruck(285, 260, 50, 200, new Texture("truck2.png"), 2));
 
-		truck2 = new Firetruck(50, 200, new Texture("truck2.png"), 2);
-		initEntity(truck2, 285, 260);
+	    for (Firetruck truck : listTruck) {
+	        initEntity(truck, truck.getPosX(), truck.getPosY());
+        }
 
 		// camTruck is located at the centre of the screen. It is not rendered, but used
 		// to switch to the full map view.
-		camTruck = new Firetruck(-10, 1, new Texture("badlogic.jpg"), 0);
-		camTruck.setX((Gdx.graphics.getWidth() / 2f) - 256);
-		camTruck.setY((Gdx.graphics.getHeight() / 2f) - 256);
+		camTruck = new Firetruck((Gdx.graphics.getWidth() / 2f) - 256, (Gdx.graphics.getHeight() / 2f) - 256, -10, 1, new Texture("badlogic.jpg"), 0);
+		camTruck.setX(camTruck.getPosX());
+		camTruck.setY(camTruck.getPosY());
 
-		changeToTruck(truck1);
+		changeToTruck(listTruck.get(0));
 	}
 
 	/**
@@ -88,8 +89,8 @@ public class MainGame implements Screen {
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
 
-		listFort = new ArrayList<Fortress>();
-		listFort.add(new Fortress(.53f, .26f,150, new Texture("ctower.png"), 20));
+		listFort = new ArrayList<>();
+		listFort.add(new Fortress(.53f, .26f,150, new Texture("clifford.png"), 20));
 		listFort.add(new Fortress(.22f, .54f,200, new Texture("station.png"), 20));
 		listFort.add(new Fortress(.47f, .82f,300, new Texture("minster.png"), 20));
 		listFort.add(new Fortress(.93f, .07f,250, new Texture("university.png"), 20));
@@ -182,7 +183,31 @@ public class MainGame implements Screen {
 		return true;
 	}
 	private static boolean checkLoose() {
-		return (!entities.contains(truck1) && !entities.contains(truck2));
+		for (Firetruck truck : listTruck) {
+			//System.out.println(entities.contains(truck));
+		    if (entities.contains(truck)) {
+		        return false;
+		    } else {
+		        for (Firetruck t : listTruck) {
+		            if (entities.contains(t)) {
+		            	timer2 += Gdx.graphics.getDeltaTime();
+
+		            	if (timer2 >= 1) {
+		            		changeToTruck(t);
+		            		timer2 = 0;
+		            	}
+		            }
+                }
+            }
+        }
+
+		if (timer2 >= 1) {
+			timer2 = 0;
+			return true;
+		} else {
+			timer2 += Gdx.graphics.getDeltaTime();
+			return false;
+		}
 	}
 
 	/**
@@ -212,11 +237,11 @@ public class MainGame implements Screen {
 	 * Check for inputs to switch between trucks.
 	 */
 	private void switchTrucks() {
-		if (Gdx.input.isKeyPressed(Keys.NUM_1) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == truck1) )) {
-			changeToTruck(truck1);
+		if (Gdx.input.isKeyPressed(Keys.NUM_1) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(0)) )) {
+			changeToTruck(listTruck.get(0));
 		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_2) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == truck2) )) {
-			changeToTruck(truck2);
+		if (Gdx.input.isKeyPressed(Keys.NUM_2) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(1)) )) {
+			changeToTruck(listTruck.get(1));
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {
 			// currentTruck.setColor(Color.WHITE);
@@ -234,7 +259,7 @@ public class MainGame implements Screen {
 	 *
 	 * @param t The truck to switch to
 	 */
-	private void changeToTruck(Firetruck t) {
+	private static void changeToTruck(Firetruck t) {
 		/*
 		if (currentTruck != null) {
 			// currentTruck.setColor(Color.WHITE);
@@ -261,7 +286,7 @@ public class MainGame implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		camera.setToOrtho(false, width, height);
-		speedMap.drawPixmap(pmap, 0, 0, pmap.getWidth(), pmap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
+		speedMap.drawPixmap(pMap, 0, 0, pMap.getWidth(), pMap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
 		// getOriginX() and getOriginY() is 512 for all fortresses
 

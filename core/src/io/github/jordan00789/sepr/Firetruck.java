@@ -11,14 +11,11 @@ import java.util.ArrayList;
 
 public class Firetruck extends Entity implements Attack, Moveable {
 
-	private int water;
-	private int maxWater;
-	private float acceleration = 2;
-	private float direction = 0;
-	private float velocity = 0;
+	private int water, maxWater;
+	private float acceleration = 2, direction = 0, velocity = 0;
 	public ArrayList<Projectile> drops = new ArrayList<Projectile>();
 	private float piConstant = (float) Math.PI / 180;
-	private float damage;
+	private float posX, posY, damage;
 
 	/**
 	 * Creates a Firetruck sprite using the texture provided, with the specified
@@ -28,9 +25,12 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 * @param maxWater The maximum amount of water in the truck
 	 * @param texture  The texture given to the Firetruck sprite
 	 */
-	public Firetruck(int health, int maxWater, Texture texture, float damage) {
+	public Firetruck(float x, float y, int health, int maxWater, Texture texture, float damage) {
 		super(health, texture);
-		this.maxWater = water = maxWater;
+
+		this.posX = x;
+		this.posY = y;
+		this.maxWater = this.water = maxWater;
 		this.damage = damage;
 	}
 
@@ -298,4 +298,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 			setColor(Color.CYAN);
 		}
 	}
+
+	public float getPosX() { return this.posX; }
+	public float getPosY() { return this.posY; }
 }

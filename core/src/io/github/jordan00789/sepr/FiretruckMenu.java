@@ -127,10 +127,10 @@ public class FiretruckMenu {
 		// ImageButton firetruckUI3 = createImageButton(new Texture("truckUI.png"));
 
 		// updated using a SetValue() between 0 and 1
-		addProgressBar(new ProgressBar(0.0f, 80.0f, 1.0f, false, progressBarStyleWater()), MainGame.truck1.getWater());
-		addProgressBar(new ProgressBar(0.0f, 100.0f, 1.0f, false, progressBarStyleHP()), MainGame.truck1.getHealth());
-		addProgressBar(new ProgressBar(0.0f, 200.0f, 1.0f, false, progressBarStyleWater()), MainGame.truck2.getWater());
-		addProgressBar(new ProgressBar(0.0f, 50.0f, 1.0f, false, progressBarStyleHP()), MainGame.truck2.getHealth());
+		addProgressBar(new ProgressBar(0.0f, 80.0f, 1.0f, false, progressBarStyleWater()), MainGame.listTruck.get(0).getWater());
+		addProgressBar(new ProgressBar(0.0f, 100.0f, 1.0f, false, progressBarStyleHP()), MainGame.listTruck.get(0).getHealth());
+		addProgressBar(new ProgressBar(0.0f, 200.0f, 1.0f, false, progressBarStyleWater()), MainGame.listTruck.get(1).getWater());
+		addProgressBar(new ProgressBar(0.0f, 50.0f, 1.0f, false, progressBarStyleHP()), MainGame.listTruck.get(1).getHealth());
 
 		backgroundTable.add(UIBackground).padLeft(20);
 
@@ -170,10 +170,10 @@ public class FiretruckMenu {
 
 	public static void update(float delta) {
 		if (!progressBars.isEmpty()) {
-			progressBars.get(0).setValue(MainGame.truck1.getWater());
-			progressBars.get(1).setValue(MainGame.truck1.getHealth());
-			progressBars.get(2).setValue(MainGame.truck2.getWater());
-			progressBars.get(3).setValue(MainGame.truck2.getHealth());
+			progressBars.get(0).setValue(MainGame.listTruck.get(0).getWater());
+			progressBars.get(1).setValue(MainGame.listTruck.get(0).getHealth());
+			progressBars.get(2).setValue(MainGame.listTruck.get(1).getWater());
+			progressBars.get(3).setValue(MainGame.listTruck.get(1).getHealth());
 		}
 		stage.act(delta);
 		stage.draw();
