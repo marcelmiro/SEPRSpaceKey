@@ -101,8 +101,8 @@ public class MainGame implements Screen {
 
 		// This entity is used to fill the end of the entity array.
 		// The last entity in entities is not rendered due to a UI bug.
-		//Entity nullEntity = new Entity(1, new Texture("badlogic.jpg"));
-		//initEntity(nullEntity, 1000, 500);
+		Entity nullEntity = new Entity(1, new Texture("badlogic.jpg"));
+		initEntity(nullEntity, 1000, 500);
 	}
 
 	/**
@@ -214,7 +214,7 @@ public class MainGame implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.NUM_1) && (currentTruck.speedLimit() == 29f)) {
 			changeToTruck(truck1);
 		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_2 ) && (currentTruck.speedLimit() == 29f)) {
+		if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
 			changeToTruck(truck2);
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {
