@@ -12,7 +12,7 @@ public class Projectile extends Entity implements Moveable {
     private float lifeTime;
     private Instant startTime;
     private boolean disposable = false;
-    private String type;
+    private final String type;
 
     /**
      * Initialises a projectile using the provided parameters

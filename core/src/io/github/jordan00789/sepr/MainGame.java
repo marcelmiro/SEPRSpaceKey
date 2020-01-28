@@ -22,14 +22,16 @@ public class MainGame implements Screen {
 	static Firetruck truck2;
 	static Firetruck currentTruck;
 	private Texture map;
-	private Pixmap pmap = new Pixmap(Gdx.files.internal("map_2.png"));
+	private Pixmap pmap = new Pixmap(Gdx.files.internal("map_3.png"));
 	static Pixmap speedMap;
 	static ArrayList<Entity> entities = new ArrayList<Entity>();
 	private static ArrayList<Fortress> listFort	;
 
 	private static float timer = 0;
-	private static float fortDamage = 5;
+	private static float fortDamage = 20;
 	private static float fortProjectileSpeed = 50;
+	private static final double damageIncrease = 0.05;
+	private static final double speedIncrease = 0.2;
 
 	public MainGame(final Kroy game) {
 		this.game = game;
@@ -46,7 +48,7 @@ public class MainGame implements Screen {
 		loadForts();
 		FiretruckMenu.create();
 
-		map = new Texture("map_2.png");
+		map = new Texture("map_3.png");
 	}
 
 	static String getPixelColour(float x, float y) {
@@ -243,8 +245,8 @@ public class MainGame implements Screen {
 	private static void updateFortDamage(float delta) {
 		timer += delta;
 		if (timer >= 1) {
-			if (fortDamage < 100) { fortDamage = Math.round((fortDamage + .2) * 10) / 10f; }
-			if (fortProjectileSpeed < 100) { fortProjectileSpeed = Math.round((fortProjectileSpeed + .25) * 100) / 100f; }
+			if (fortDamage < 100) { fortDamage = Math.round((fortDamage + damageIncrease) * 10) / 10f; }
+			if (fortProjectileSpeed < 100) { fortProjectileSpeed = Math.round((fortProjectileSpeed + speedIncrease) * 100) / 100f; }
 			timer = 0;
 		}
 	}
