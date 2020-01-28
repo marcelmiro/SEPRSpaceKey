@@ -94,6 +94,7 @@ public class MainGame implements Screen {
 		listFort.add(new Fortress(.47f, .82f,300, new Texture("minster.png"), 20));
 		listFort.add(new Fortress(.93f, .07f,250, new Texture("university.png"), 20));
 		listFort.add(new Fortress(.25f, .86f,200, new Texture("museum.png"), 20));
+		listFort.add(new Fortress(.25f, .05f,200, new Texture("tower.png"), 20));
 
 		for (Fortress fort : listFort) {
 			initEntity(fort, fort.getPosX() * width, fort.getPosY() * height);
