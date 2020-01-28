@@ -20,13 +20,13 @@ public class MainGame implements Screen {
 	private Firetruck camTruck;
 	static Firetruck truck1;
 	static Firetruck truck2;
+	static Firetruck prevTruck;
 	static Firetruck currentTruck;
 	private Texture map;
 	private Pixmap pmap = new Pixmap(Gdx.files.internal("map_3.png"));
 	static Pixmap speedMap;
 	static ArrayList<Entity> entities = new ArrayList<Entity>();
 	private static ArrayList<Fortress> listFort	;
-
 	private static float timer = 0;
 	private static float fortDamage = 0;
 	private static float fortProjectileSpeed = 50;
@@ -212,14 +212,17 @@ public class MainGame implements Screen {
 	 * Check for inputs to switch between trucks.
 	 */
 	private void switchTrucks() {
-		if (Gdx.input.isKeyPressed(Keys.NUM_1) && (currentTruck.speedLimit() == 29f)) {
+		if (Gdx.input.isKeyPressed(Keys.NUM_1) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == truck1) )) {
 			changeToTruck(truck1);
 		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
+		if (Gdx.input.isKeyPressed(Keys.NUM_2) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == truck2) )) {
 			changeToTruck(truck2);
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {
 			// currentTruck.setColor(Color.WHITE);
+			if (currentTruck != camTruck){
+				prevTruck = currentTruck;
+			}
 			currentTruck = camTruck;
 			camera.zoom = 1f;
 		}
