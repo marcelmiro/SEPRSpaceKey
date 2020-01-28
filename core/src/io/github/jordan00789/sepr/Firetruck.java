@@ -136,11 +136,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 * @return Turning speed
 	 */
 	private float getTurnSpeed() {
-		if (velocity > 50f) {
-			return (400f / velocity);
-		} else {
-			return 8f;
-		}
+		return 4f;
 	}
 
 	/**
