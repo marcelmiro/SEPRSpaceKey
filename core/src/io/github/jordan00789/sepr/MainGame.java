@@ -87,7 +87,7 @@ public class MainGame implements Screen {
 		int height = Gdx.graphics.getHeight();
 
 		listFort = new ArrayList<Fortress>();
-		listFort.add(new Fortress(.53f, .26f,150, new Texture("ctower.png")));
+		listFort.add(new Fortress(.53f, .26f,300, new Texture("ctower.png")));
 		listFort.add(new Fortress(.22f, .54f,200, new Texture("station.png")));
 		listFort.add(new Fortress(.47f, .82f,300, new Texture("minster.png")));
 		listFort.add(new Fortress(.93f, .07f,250, new Texture("university.png")));
