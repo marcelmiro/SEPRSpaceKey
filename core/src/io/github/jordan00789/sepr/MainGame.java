@@ -210,10 +210,10 @@ public class MainGame implements Screen {
 	 * Check for inputs to switch between trucks.
 	 */
 	private void switchTrucks() {
-		if (Gdx.input.isKeyPressed(Keys.NUM_1) && (currentTruck.speedLimit() == 29f)) {
+		if (Gdx.input.isKeyPressed(Keys.NUM_1) && ((currentTruck.speedLimit() == 29f) || currentTruck == camTruck)) {
 			changeToTruck(truck1);
 		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_2) && (currentTruck.speedLimit() == 29f)) {
+		if (Gdx.input.isKeyPressed(Keys.NUM_2) && ((currentTruck.speedLimit() == 29f) || currentTruck == camTruck)) {
 			changeToTruck(truck2);
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {
