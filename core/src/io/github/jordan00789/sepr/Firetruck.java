@@ -239,39 +239,31 @@ public class Firetruck extends Entity implements Attack, Moveable {
 			col = col.substring(0, 7);
 		}
 		switch (col) {
-		case ("#c070f0"):// buildings
-			return 100f;
-		case ("#d070f0"):// buildings 2
-			return 100f;
-		case ("#f0f0f0"):// road
-			return 100f;
-		case ("#f0c0f0"):// grass
-			return 30f;
-		case ("#6040f0"):// walls
-			setVelocity(0f);
-			return 0f;
-		case ("#6050f0"):// walls 2
-			setVelocity(0f);
-			return 0f;
-		case ("#e0f0f0"):// water
-			setVelocity(0f);
-			return 0f;
-		case ("#c0f0f0"):// water 2
-			setVelocity(0f);
-			return 0f;
-		case ("#8070f0"):
-			if (water == maxWater) {
-				setColor(Color.WHITE);
-			}
-			refill();
-			setHealth((int) (getHealth() + 1));
-			return 29f;
-		case ("#0"):// off of map
-			setVelocity(0f);
-			return 0f;
-		default:
-			// System.err.println("Unknown colour");
-			return 100f;
+			case ("#c070f0"):	// buildings
+				return 100f;
+			case ("#d070f0"):	// buildings 2
+				return 100f;
+			case ("#f0f0f0"):	// road
+				return 100f;
+			case ("#f0c0f0"):	// grass
+				return 30f;
+			case ("#6040f0"):	// walls
+			case ("#e0f0f0"):	// water
+			case ("#6050f0"):	// walls 2
+			case ("#c0f0f0"):	// water 2
+			case ("#0"):		// off of map
+				setVelocity(0f);
+				return 0f;
+			case ("#8070f0"): 	//
+				if (water == maxWater) {
+					setColor(Color.WHITE);
+				}
+				refill();
+				setHealth((int) (getHealth() + 1));
+				return 29f;
+			default:
+				// System.err.println("Unknown colour");
+				return 100f;
 		}
 	}
 
@@ -284,9 +276,9 @@ public class Firetruck extends Entity implements Attack, Moveable {
 			takeWater(1);
 			float flowRate = 40f;
 			float range = 2f;
-			float xdirection = Gdx.input.getX() - Gdx.graphics.getWidth() / 2;
-			float ydirection = Gdx.input.getY() - Gdx.graphics.getHeight() / 2;
-			Vector2 directionVector = new Vector2 (xdirection,ydirection);
+			float xDirection = Gdx.input.getX() - Gdx.graphics.getWidth() / 2f;
+			float yDirection = Gdx.input.getY() - Gdx.graphics.getHeight() / 2f;
+			Vector2 directionVector = new Vector2 (xDirection,yDirection);
 			float shootDirection = directionVector.angle() + 90;
 			Projectile drop = new Projectile(
 					(getX() + getOriginX() / 2) + ((float) Math.sin(shootDirection * piConstant) * 10),

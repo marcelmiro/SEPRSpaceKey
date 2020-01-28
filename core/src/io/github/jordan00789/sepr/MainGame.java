@@ -183,8 +183,8 @@ public class MainGame implements Screen {
 		return true;
 	}
 	private static boolean checkLoose() {
+		//System.out.println("Truck1: " + entities.contains(listTruck.get(0)) + "\tTruck2: " + entities.contains(listTruck.get(1)));
 		for (Firetruck truck : listTruck) {
-			//System.out.println(entities.contains(truck));
 		    if (entities.contains(truck)) {
 		        return false;
 		    } else {
@@ -196,8 +196,11 @@ public class MainGame implements Screen {
 		            		changeToTruck(t);
 		            		timer2 = 0;
 		            	}
+
+		            	return false;
 		            }
                 }
+		        listTruck.remove(truck);
             }
         }
 
