@@ -222,7 +222,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 					Math.round(getX() + getOriginX() + ((float) Math.sin(direction * piConstant) * 9)),
 					Gdx.graphics.getHeight()
 							- Math.round(getY() + getOriginY() + ((float) Math.cos(direction * piConstant) * 9)));
-		} else if (velocity > 0){
+		} else if (velocity < 0){
 			pixcolour = MainGame.speedMap.getPixel(
 					Math.round(getX() + getOriginX() - ((float) Math.sin(direction * piConstant) * 9)),
 					Gdx.graphics.getHeight()
