@@ -26,7 +26,6 @@ public class MainGame implements Screen {
 	static Pixmap speedMap;
 	static ArrayList<Entity> entities = new ArrayList<Entity>();
 	private static ArrayList<Fortress> listFort	;
-
 	private static float timer = 0;
 	private static float fortDamage = 0;
 	private static float fortProjectileSpeed = 50;
@@ -214,7 +213,7 @@ public class MainGame implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.NUM_1) && (currentTruck.speedLimit() == 29f)) {
 			changeToTruck(truck1);
 		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
+		if (Gdx.input.isKeyPressed(Keys.NUM_2) && (currentTruck.speedLimit() == 29f)) {
 			changeToTruck(truck2);
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {
