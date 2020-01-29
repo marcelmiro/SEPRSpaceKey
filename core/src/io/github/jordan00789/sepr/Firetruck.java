@@ -13,7 +13,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 
 	private int water, maxWater;
 	private float acceleration = 2, direction = 0, velocity = 0;
-	public ArrayList<Projectile> drops = new ArrayList<Projectile>();
+	public ArrayList<Projectile> drops = new ArrayList<>();
 	private float piConstant = (float) Math.PI / 180;
 	private float posX, posY, damage;
 
@@ -21,9 +21,12 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 * Creates a Firetruck sprite using the texture provided, with the specified
 	 * amounts of health and water.
 	 *
-	 * @param health   The amount of health the truck has
-	 * @param maxWater The maximum amount of water in the truck
-	 * @param texture  The texture given to the Firetruck sprite
+	 * @param x			x position of truck
+	 * @param y			y position of truck
+	 * @param health	The amount of health the truck has
+	 * @param maxWater	The maximum amount of water in the truck
+	 * @param texture	The texture given to the Firetruck sprite
+	 * @param damage	Damage of the firetruck
 	 */
 	public Firetruck(float x, float y, int health, int maxWater, Texture texture, float damage) {
 		super(health, texture);
@@ -95,7 +98,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 *
 	 * @param velocity The value the velocity is set to
 	 */
-	private void setVelocity(float velocity) {
+	void setVelocity(float velocity) {
 		this.velocity = velocity;
 	}
 
@@ -235,34 +238,27 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		// Convert 32-bit RGBA8888 integer to 3-bit hex code, using a mask.
 		// Note: col is GBR instead of RGB
 		String col = "#" + Integer.toHexString(pixcolour & 15790320);
-		if (col.length() > 2) {
-			col = col.substring(0, 7);
-		}
+
 		switch (col) {
-			case ("#c070f0"):	// buildings
-				return 100f;
-			case ("#d070f0"):	// buildings 2
-				return 100f;
-			case ("#f0f0f0"):	// road
-				return 100f;
-			case ("#f0c0f0"):	// grass
+			case "#f0c0f0":
 				return 30f;
-			case ("#6040f0"):	// walls
-			case ("#e0f0f0"):	// water
-			case ("#6050f0"):	// walls 2
-			case ("#c0f0f0"):	// water 2
-			case ("#0"):		// off of map
-				setVelocity(0f);
-				return 0f;
-			case ("#8070f0"): 	//
-				if (water == maxWater) {
+			case "#6040f0":
+			case "#e0f0f0":
+			case "#6050f0":
+			case "#c0f0f0":
+			case "#0":
+				setVelocity(0);
+				return 0;
+			case "#8070f0":
+				if (water > 0) {
 					setColor(Color.WHITE);
 				}
+
 				refill();
 				setHealth((int) (getHealth() + 1));
+
 				return 29f;
 			default:
-				// System.err.println("Unknown colour");
 				return 100f;
 		}
 	}

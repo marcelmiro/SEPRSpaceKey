@@ -87,6 +87,7 @@ public class Fortress extends Entity implements Attack {
             // choose different attack method for each fortress
             switch (this.textureDirectory) {
                 case "clifford.png":
+                case "tower.png":
                     attack(MainGame.currentTruck, 0);
                     break;
                 case "minster.png":
@@ -104,9 +105,6 @@ public class Fortress extends Entity implements Attack {
                     break;
                 case "university.png":
                     attackSpiral();
-                    break;
-                case "tower.png":
-                    attack(MainGame.currentTruck, 0);
                     break;
             }
             ableToAttack = false;
@@ -131,6 +129,7 @@ public class Fortress extends Entity implements Attack {
             this.timer = 0;
 
             if (distanceTo(MainGame.currentTruck) < 100f) {
+                temp = temp >= 360 ? 0 : temp;
                 attackSpiral();
             }
         }

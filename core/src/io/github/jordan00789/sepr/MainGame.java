@@ -26,11 +26,11 @@ public class MainGame implements Screen {
 	static ArrayList<Entity> entities = new ArrayList<>();
 	private static ArrayList<Fortress> listFort;
 	static ArrayList<Firetruck> listTruck;
-	private static float timer = 0, timer2 = 0;
-	private static float fortDamage = 0;
-	private static float fortProjectileSpeed = 50;
-	private static final double damageIncrease = 0.05;
-	private static final double speedIncrease = 0.2;
+	private static ArrayList<Firetruck> listTruckDead;
+	private static float timer1 = 0, timer2 = 0, timer3 = 0, timer4 = 0;
+	private static float fortDamage = 0, fortProjectileSpeed = 50;
+	private static final double damageIncrease = 0.05, speedIncrease = 0.2;
+	private boolean changeTruck = false;
 
 	public MainGame(final Kroy game) {
 		this.game = game;
@@ -60,11 +60,10 @@ public class MainGame implements Screen {
 		return col;
 	}
 
-	/**
-	 * Separate method to load the trucks.
-	 */
+	// Create all trucks
 	private void loadTrucks() {
 	    listTruck = new ArrayList<>();
+	    listTruckDead = new ArrayList<>();
 	    listTruck.add(new Firetruck(309, 290, 100, 100, new Texture("truck1.png"), 2));
 	    listTruck.add(new Firetruck(285, 260, 50, 200, new Texture("truck2.png"), 2));
 
@@ -81,11 +80,8 @@ public class MainGame implements Screen {
 		changeToTruck(listTruck.get(0));
 	}
 
-	/**
-	 * Separate method to load the fortresses.
-	 */
+	// Create all fortresses
 	private void loadForts() {
-		// Screen width and height.
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
 
@@ -128,7 +124,6 @@ public class MainGame implements Screen {
 	 * @param delta The current delta time
 	 */
 	public void render(float delta) {
-
 		takeInputs();
 
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
@@ -158,52 +153,45 @@ public class MainGame implements Screen {
 			}
 		});
 
+		// Removes entity from list if dead. Checks if game is won or lost.
 		entities.removeIf(Entity::isDestroyed);
 		if (checkWin()) {
 			game.setScreen(new MainWin(game));
 			dispose();
-		}else if (checkLoose()) {
+		} else if (checkLoose()) {
 			game.setScreen(new MainLose(game));
 			dispose();
 		}
 
-		updateFortDamage(delta);
+		// Adds truck to listTruckDead if health = 0. Countdown timer of 1s to change to non-dead truck automatically.
+		for (Firetruck truck : listTruck) {
+			if (truck.getHealth() <= 0 && !listTruckDead.contains(truck)) {
+				listTruckDead.add(truck);
+				changeTruck = true;
+			}
+		}
+		if (changeTruck) {
+			timer1 += Gdx.graphics.getDeltaTime();
+
+			if (timer1 >= 1) {
+				changeTruck = false;
+				timer1 = 0;
+				changeTruckAuto();
+			}
+		}
+
+		// Update fort stats and firetruck's menu
+		updateFortStats(delta);
 		FiretruckMenu.update(delta);
 
 		batch.end();
 	}
 
-	/**
-	 * Checks if all forts are destroyed and returns true if so.
-	 */
+	// Checks if all forts are destroyed and returns true if so.
 	private static boolean checkWin() {
 		for (Fortress fort : listFort) {
 			if (entities.contains(fort)) { return false; }
 		}
-		return true;
-	}
-	private static boolean checkLoose() {
-		//System.out.println("Truck1: " + entities.contains(listTruck.get(0)) + "\tTruck2: " + entities.contains(listTruck.get(1)));
-		for (Firetruck truck : listTruck) {
-		    if (entities.contains(truck)) {
-		        return false;
-		    } else {
-		        for (Firetruck t : listTruck) {
-		            if (entities.contains(t)) {
-		            	timer2 += Gdx.graphics.getDeltaTime();
-
-		            	if (timer2 >= 1) {
-		            		changeToTruck(t);
-		            		timer2 = 0;
-		            	}
-
-		            	return false;
-		            }
-                }
-		        listTruck.remove(truck);
-            }
-        }
-
 		if (timer2 >= 1) {
 			timer2 = 0;
 			return true;
@@ -213,11 +201,32 @@ public class MainGame implements Screen {
 		}
 	}
 
-	/**
-	 * Check for inputs to move the current truck.
-	 */
-	private void takeInputs() {
+	// Checks if all trucks are destroyed and return true if so.
+	private static boolean checkLoose() {
+		for (Firetruck truck : listTruck) {
+			if (entities.contains(truck)) { return false; }
+		}
+		if (timer3 >= 1) {
+			timer3 = 0;
+			return true;
+		} else {
+			timer3 += Gdx.graphics.getDeltaTime();
+			return false;
+		}
+	}
 
+	// Changes automatically to first non-dead truck in listTruck.
+	private static void changeTruckAuto() {
+		for (Firetruck truck : listTruck) {
+			if (entities.contains(truck)) {
+				changeToTruck(truck);
+				return;
+			}
+		}
+	}
+
+	// Check for inputs to move the current truck.
+	private void takeInputs() {
 		if (Gdx.input.isKeyPressed(Keys.W)) {
 			currentTruck.goForward();
 		}
@@ -236,9 +245,7 @@ public class MainGame implements Screen {
 		switchTrucks();
 	}
 
-	/**
-	 * Check for inputs to switch between trucks.
-	 */
+	// Check for inputs to switch between trucks.
 	private void switchTrucks() {
 		if (Gdx.input.isKeyPressed(Keys.NUM_1) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(0)) )) {
 			changeToTruck(listTruck.get(0));
@@ -251,6 +258,7 @@ public class MainGame implements Screen {
 			if (currentTruck != camTruck){
 				prevTruck = currentTruck;
 			}
+			currentTruck.setVelocity(0);
 			currentTruck = camTruck;
 			camera.zoom = 1f;
 		}
@@ -263,23 +271,19 @@ public class MainGame implements Screen {
 	 * @param t The truck to switch to
 	 */
 	private static void changeToTruck(Firetruck t) {
-		/*
-		if (currentTruck != null) {
-			// currentTruck.setColor(Color.WHITE);
+		if (!listTruckDead.contains(t)) {
+			currentTruck = t;
+			camera.zoom = 0.25f;
 		}
-		*/
-		currentTruck = t;
-		// currentTruck.setColor(Color.RED);
-		camera.zoom = 0.25f;
 	}
 
 	// Increments ET Fortress' damage each second by 0.2 and range by 0.25, by using Gdx's delta variable
-	private static void updateFortDamage(float delta) {
-		timer += delta;
-		if (timer >= 1) {
+	private static void updateFortStats(float delta) {
+		timer4 += delta;
+		if (timer4 >= 1) {
 			if (fortDamage < 100) { fortDamage = Math.round((fortDamage + damageIncrease) * 10) / 10f; }
 			if (fortProjectileSpeed < 100) { fortProjectileSpeed = Math.round((fortProjectileSpeed + speedIncrease) * 100) / 100f; }
-			timer = 0;
+			timer4 = 0;
 		}
 	}
 
@@ -291,8 +295,8 @@ public class MainGame implements Screen {
 		camera.setToOrtho(false, width, height);
 		speedMap.drawPixmap(pMap, 0, 0, pMap.getWidth(), pMap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
+		
 		// getOriginX() and getOriginY() is 512 for all fortresses
-
 		for (Fortress fort : listFort) {
 			fort.setPosition((fort.getPosX() * width) - 512, (fort.getPosY() * height) - 512);
 		}
