@@ -64,8 +64,8 @@ public class MainGame implements Screen {
 	private void loadTrucks() {
 	    listTruck = new ArrayList<>();
 	    listTruckDead = new ArrayList<>();
-	    listTruck.add(new Firetruck(309, 290, 100, 100, new Texture("truck1.png"), 2));
-	    listTruck.add(new Firetruck(285, 260, 50, 200, new Texture("truck2.png"), 2));
+	    listTruck.add(new Firetruck(309, 290, 100, 100, new Texture("firetruck_red.png"), 2));
+	    listTruck.add(new Firetruck(285, 260, 50, 200, new Texture("firetruck_purple.png"), 2));
 
 	    for (Firetruck truck : listTruck) {
 	        initEntity(truck, truck.getPosX(), truck.getPosY());
