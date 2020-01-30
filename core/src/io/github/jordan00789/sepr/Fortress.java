@@ -1,6 +1,7 @@
 package io.github.jordan00789.sepr;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
@@ -9,9 +10,11 @@ import java.util.ArrayList;
 public class Fortress extends Entity implements Attack {
 
     private float posX, posY, damage, timer;
+    private int maxHealth;
     private boolean ableToAttack = true;
     private ArrayList<Projectile> goos = new ArrayList<>();
     private String textureDirectory;
+    private Texture barHealth, barBg;
 
     /**
      * Creates a Fortress sprite using the texture provided, with the specified
@@ -29,6 +32,22 @@ public class Fortress extends Entity implements Attack {
         this.damage = damage;
         this.textureDirectory = String.valueOf(texture);
         this.timer = 0;
+        this.maxHealth = health;
+
+        this.createGUI();
+    }
+
+    private void createGUI() {
+        Pixmap pHealth = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pHealth.setColor(0, 1,0,1);
+        pHealth.fill();
+
+        Pixmap pBg = new Pixmap(5, 5, Pixmap.Format.RGBA8888);
+        pBg.setColor(1, 0,0,1);
+        pBg.fill();
+
+        barHealth = new Texture(pHealth);
+        barBg = new Texture(pBg);
     }
 
     /**
@@ -149,7 +168,12 @@ public class Fortress extends Entity implements Attack {
      */
     @Override
     public void draw(Batch batch) {
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
+
         goos.forEach(goo -> goo.draw(batch));
+        batch.draw(barBg, getPosX() * width - 20, getPosY() * height + 30, 40, 3);
+        batch.draw(barHealth, getPosX() * width - 20, getPosY() * height + 30, (getHealth() / this.maxHealth) * 40, 3);
         super.draw(batch);
     }
 

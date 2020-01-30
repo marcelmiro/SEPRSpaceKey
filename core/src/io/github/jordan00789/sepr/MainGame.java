@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 
@@ -135,7 +136,7 @@ public class MainGame implements Screen {
 		float cameraY = Math.max(0.125f * Gdx.graphics.getHeight(),
 				Math.min(currentTruck.getY() + 256, 0.875f * Gdx.graphics.getHeight()));
 
-		Batch batch = game.batch;
+		SpriteBatch batch = game.batch;
 		camera.position.set(cameraX, cameraY, 0);
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
@@ -146,6 +147,7 @@ public class MainGame implements Screen {
 		entities.forEach(e -> {
 			e.update(delta);
 			e.draw(batch);
+
 			// Moves the entity to the screen centre when it is destroyed.
 			if (e.isDestroyed()) {
 				e.setPosition((Gdx.graphics.getWidth() / 2f) - e.getOriginX(),
