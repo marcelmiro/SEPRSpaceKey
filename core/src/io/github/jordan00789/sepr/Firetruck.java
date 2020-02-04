@@ -16,6 +16,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	public ArrayList<Projectile> drops = new ArrayList<>();
 	private float piConstant = (float) Math.PI / 180;
 	private float posX, posY, damage;
+	private String attackType;
 
 	/**
 	 * Creates a Firetruck sprite using the texture provided, with the specified
@@ -28,9 +29,9 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 * @param texture	The texture given to the Firetruck sprite
 	 * @param damage	Damage of the firetruck
 	 */
-	public Firetruck(float x, float y, int health, int maxWater, Texture texture, float damage) {
+	public Firetruck(float x, float y, int health, int maxWater, Texture texture, float damage, String type) {
 		super(health, texture);
-
+		this.attackType = type;
 		this.posX = x;
 		this.posY = y;
 		this.maxWater = this.water = maxWater;
@@ -268,22 +269,38 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 */
 	@Override
 	public void attack() {
-		if (drops.size() < 200 && water > 0) {
-			takeWater(1);
-			float flowRate = 40f;
-			float range = 2f;
-			float xDirection = Gdx.input.getX() - Gdx.graphics.getWidth() / 2f;
-			float yDirection = Gdx.input.getY() - Gdx.graphics.getHeight() / 2f;
-			Vector2 directionVector = new Vector2 (xDirection,yDirection);
-			float shootDirection = directionVector.angle() + 90;
-			Projectile drop = new Projectile(
-					(getX() + getOriginX() / 2) + ((float) Math.sin(shootDirection * piConstant) * 10),
-					(getY() + getOriginY() / 2) + ((float) Math.cos(shootDirection * piConstant) * 10), shootDirection,
-					flowRate + velocity, range, new Texture("drop.png"), "water", this.damage);
-			drops.add(drop);
+		if (this.checkAttack() == true) {
+			if (drops.size() < 200 && water > 0) {
+				takeWater(1);
+				float flowRate = 40f;
+				float range = 1f;
+				float xDirection = Gdx.input.getX() - Gdx.graphics.getWidth() / 2f;
+				float yDirection = Gdx.input.getY() - Gdx.graphics.getHeight() / 2f;
+				Vector2 directionVector = new Vector2(xDirection, yDirection);
+				float shootDirection = directionVector.angle() + 90;
+				Projectile drop = new Projectile(
+						(getX() + getOriginX() / 2) + ((float) Math.sin(shootDirection * piConstant) * 10),
+						(getY() + getOriginY() / 2) + ((float) Math.cos(shootDirection * piConstant) * 10), shootDirection,
+						flowRate + velocity, range, new Texture("drop.png"), "water", this.damage);
+				drops.add(drop);
+			}
+			if (water == 0) {
+				setColor(Color.CYAN);
+			}
 		}
-		if (water == 0) {
-			setColor(Color.CYAN);
+	}
+
+	public boolean checkAttack() {
+		if (this.attackType == "default" || this.attackType == "bigBoi" && this.velocity == 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public void ability() {
+		if (this.attackType == "bigBoi") {
+			this.velocity = (float)(this.velocity * 0.8);
 		}
 	}
 

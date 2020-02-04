@@ -65,8 +65,9 @@ public class MainGame implements Screen {
 	private void loadTrucks() {
 	    listTruck = new ArrayList<>();
 	    listTruckDead = new ArrayList<>();
-	    listTruck.add(new Firetruck(309, 290, 100, 100, new Texture("firetruck_red.png"), 2));
-	    listTruck.add(new Firetruck(285, 260, 50, 200, new Texture("firetruck_purple.png"), 2));
+	    listTruck.add(new Firetruck(309, 290, 100, 400, new Texture("firetruck_red.png"), 2, "default")); //Default truck
+	    listTruck.add(new Firetruck(285, 260, 50, 800, new Texture("firetruck_purple.png"), 2, "default")); //Low health high water
+		listTruck.add(new Firetruck(290, 260, 200, 1000, new Texture("firetruck_blue.png"), 5, "bigBoi")); //Rian's stupid truck
 
 	    for (Firetruck truck : listTruck) {
 	        initEntity(truck, truck.getPosX(), truck.getPosY());
@@ -74,7 +75,7 @@ public class MainGame implements Screen {
 
 		// camTruck is located at the centre of the screen. It is not rendered, but used
 		// to switch to the full map view.
-		camTruck = new Firetruck((Gdx.graphics.getWidth() / 2f) - 256, (Gdx.graphics.getHeight() / 2f) - 256, -10, 1, new Texture("badlogic.jpg"), 0);
+		camTruck = new Firetruck((Gdx.graphics.getWidth() / 2f) - 256, (Gdx.graphics.getHeight() / 2f) - 256, -10, 1, new Texture("badlogic.jpg"), 0, "none");
 		camTruck.setX(camTruck.getPosX());
 		camTruck.setY(camTruck.getPosY());
 
@@ -241,6 +242,9 @@ public class MainGame implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.D)) {
 			currentTruck.turnRight();
 		}
+		if (Gdx.input.isKeyPressed(Keys.E)) {
+			currentTruck.ability();
+		}
 		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			currentTruck.attack();
 		}
@@ -255,6 +259,9 @@ public class MainGame implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.NUM_2) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(1)) )) {
 			changeToTruck(listTruck.get(1));
 		}
+		if (Gdx.input.isKeyPressed(Keys.NUM_3) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(2)) )) {
+			changeToTruck(listTruck.get(2));
+		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {
 			// currentTruck.setColor(Color.WHITE);
 			if (currentTruck != camTruck){
@@ -264,7 +271,6 @@ public class MainGame implements Screen {
 			currentTruck = camTruck;
 			camera.zoom = 1f;
 		}
-
 	}
 
 	/**
