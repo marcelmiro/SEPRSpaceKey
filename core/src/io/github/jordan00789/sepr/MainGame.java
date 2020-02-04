@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class MainGame implements Screen {
 	private final Kroy game;
-	private static OrthographicCamera camera;
+	public static OrthographicCamera camera;
 
 	// Entities
 	private Firetruck camTruck;

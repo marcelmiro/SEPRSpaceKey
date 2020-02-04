@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 
@@ -15,9 +16,8 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	private float direction = 0, velocity = 0;
 	public ArrayList<Projectile> drops = new ArrayList<>();
 	private float piConstant = (float) Math.PI / 180;
-	private float posX, posY, damage;
+	private float posX, posY, damage, speed;
 	private String attackType;
-	private float speed;
 
 	/**
 	 * Creates a Firetruck sprite using the texture provided, with the specified
@@ -276,9 +276,13 @@ public class Firetruck extends Entity implements Attack, Moveable {
 				takeWater(1);
 				float flowRate = 40f;
 				float range = 1f;
-				float xDirection = Gdx.input.getX() - Gdx.graphics.getWidth() / 2f;
-				float yDirection = Gdx.input.getY() - Gdx.graphics.getHeight() / 2f;
-				Vector2 directionVector = new Vector2(xDirection, yDirection);
+
+				Vector3 mousePosInWorld = MainGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+				float xDirection = mousePosInWorld.x - (getX() + getOriginX());
+				float yDirection = mousePosInWorld.y - (getY() + getOriginY());
+				System.out.println(mousePosInWorld.x);
+				System.out.println((getY() + getOriginY() / 2));
+				Vector2 directionVector = new Vector2(xDirection, -yDirection);
 				float shootDirection = directionVector.angle() + 90;
 				Projectile drop = new Projectile(
 						(getX() + getOriginX() / 2) + ((float) Math.sin(shootDirection * piConstant) * 10),
