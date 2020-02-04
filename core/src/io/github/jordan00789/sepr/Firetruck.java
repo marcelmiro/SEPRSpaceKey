@@ -12,11 +12,12 @@ import java.util.ArrayList;
 public class Firetruck extends Entity implements Attack, Moveable {
 
 	private int water, maxWater;
-	private float acceleration = 2, direction = 0, velocity = 0;
+	private float direction = 0, velocity = 0;
 	public ArrayList<Projectile> drops = new ArrayList<>();
 	private float piConstant = (float) Math.PI / 180;
 	private float posX, posY, damage;
 	private String attackType;
+	private float speed;
 
 	/**
 	 * Creates a Firetruck sprite using the texture provided, with the specified
@@ -29,9 +30,10 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 * @param texture	The texture given to the Firetruck sprite
 	 * @param damage	Damage of the firetruck
 	 */
-	public Firetruck(float x, float y, int health, int maxWater, Texture texture, float damage, String type) {
+	public Firetruck(float x, float y, int health, int maxWater, Texture texture, float damage, float speed, String type) {
 		super(health, texture);
 		this.attackType = type;
+		this.speed = speed;
 		this.posX = x;
 		this.posY = y;
 		this.maxWater = this.water = maxWater;
@@ -151,7 +153,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	@Override
 	public void goForward() {
 		if (velocity < speedLimit()) {
-			setVelocity(getVelocity() + acceleration);
+			setVelocity(getVelocity() + (speed / 5));
 		}
 	}
 
@@ -161,7 +163,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	@Override
 	public void goBackward() {
 		if (velocity > -speedLimit()) {
-			setVelocity(getVelocity() - acceleration);
+			setVelocity(getVelocity() - (speed / 5));
 		}
 	}
 
@@ -291,17 +293,15 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	}
 
 	public boolean checkAttack() {
-		if (this.attackType == "default" || this.attackType == "bigBoi" && this.velocity == 0){
+		if (this.attackType == "default" || this.attackType == "bigBoi" && this.velocity < 5 && this.velocity > -5){
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public void ability() {
-		if (this.attackType == "bigBoi") {
-			this.velocity = (float)(this.velocity * 0.8);
-		}
+	public void brake() {
+		this.velocity = (float)(this.velocity * 0.8);
 	}
 
 	public float getPosX() { return this.posX; }
