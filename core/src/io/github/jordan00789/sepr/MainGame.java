@@ -68,7 +68,7 @@ public class MainGame implements Screen {
 	    listTruck.add(new Firetruck(318, 295, 100, 400, new Texture("firetruck_red.png"), 2, 10, "default")); //Default truck
 	    listTruck.add(new Firetruck(300, 275, 50, 800, new Texture("firetruck_purple.png"), 2, 10,"default")); //Low health high water truck
 		listTruck.add(new Firetruck(283, 255, 200, 1000, new Texture("firetruck_blue.png"), 5, 4, "bigBoi")); //Rian's stupid truck
-		listTruck.add(new Firetruck(265, 235, 60, 400, new Texture("firetruck_yellow.png"), 3, 16, "bigBoi")); //Rapid truck
+		listTruck.add(new Firetruck(265, 235, 60, 400, new Texture("firetruck_yellow.png"), 3, 16, "default")); //Rapid truck
 
 	    for (Firetruck truck : listTruck) {
 	        initEntity(truck, truck.getPosX(), truck.getPosY());
@@ -268,6 +268,9 @@ public class MainGame implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.NUM_3) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(2)) )) {
 			changeToTruck(listTruck.get(2));
 		}
+		if (Gdx.input.isKeyPressed(Keys.NUM_4) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(3)) )) {
+			changeToTruck(listTruck.get(3));
+		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {
 			// currentTruck.setColor(Color.WHITE);
 			if (currentTruck != camTruck){
@@ -294,7 +297,7 @@ public class MainGame implements Screen {
 	// Game timer to destroy FireStation after 5 seconds
 	private void gameTimer (float delta) {
 		timer5 += delta;
-		if (timer5 >= 5) {
+		if (timer5 >= 60) {
 			isFireStationDestroyed = true;
 			this.map = new Texture("map_3_destroyed.png");
 			this.pMap = new Pixmap(Gdx.files.internal("map_3_destroyed.png"));
@@ -325,6 +328,7 @@ public class MainGame implements Screen {
 		for (Fortress fort : listFort) {
 			fort.setPosition((fort.getPosX() * width) - 512, (fort.getPosY() * height) - 512);
 		}
+		System.out.println(Gdx.graphics.getWidth());
 	}
 
 	@Override
