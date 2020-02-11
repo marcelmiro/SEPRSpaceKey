@@ -134,7 +134,7 @@ public class FiretruckMenu {
 
 		for (Firetruck truck : MainGame.listTruck) {
 			addProgressBar(new ProgressBar(0, truck.getMaxWater(), 1, false, progressBarStyleWater()),truck.getWater());
-			addProgressBar(new ProgressBar(0, truck.getMaxHealth(), 1, false, progressBarStyleHP()), truck.getHealth());
+			addProgressBar(new ProgressBar(0, truck.getHealth(), 1, false, progressBarStyleHP()), truck.getHealth());
 		}
 
 		backgroundTable.add(UIBackground).padLeft(20);
