@@ -27,7 +27,7 @@ public class MainGame implements Screen {
 	private static ArrayList<ETPatrol> listPatrol = new ArrayList<>();
 	private static ArrayList<Fortress> listFort = new ArrayList<>();
 	static ArrayList<Firetruck> listTruck = new ArrayList<>();
-	private static ArrayList<Firetruck> listTruckDead;
+	private static ArrayList<Firetruck> listTruckDead = new ArrayList<>();;
 	private static float timer1 = 0, timer2 = 0, timer3 = 0, timer4 = 0, timer5 = 0;
 	private static float fortDamage = 0, fortProjectileSpeed = 50;
 	private static final double damageIncrease = 0.05, speedIncrease = 0.2;
@@ -64,8 +64,6 @@ public class MainGame implements Screen {
 
 	// Create all trucks
 	private void loadTrucks() {
-	    listTruck = new ArrayList<>();
-	    listTruckDead = new ArrayList<>();
 	    listTruck.add(new Firetruck(318, 295, 100, 400, new Texture("firetruck_red.png"), 2, 10, "default")); //Default truck
 	    listTruck.add(new Firetruck(300, 275, 50, 800, new Texture("firetruck_purple.png"), 2, 10,"default")); //Low health high water truck
 		listTruck.add(new Firetruck(283, 255, 200, 1000, new Texture("firetruck_blue.png"), 5, 4, "bigBoi")); //Rian's stupid truck
