@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Firetruck extends Entity implements Attack, Moveable {
 
-	private int water, maxWater;
+	private int water, maxWater, maxHealth;
 	private float direction = 0, velocity = 0;
 	public ArrayList<Projectile> drops = new ArrayList<>();
 	private float piConstant = (float) Math.PI / 180;
@@ -32,6 +32,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 */
 	public Firetruck(float x, float y, int health, int maxWater, Texture texture, float damage, float speed, String type) {
 		super(health, texture);
+		this.maxHealth = health;
 		this.attackType = type;
 		this.speed = speed;
 		this.posX = x;
@@ -217,7 +218,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 *
 	 * @return Speed limit
 	 */
-	public float speedLimit() {
+	float speedLimit() {
 		int pixcolour;
 		// Checks either front or back of the truck sprite depending on whether the
 		// truck is moving forwards or backwards
@@ -271,7 +272,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 */
 	@Override
 	public void attack() {
-		if (this.checkAttack() == true) {
+		if (this.checkAttack()) {
 			if (drops.size() < 200 && water > 0) {
 				takeWater(1);
 				float flowRate = 40f;
@@ -280,8 +281,8 @@ public class Firetruck extends Entity implements Attack, Moveable {
 				Vector3 mousePosInWorld = MainGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 				float xDirection = mousePosInWorld.x - (getX() + getOriginX());
 				float yDirection = mousePosInWorld.y - (getY() + getOriginY());
-				System.out.println(mousePosInWorld.x);
-				System.out.println((getY() + getOriginY() / 2));
+				//System.out.println(mousePosInWorld.x);
+				//System.out.println((getY() + getOriginY() / 2));
 				Vector2 directionVector = new Vector2(xDirection, -yDirection);
 				float shootDirection = directionVector.angle() + 90;
 				Projectile drop = new Projectile(
@@ -296,18 +297,16 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		}
 	}
 
-	public boolean checkAttack() {
-		if (this.attackType == "default" || this.attackType == "bigBoi" && this.velocity < 5 && this.velocity > -5){
-			return true;
-		} else {
-			return false;
-		}
+	private boolean checkAttack() {
+		return this.attackType.equals("default") || this.attackType.equals("bigBoi") && this.velocity < 5 && this.velocity > -5;
 	}
 
-	public void brake() {
+	void brake() {
 		this.velocity = (float)(this.velocity * 0.8);
 	}
 
-	public float getPosX() { return this.posX; }
-	public float getPosY() { return this.posY; }
+	float getPosX() { return this.posX; }
+	float getPosY() { return this.posY; }
+	int getMaxWater() { return this.maxWater; }
+	int getMaxHealth() { return this.maxHealth; }
 }
