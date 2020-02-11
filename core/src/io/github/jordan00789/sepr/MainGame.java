@@ -87,7 +87,7 @@ public class MainGame implements Screen {
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
 
-		listPatrol.add(new ETPatrol(.53f,.54f,100));
+		listFort.add(new ETPatrol(.80f,.90f,100));
 
 		for (ETPatrol patrol : listPatrol) {
 			initEntity(patrol, patrol.getPosX() * width, patrol.getPosY() * height);
@@ -100,7 +100,9 @@ public class MainGame implements Screen {
 		listFort.add(new Fortress(.25f, .86f,200, new Texture("museum.png"), 20));
 		listFort.add(new Fortress(.25f, .05f,200, new Texture("tower.png"), 20));
 
+
 		for (Fortress fort : listFort) {
+			fort.setOrigin(-384,-384);
 			initEntity(fort, fort.getPosX() * width, fort.getPosY() * height);
 		}
 

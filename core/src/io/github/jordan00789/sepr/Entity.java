@@ -106,7 +106,6 @@ public class Entity extends Sprite {
 	 * @return The distance to the point
 	 */
 	private float distanceTo(float farx, float fary) {
-		return (float) Math
-				.sqrt(Math.pow((fary - (getY() + getOriginY())), 2) + Math.pow((farx - (getX() + getOriginX())), 2));
+		return (float) Math.sqrt(Math.pow((fary - (getY() + getOriginY())), 2) + Math.pow((farx - (getX() + getOriginX())), 2));
 	}
 }
