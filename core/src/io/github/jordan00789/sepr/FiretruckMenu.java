@@ -16,11 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import com.badlogic.gdx.utils.Align;
+import jdk.tools.jaotc.Main;
 
 public class FiretruckMenu {
 
 	private static Stage stage;
-	private static ArrayList<ProgressBar> progressBars = new ArrayList<ProgressBar>();
+	private static ArrayList<ProgressBar> progressBars = new ArrayList<>();
 
 	// Creates an image button from a texture by defining a drawable texture region.
 	private static ImageButton createImageButton(Texture tex) {
@@ -121,16 +122,20 @@ public class FiretruckMenu {
 		barTableTruck2.align(Align.center | Align.left);
 		barTableTruck2.setPosition(10, (float) (Gdx.graphics.getHeight() / 4.8));
 
-		ImageButton UIBackground = createImageButton(new Texture("stationUI.png"));
-		ImageButton firetruckUI1 = createImageButton(new Texture("truckUI.png"));
-		ImageButton firetruckUI2 = createImageButton(new Texture("truckUI.png"));
-		// ImageButton firetruckUI3 = createImageButton(new Texture("truckUI.png"));
+		Table barTableTruck3 = new Table();
+		barTableTruck3.setWidth(10f);
+		barTableTruck3.align(Align.center | Align.left);
+		barTableTruck3.setPosition(10, (float) (Gdx.graphics.getHeight() / 9.6));
 
-		// updated using a SetValue() between 0 and 1
-		addProgressBar(new ProgressBar(0.0f, 80.0f, 1.0f, false, progressBarStyleWater()), MainGame.listTruck.get(0).getWater());
-		addProgressBar(new ProgressBar(0.0f, 100.0f, 1.0f, false, progressBarStyleHP()), MainGame.listTruck.get(0).getHealth());
-		addProgressBar(new ProgressBar(0.0f, 200.0f, 1.0f, false, progressBarStyleWater()), MainGame.listTruck.get(1).getWater());
-		addProgressBar(new ProgressBar(0.0f, 50.0f, 1.0f, false, progressBarStyleHP()), MainGame.listTruck.get(1).getHealth());
+		ImageButton UIBackground = createImageButton(new Texture("stationUI.png"));
+		ImageButton firetruckUI1 = createImageButton(new Texture("truckUI_red.png"));
+		ImageButton firetruckUI2 = createImageButton(new Texture("truckUI_purple.png"));
+		ImageButton firetruckUI3 = createImageButton(new Texture("truckUI_blue.png"));
+
+		for (Firetruck truck : MainGame.listTruck) {
+			addProgressBar(new ProgressBar(0, truck.getMaxWater(), 1, false, progressBarStyleWater()),truck.getWater());
+			addProgressBar(new ProgressBar(0, truck.getMaxHealth(), 1, false, progressBarStyleHP()), truck.getHealth());
+		}
 
 		backgroundTable.add(UIBackground).padLeft(20);
 
@@ -138,8 +143,8 @@ public class FiretruckMenu {
 		iconTable.add(firetruckUI1).width(Value.percentWidth(0.025F, iconTable));
 		iconTable.row().height(100).padLeft(30);
 		iconTable.add(firetruckUI2);
-		// iconTable.row().height(50).padLeft(30);
-		// iconTable.add(firetruckUI3);
+		iconTable.row().height(50).padLeft(30);
+		iconTable.add(firetruckUI3);
 
 		barTableTruck1.row().padLeft(13);
 		barTableTruck1.add(progressBars.get(1)).maxWidth(60);
@@ -151,10 +156,16 @@ public class FiretruckMenu {
 		barTableTruck2.row().padLeft(13);
 		barTableTruck2.add(progressBars.get(2)).maxWidth(60);
 
+		barTableTruck3.row().padLeft(13);
+		barTableTruck3.add(progressBars.get(5)).maxWidth(60);
+		barTableTruck3.row().padLeft(13);
+		barTableTruck3.add(progressBars.get(4)).maxWidth(60);
+
 		stage.addActor(backgroundTable);
 		stage.addActor(iconTable);
 		stage.addActor(barTableTruck1);
 		stage.addActor(barTableTruck2);
+		stage.addActor(barTableTruck3);
 		Gdx.input.setInputProcessor(stage);
 
 		stage.act(Gdx.graphics.getDeltaTime());
@@ -170,10 +181,13 @@ public class FiretruckMenu {
 
 	public static void update(float delta) {
 		if (!progressBars.isEmpty()) {
-			progressBars.get(0).setValue(MainGame.listTruck.get(0).getWater());
-			progressBars.get(1).setValue(MainGame.listTruck.get(0).getHealth());
-			progressBars.get(2).setValue(MainGame.listTruck.get(1).getWater());
-			progressBars.get(3).setValue(MainGame.listTruck.get(1).getHealth());
+			int index = 0;
+			for (Firetruck truck : MainGame.listTruck) {
+				progressBars.get(index).setValue(truck.getWater());
+				index++;
+				progressBars.get(index).setValue(truck.getHealth());
+				index++;
+			}
 		}
 		stage.act(delta);
 		stage.draw();

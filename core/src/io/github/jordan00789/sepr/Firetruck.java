@@ -274,7 +274,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 */
 	@Override
 	public void attack() {
-		if (this.checkAttack() == true) {
+		if (this.checkAttack()) {
 			if (drops.size() < 200 && water > 0) {
 				takeWater(1);
 				float flowRate = 40f;
@@ -297,18 +297,15 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		}
 	}
 
-	public boolean checkAttack() {
-		if (this.attackType == "default" || this.attackType == "bigBoi" && this.velocity < 5 && this.velocity > -5){
-			return true;
-		} else {
-			return false;
-		}
+	private boolean checkAttack() {
+		return this.attackType.equals("default") || this.attackType.equals("bigBoi") && this.velocity < 5 && this.velocity > -5;
 	}
 
 	public void brake() {
 		this.velocity = (float)(this.velocity * 0.8);
 	}
 
-	public float getPosX() { return this.posX; }
-	public float getPosY() { return this.posY; }
+	float getPosX() { return this.posX; }
+	float getPosY() { return this.posY; }
+	int getMaxWater() { return this.maxWater; }
 }
