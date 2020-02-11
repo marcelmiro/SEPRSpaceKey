@@ -25,8 +25,9 @@ public class MainGame implements Screen {
 	private Pixmap pMap = new Pixmap(Gdx.files.internal("map_3.png"));
 	static Pixmap speedMap;
 	static ArrayList<Entity> entities = new ArrayList<>();
-	private static ArrayList<Fortress> listFort;
-	static ArrayList<Firetruck> listTruck;
+	private static ArrayList<ETPatrol> listPatrol = new ArrayList<>();
+	private static ArrayList<Fortress> listFort = new ArrayList<>();
+	static ArrayList<Firetruck> listTruck = new ArrayList<>();
 	private static ArrayList<Firetruck> listTruckDead;
 	private static float timer1 = 0, timer2 = 0, timer3 = 0, timer4 = 0;
 	private static float fortDamage = 0, fortProjectileSpeed = 50;
@@ -63,7 +64,6 @@ public class MainGame implements Screen {
 
 	// Create all trucks
 	private void loadTrucks() {
-	    listTruck = new ArrayList<>();
 	    listTruckDead = new ArrayList<>();
 	    listTruck.add(new Firetruck(309, 290, 100, 400, new Texture("firetruck_red.png"), 2, 10, "default")); //Default truck
 	    listTruck.add(new Firetruck(285, 260, 50, 800, new Texture("firetruck_purple.png"), 2, 10,"default")); //Low health high water
@@ -82,12 +82,17 @@ public class MainGame implements Screen {
 		changeToTruck(listTruck.get(0));
 	}
 
-	// Create all fortresses
+	// Create all fortresses and ETPatrols
 	private void loadForts() {
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
 
-		listFort = new ArrayList<>();
+		listPatrol.add(new ETPatrol(.53f,.54f,100));
+
+		for (ETPatrol patrol : listPatrol) {
+			initEntity(patrol, patrol.getPosX() * width, patrol.getPosY() * height);
+		}
+
 		listFort.add(new Fortress(.53f, .26f,150, new Texture("clifford.png"), 20));
 		listFort.add(new Fortress(.22f, .54f,200, new Texture("station.png"), 20));
 		listFort.add(new Fortress(.47f, .82f,300, new Texture("minster.png"), 20));

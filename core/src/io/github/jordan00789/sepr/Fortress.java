@@ -56,7 +56,7 @@ public class Fortress extends Entity implements Attack {
      * @param e The entity to aim at.
      * @param n The offset of the projectile from the entity in degrees
      */
-    private void attack(Entity e, int n) {
+    public void attack(Entity e, int n) {
         if (e != null) {
             float piConstant = (float) Math.PI / 180;
             if (ableToAttack) {
@@ -64,7 +64,7 @@ public class Fortress extends Entity implements Attack {
                         (getY() + 384 + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
                         1f, new Texture("goo.png"),"goo", damage);
                 goos.add(goo);
-            } else if (this.textureDirectory.equals("tower.png")) {
+            } else if (this.textureDirectory.equals("tower.png") || this instanceof ETPatrol) {
                 this.timer += Gdx.graphics.getDeltaTime();
 
                 if (this.timer >= .15) {

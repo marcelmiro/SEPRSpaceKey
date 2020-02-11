@@ -280,8 +280,6 @@ public class Firetruck extends Entity implements Attack, Moveable {
 				Vector3 mousePosInWorld = MainGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 				float xDirection = mousePosInWorld.x - (getX() + getOriginX());
 				float yDirection = mousePosInWorld.y - (getY() + getOriginY());
-				System.out.println(mousePosInWorld.x);
-				System.out.println((getY() + getOriginY() / 2));
 				Vector2 directionVector = new Vector2(xDirection, -yDirection);
 				float shootDirection = directionVector.angle() + 90;
 				Projectile drop = new Projectile(
