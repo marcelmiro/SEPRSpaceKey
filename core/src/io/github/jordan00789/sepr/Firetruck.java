@@ -298,7 +298,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	}
 
 	private boolean checkAttack() {
-		return this.attackType.equals("default") || this.attackType.equals("bigBoi") && this.velocity < 5 && this.velocity > -5;
+		return (this.attackType.equals("default") || this.attackType.equals("bigBoi") && this.velocity < 5 && this.velocity > -5);
 	}
 
 	public void brake() {
