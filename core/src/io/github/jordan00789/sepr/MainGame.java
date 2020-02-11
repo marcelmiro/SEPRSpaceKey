@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
@@ -29,10 +28,11 @@ public class MainGame implements Screen {
 	private static ArrayList<Fortress> listFort = new ArrayList<>();
 	static ArrayList<Firetruck> listTruck = new ArrayList<>();
 	private static ArrayList<Firetruck> listTruckDead;
-	private static float timer1 = 0, timer2 = 0, timer3 = 0, timer4 = 0;
+	private static float timer1 = 0, timer2 = 0, timer3 = 0, timer4 = 0, timer5 = 0;
 	private static float fortDamage = 0, fortProjectileSpeed = 50;
 	private static final double damageIncrease = 0.05, speedIncrease = 0.2;
 	private boolean changeTruck = false;
+	static boolean isFireStationDestroyed = false;
 
 	public MainGame(final Kroy game) {
 		this.game = game;
@@ -64,10 +64,12 @@ public class MainGame implements Screen {
 
 	// Create all trucks
 	private void loadTrucks() {
+	    listTruck = new ArrayList<>();
 	    listTruckDead = new ArrayList<>();
-	    listTruck.add(new Firetruck(310, 290, 100, 400, new Texture("firetruck_red.png"), 2, 10, "default")); //Default truck
-	    listTruck.add(new Firetruck(290, 265, 50, 800, new Texture("firetruck_purple.png"), 2, 10,"default")); //Low health high water
-		listTruck.add(new Firetruck(270, 240, 200, 1000, new Texture("firetruck_blue.png"), 5, 2, "bigBoi")); //Rian's stupid truck
+	    listTruck.add(new Firetruck(318, 295, 100, 400, new Texture("firetruck_red.png"), 2, 10, "default")); //Default truck
+	    listTruck.add(new Firetruck(300, 275, 50, 800, new Texture("firetruck_purple.png"), 2, 10,"default")); //Low health high water truck
+		listTruck.add(new Firetruck(283, 255, 200, 1000, new Texture("firetruck_blue.png"), 5, 4, "bigBoi")); //Rian's stupid truck
+		listTruck.add(new Firetruck(265, 235, 60, 400, new Texture("firetruck_yellow.png"), 3, 16, "default")); //Rapid truck
 
 	    for (Firetruck truck : listTruck) {
 	        initEntity(truck, truck.getPosX(), truck.getPosY());
@@ -100,9 +102,7 @@ public class MainGame implements Screen {
 		listFort.add(new Fortress(.25f, .86f,200, new Texture("museum.png"), 20));
 		listFort.add(new Fortress(.25f, .05f,200, new Texture("tower.png"), 20));
 
-
 		for (Fortress fort : listFort) {
-			fort.setOrigin(-384,-384);
 			initEntity(fort, fort.getPosX() * width, fort.getPosY() * height);
 		}
 
@@ -190,6 +190,11 @@ public class MainGame implements Screen {
 			}
 		}
 
+		// Update game timer
+		if (!isFireStationDestroyed) {
+			gameTimer(delta);
+		}
+
 		// Update fort stats and firetruck's menu
 		updateFortStats(delta);
 		FiretruckMenu.update(delta);
@@ -264,6 +269,9 @@ public class MainGame implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.NUM_3) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(2)) )) {
 			changeToTruck(listTruck.get(2));
 		}
+		if (Gdx.input.isKeyPressed(Keys.NUM_4) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(3)) )) {
+			changeToTruck(listTruck.get(3));
+		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {
 			// currentTruck.setColor(Color.WHITE);
 			if (currentTruck != camTruck){
@@ -287,8 +295,19 @@ public class MainGame implements Screen {
 		}
 	}
 
+	// Game timer to destroy FireStation after 5 seconds
+	private void gameTimer (float delta) {
+		timer5 += delta;
+		if (timer5 >= 60) {
+			isFireStationDestroyed = true;
+			this.map = new Texture("map_3_destroyed.png");
+			this.pMap = new Pixmap(Gdx.files.internal("map_3_destroyed.png"));
+			timer5 = 0;
+		}
+	}
+
 	// Increments ET Fortress' damage each second by 0.2 and range by 0.25, by using Gdx's delta variable
-	private static void updateFortStats(float delta) {
+	private void updateFortStats(float delta) {
 		timer4 += delta;
 		if (timer4 >= 1) {
 			if (fortDamage < 100) { fortDamage = Math.round((fortDamage + damageIncrease) * 10) / 10f; }

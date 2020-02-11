@@ -254,13 +254,11 @@ public class Firetruck extends Entity implements Attack, Moveable {
 				setVelocity(0);
 				return 0;
 			case "#8070f0":
-				if (water > 0) {
-					setColor(Color.WHITE);
+				if (!MainGame.isFireStationDestroyed) {
+					if (water > 0) { setColor(Color.WHITE); }
+					refill();
+					setHealth((int) (getHealth() + 1));
 				}
-
-				refill();
-				setHealth((int) (getHealth() + 1));
-
 				return 29f;
 			default:
 				return 100f;

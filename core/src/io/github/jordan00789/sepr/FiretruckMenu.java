@@ -115,22 +115,28 @@ public class FiretruckMenu {
 		Table barTableTruck1 = new Table();
 		barTableTruck1.setWidth(10f);
 		barTableTruck1.align(Align.left | Align.top);
-		barTableTruck1.setPosition(10, (float) (Gdx.graphics.getHeight() / 3.2));
+		barTableTruck1.setPosition(10, (float) (Gdx.graphics.getHeight() / 3.3));
 
 		Table barTableTruck2 = new Table();
 		barTableTruck2.setWidth(10f);
 		barTableTruck2.align(Align.center | Align.left);
-		barTableTruck2.setPosition(10, (float) (Gdx.graphics.getHeight() / 4.8));
+		barTableTruck2.setPosition(10, (float) (Gdx.graphics.getHeight() / 4.4));
 
 		Table barTableTruck3 = new Table();
 		barTableTruck3.setWidth(10f);
 		barTableTruck3.align(Align.center | Align.left);
-		barTableTruck3.setPosition(10, (float) (Gdx.graphics.getHeight() / 9.6));
+		barTableTruck3.setPosition(10, (float) (Gdx.graphics.getHeight() / 6.3));
+
+		Table barTableTruck4 = new Table();
+		barTableTruck4.setWidth(10f);
+		barTableTruck4.align(Align.center | Align.left);
+		barTableTruck4.setPosition(10, (float) (Gdx.graphics.getHeight() / 11.4));
 
 		ImageButton UIBackground = createImageButton(new Texture("stationUI.png"));
 		ImageButton firetruckUI1 = createImageButton(new Texture("truckUI_red.png"));
 		ImageButton firetruckUI2 = createImageButton(new Texture("truckUI_purple.png"));
 		ImageButton firetruckUI3 = createImageButton(new Texture("truckUI_blue.png"));
+		ImageButton firetruckUI4 = createImageButton(new Texture("truckUI_yellow.png"));
 
 		for (Firetruck truck : MainGame.listTruck) {
 			addProgressBar(new ProgressBar(0, truck.getMaxWater(), 1, false, progressBarStyleWater()),truck.getWater());
@@ -139,12 +145,14 @@ public class FiretruckMenu {
 
 		backgroundTable.add(UIBackground).padLeft(20);
 
-		iconTable.row().height(40).padLeft(30);
-		iconTable.add(firetruckUI1).width(Value.percentWidth(0.025F, iconTable));
-		iconTable.row().height(100).padLeft(30);
+		iconTable.row().height(50).padLeft(30);
+		iconTable.add(firetruckUI1);
+		iconTable.row().height(50).padLeft(30);
 		iconTable.add(firetruckUI2);
 		iconTable.row().height(50).padLeft(30);
 		iconTable.add(firetruckUI3);
+		iconTable.row().height(50).padLeft(30);
+		iconTable.add(firetruckUI4);
 
 		barTableTruck1.row().padLeft(13);
 		barTableTruck1.add(progressBars.get(1)).maxWidth(60);
@@ -161,11 +169,17 @@ public class FiretruckMenu {
 		barTableTruck3.row().padLeft(13);
 		barTableTruck3.add(progressBars.get(4)).maxWidth(60);
 
+		barTableTruck4.row().padLeft(13);
+		barTableTruck4.add(progressBars.get(7)).maxWidth(60);
+		barTableTruck4.row().padLeft(13);
+		barTableTruck4.add(progressBars.get(6)).maxWidth(60);
+
 		stage.addActor(backgroundTable);
 		stage.addActor(iconTable);
 		stage.addActor(barTableTruck1);
 		stage.addActor(barTableTruck2);
 		stage.addActor(barTableTruck3);
+		stage.addActor(barTableTruck4);
 		Gdx.input.setInputProcessor(stage);
 
 		stage.act(Gdx.graphics.getDeltaTime());
