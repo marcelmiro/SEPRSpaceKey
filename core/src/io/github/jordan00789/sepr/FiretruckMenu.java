@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import com.badlogic.gdx.utils.Align;
+import jdk.tools.jaotc.Main;
 
 public class FiretruckMenu {
 
