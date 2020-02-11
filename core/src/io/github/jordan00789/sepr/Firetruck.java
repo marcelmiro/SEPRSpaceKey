@@ -199,8 +199,6 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		setPosition((float) (getX() + (Math.sin(Math.toRadians(direction)) * delta * velocity)),
 				(float) (getY() + (Math.cos(Math.toRadians(direction)) * delta * velocity)));
 
-		this.posX = this.getX() + this.getOriginX() / 2;
-		this.posY = this.getY() + this.getOriginY() / 2;
 	}
 
 	/**
