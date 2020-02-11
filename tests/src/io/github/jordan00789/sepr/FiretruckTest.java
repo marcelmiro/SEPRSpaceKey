@@ -17,7 +17,7 @@ public class FiretruckTest {
 
     @Before
     public void init() {
-        truck = new Firetruck(100, 500, new Texture("../core/assets/truck1.png"));
+        truck = new Firetruck(100, 500, 100, 100, new Texture("../core/assets/truck1.png"), 10, 10, "default");
         kroy = new Kroy();
         kroy.setScreen(new MainGame(kroy));
     }
