@@ -16,7 +16,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	private float direction = 0, velocity = 0;
 	public ArrayList<Projectile> drops = new ArrayList<>();
 	private float piConstant = (float) Math.PI / 180;
-	private float posX, posY, damage, speed;
+	private float STARTX, STARTY, damage, speed;
 	private String attackType;
 
 	/**
@@ -34,8 +34,8 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		super(health, texture);
 		this.attackType = type;
 		this.speed = speed;
-		this.posX = x;
-		this.posY = y;
+		this.STARTX = x;
+		this.STARTY = y;
 		this.maxWater = this.water = maxWater;
 		this.damage = damage;
 	}
@@ -196,9 +196,9 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		drops.removeIf(Projectile::isDisposable);
 		drops.forEach(drop -> drop.update(delta));
 
+		setOriginCenter();
 		setPosition((float) (getX() + (Math.sin(Math.toRadians(direction)) * delta * velocity)),
-				(float) (getY() + (Math.cos(Math.toRadians(direction)) * delta * velocity)));
-
+				(float) (getY() + (Math.cos(Math.toRadians(direction)) * delta * velocity) ));
 	}
 
 	/**
@@ -220,23 +220,23 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 */
 	public float speedLimit() {
 		int pixcolour;
-		// Checks either front or back of the truck sprite depending on whether the
-		// truck is moving forwards or backwards
+		// Checks either front, back or middle of the truck sprite depending on whether the
+		// truck is moving forwards, backwards or is stationary
 		if (velocity > 0) {
 			pixcolour = MainGame.speedMap.getPixel(
-					Math.round(getX() + getOriginX() + ((float) Math.sin(direction * piConstant) * 9)),
+					Math.round(getX() + ((float) Math.sin(direction * piConstant) * 9)),
 					Gdx.graphics.getHeight()
-							- Math.round(getY() + getOriginY() + ((float) Math.cos(direction * piConstant) * 9)));
+							- Math.round(getY() + ((float) Math.cos(direction * piConstant) * 9)));
 		} else if (velocity < 0){
 			pixcolour = MainGame.speedMap.getPixel(
-					Math.round(getX() + getOriginX() - ((float) Math.sin(direction * piConstant) * 9)),
+					Math.round(getX() - ((float) Math.sin(direction * piConstant) * 9)),
 					Gdx.graphics.getHeight()
-							- Math.round(getY() + getOriginY() - ((float) Math.cos(direction * piConstant) * 9)));
+							- Math.round(getY() - ((float) Math.cos(direction * piConstant) * 9)));
 		} else {
 			pixcolour = MainGame.speedMap.getPixel(
-					Math.round(getX() + getOriginX()),
+					Math.round(getX()),
 					Gdx.graphics.getHeight()
-							- Math.round(getY() + getOriginY()));
+							- Math.round(getY()));
 		}
 
 		// Convert 32-bit RGBA8888 integer to 3-bit hex code, using a mask.
@@ -252,7 +252,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 			case "#c0f0f0":
 			case "#0":
 				setVelocity(0);
-				return 0;
+				return 0f;
 			case "#8070f0":
 				if (!MainGame.isFireStationDestroyed) {
 					if (water > 0) { setColor(Color.WHITE); }
@@ -277,13 +277,13 @@ public class Firetruck extends Entity implements Attack, Moveable {
 				float range = 1f;
 
 				Vector3 mousePosInWorld = MainGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-				float xDirection = mousePosInWorld.x - (getX() + getOriginX());
-				float yDirection = mousePosInWorld.y - (getY() + getOriginY());
+				float xDirection = mousePosInWorld.x - (getX());
+				float yDirection = mousePosInWorld.y - (getY());
 				Vector2 directionVector = new Vector2(xDirection, -yDirection);
 				float shootDirection = directionVector.angle() + 90;
 				Projectile drop = new Projectile(
-						(getX() + getOriginX() / 2) + ((float) Math.sin(shootDirection * piConstant) * 10),
-						(getY() + getOriginY() / 2) + ((float) Math.cos(shootDirection * piConstant) * 10), shootDirection,
+						(getX()) + ((float) Math.sin(shootDirection * piConstant) * 10),
+						(getY()) + ((float) Math.cos(shootDirection * piConstant) * 10), shootDirection,
 						flowRate + velocity, range, new Texture("drop.png"), "water", this.damage);
 				drops.add(drop);
 			}
@@ -301,7 +301,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		this.velocity = (float)(this.velocity * 0.8);
 	}
 
-	float getPosX() { return this.posX; }
-	float getPosY() { return this.posY; }
-	int getMaxWater() { return this.maxWater; }
+	public float getStartX() { return this.STARTX; }
+	public float getStartY() { return this.STARTY; }
+	public int getMaxWater() { return this.maxWater; }
 }

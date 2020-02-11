@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Fortress extends Entity implements Attack {
 
-    private float posX, posY, damage, timer;
+    private float startX, startY, damage, timer;
     private int maxHealth;
     private boolean ableToAttack = true;
     private ArrayList<Projectile> goos = new ArrayList<>();
@@ -27,8 +27,8 @@ public class Fortress extends Entity implements Attack {
      */
     Fortress(float x, float y, int health, Texture texture, float damage) {
         super(health, texture);
-        this.posX = x;
-        this.posY = y;
+        this.startX = x;
+        this.startY = y;
         this.damage = damage;
         this.textureDirectory = String.valueOf(texture);
         this.timer = 0;
@@ -60,15 +60,15 @@ public class Fortress extends Entity implements Attack {
         if (e != null) {
             float piConstant = (float) Math.PI / 180;
             if (ableToAttack) {
-                Projectile goo = new Projectile((getX() + 384) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
-                        (getY() + 384 + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
+                Projectile goo = new Projectile((getX()) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
+                        (getY() + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
                         1f, new Texture("goo.png"),"goo", damage);
                 goos.add(goo);
             } else if (this.textureDirectory.equals("tower.png")) {
                 this.timer += Gdx.graphics.getDeltaTime();
                 if (this.timer >= .15) {
-                    Projectile goo = new Projectile((getX() + 384) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
-                            ((getY() + 384) + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
+                    Projectile goo = new Projectile((getX()) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
+                            ((getY()) + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
                             1f, new Texture("goo.png"),"goo", damage);
                     goos.add(goo);
                     this.timer = 0;
@@ -89,7 +89,7 @@ public class Fortress extends Entity implements Attack {
     }
     private void attack(float n) {
         if (ableToAttack || this.textureDirectory.equals("university.png")) {
-            Projectile goo = new Projectile(getX() + 384, getY() + 384, n, MainGame.getFortProjectileSpeed(),1f, new Texture("goo.png"),"goo", damage);
+            Projectile goo = new Projectile(getX(), getY(), n, MainGame.getFortProjectileSpeed(),1f, new Texture("goo.png"),"goo", damage);
             goos.add(goo);
         }
     }
@@ -180,13 +180,13 @@ public class Fortress extends Entity implements Attack {
         float height = Gdx.graphics.getHeight();
 
         goos.forEach(goo -> goo.draw(batch));
-        batch.draw(barBg, getPosX() * width - 20, getPosY() * height + 30, 40, 3);
-        batch.draw(barHealth, getPosX() * width - 20, getPosY() * height + 30, (getHealth() / this.maxHealth) * 40, 3);
+        batch.draw(barBg, this.getX() * width - 20, this.getY() * height + 30, 40, 3);
+        batch.draw(barHealth, this.getX() * width - 20, this.getY() * height + 30, (getHealth() / this.maxHealth) * 40, 3);
         super.draw(batch);
     }
 
-    float getPosX() { return this.posX; }
-    float getPosY() { return this.posY; }
+    float getStartX() { return this.startX; }
+    float getStartY() { return this.startY; }
 
     /**
      * Calculate the direction from the current entity to another entity.
@@ -199,6 +199,6 @@ public class Fortress extends Entity implements Attack {
             super.directionTo(e);
             System.out.println("ETPATROL ATTACK");
         }
-        return directionTo(e.getX() + 384, e.getY() + 384);
+        return directionTo(e.getX(), e.getY());
     }
 }

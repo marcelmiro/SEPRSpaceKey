@@ -64,20 +64,21 @@ public class MainGame implements Screen {
 
 	// Create all trucks
 	private void loadTrucks() {
+		int height = Gdx.graphics.getHeight();
 	    listTruck.add(new Firetruck(318, 295, 100, 400, new Texture("firetruck_red.png"), 2, 10, "default")); //Default truck
 	    listTruck.add(new Firetruck(300, 275, 50, 800, new Texture("firetruck_purple.png"), 2, 10,"default")); //Low health high water truck
 		listTruck.add(new Firetruck(283, 255, 200, 1000, new Texture("firetruck_blue.png"), 5, 4, "bigBoi")); //Rian's stupid truck
 		listTruck.add(new Firetruck(265, 235, 60, 400, new Texture("firetruck_yellow.png"), 3, 16, "default")); //Rapid truck
 
 	    for (Firetruck truck : listTruck) {
-	        initEntity(truck, truck.getPosX(), truck.getPosY());
+	        initEntity(truck, truck.getStartX(), -height+truck.getStartY());
         }
 
 		// camTruck is located at the centre of the screen. It is not rendered, but used
 		// to switch to the full map view.
-		camTruck = new Firetruck((Gdx.graphics.getWidth() / 2f) - 256, (Gdx.graphics.getHeight() / 2f) - 256, -10, 1, new Texture("badlogic.jpg"), 0, 0,"none");
-		camTruck.setX(camTruck.getPosX());
-		camTruck.setY(camTruck.getPosY());
+		camTruck = new Firetruck((Gdx.graphics.getWidth() / 2f), (Gdx.graphics.getHeight() / 2f), -10, 1, new Texture("badlogic.jpg"), 0, 0,"none");
+		camTruck.setX(camTruck.getStartX());
+		camTruck.setY(camTruck.getStartY());
 
 		changeToTruck(listTruck.get(0));
 	}
@@ -90,7 +91,7 @@ public class MainGame implements Screen {
 		listFort.add(new ETPatrol(.80f,.90f,100));
 
 		for (ETPatrol patrol : listPatrol) {
-			initEntity(patrol, patrol.getPosX() * width, patrol.getPosY() * height);
+			initEntity(patrol, patrol.getStartX() * width, patrol.getStartY() * height);
 		}
 
 		listFort.add(new Fortress(.53f, .26f,150, new Texture("clifford.png"), 20));
@@ -101,7 +102,7 @@ public class MainGame implements Screen {
 		listFort.add(new Fortress(.25f, .05f,200, new Texture("tower.png"), 20));
 
 		for (Fortress fort : listFort) {
-			initEntity(fort, fort.getPosX() * width, fort.getPosY() * height);
+			initEntity(fort, fort.getStartX() * width, fort.getStartY() * height);
 		}
 
 		// This entity is used to fill the end of the entity array.
@@ -121,7 +122,7 @@ public class MainGame implements Screen {
 	private void initEntity(Entity e, float x, float y) {
 		e.setScale(0.05f);
 		e.setOriginCenter();
-		e.setPosition(x - e.getOriginX(), y - e.getOriginY());
+		e.setPosition(x,y);
 		entities.add(e);
 	}
 
@@ -133,22 +134,24 @@ public class MainGame implements Screen {
 	public void render(float delta) {
 		takeInputs();
 
+
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
 		// Ensures viewport edges stay within the bounds of the map.
+
 		float cameraX = Math.max(0.125f * Gdx.graphics.getWidth(),
-				Math.min(currentTruck.getX() + 256, 0.875f * Gdx.graphics.getWidth()));
+				Math.min(currentTruck.getX(), 0.875f * Gdx.graphics.getWidth()));
 		float cameraY = Math.max(0.125f * Gdx.graphics.getHeight(),
-				Math.min(currentTruck.getY() + 256, 0.875f * Gdx.graphics.getHeight()));
+				Math.min(currentTruck.getY(), 0.875f * Gdx.graphics.getHeight()));
 
 		SpriteBatch batch = game.batch;
-		camera.position.set(cameraX, cameraY, 0);
+		//camera.position.set(cameraX, cameraY, 0);]
+		camera.position.set(currentTruck.getX(),currentTruck.getY(),0);
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(map, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
+		batch.draw(map,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		// Updates and draws each entity in the entities array.
 		entities.forEach(e -> {
 			e.update(delta);
@@ -156,8 +159,8 @@ public class MainGame implements Screen {
 
 			// Moves the entity to the screen centre when it is destroyed.
 			if (e.isDestroyed()) {
-				e.setPosition((Gdx.graphics.getWidth() / 2f) - e.getOriginX(),
-						(Gdx.graphics.getHeight() / 2f) - e.getOriginY());
+				e.setPosition((Gdx.graphics.getWidth() / 2f),
+						(Gdx.graphics.getHeight() / 2f));
 			}
 		});
 
@@ -165,6 +168,7 @@ public class MainGame implements Screen {
 		entities.removeIf(Entity::isDestroyed);
 		if (checkWin()) {
 			game.setScreen(new MainWin(game));
+
 			dispose();
 		} else if (checkLoose()) {
 			game.setScreen(new MainLose(game));
@@ -268,6 +272,7 @@ public class MainGame implements Screen {
 			changeToTruck(listTruck.get(2));
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_4) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(3)) )) {
+			System.out.println(currentTruck.getX());
 			changeToTruck(listTruck.get(3));
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {
@@ -325,7 +330,7 @@ public class MainGame implements Screen {
 		
 		// getOriginX() and getOriginY() is 512 for all fortresses
 		for (Fortress fort : listFort) {
-			fort.setPosition((fort.getPosX() * width) - 512, (fort.getPosY() * height) - 512);
+			fort.setPosition((fort.getStartX() * width), (fort.getStartY() * height));
 		}
 	}
 

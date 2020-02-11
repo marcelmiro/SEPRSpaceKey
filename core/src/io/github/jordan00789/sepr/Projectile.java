@@ -72,7 +72,7 @@ public class Projectile extends Entity implements Moveable {
         setPosition((float) (getX() + (Math.sin(Math.toRadians(direction)) * delta * velocity)),
                 (float) (getY() + (Math.cos(Math.toRadians(direction)) * delta * velocity)));
 
-        String col = MainGame.getPixelColour(getX() + getOriginX(), getY() + getOriginY());
+        String col = MainGame.getPixelColour(getX(), getY());
         if (col.equals("#6040f0") || col.equals("#6050f0")) {
             disposable = true;
         }
