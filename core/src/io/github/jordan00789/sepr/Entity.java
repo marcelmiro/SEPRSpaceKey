@@ -85,7 +85,7 @@ public class Entity extends Sprite {
 	 * @return The direction of the entity
 	 */
 	public float directionTo(float x, float y) {
-		return (float) ((180 / Math.PI) * Math.atan2(x - (getX() + getOriginX()), y - (getY() + getOriginY())));
+		return (float) ((180 / Math.PI) * Math.atan2(x - (this.getX() + this.getOriginX()), y - (this.getY() + this.getOriginY())));
 	}
 
 	/**

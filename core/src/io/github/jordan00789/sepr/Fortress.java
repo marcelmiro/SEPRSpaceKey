@@ -64,11 +64,20 @@ public class Fortress extends Entity implements Attack {
                         (getY() + 384 + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
                         1f, new Texture("goo.png"),"goo", damage);
                 goos.add(goo);
-            } else if (this.textureDirectory.equals("tower.png") || this instanceof ETPatrol) {
+            } else if (this.textureDirectory.equals("tower.png")) {
                 this.timer += Gdx.graphics.getDeltaTime();
                 if (this.timer >= .15) {
                     Projectile goo = new Projectile((getX() + 384) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
                             ((getY() + 384) + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
+                            1f, new Texture("goo.png"),"goo", damage);
+                    goos.add(goo);
+                    this.timer = 0;
+                }
+            }else if (this instanceof ETPatrol) {
+                this.timer += Gdx.graphics.getDeltaTime();
+                if (this.timer >= .15) {
+                    Projectile goo = new Projectile(getX(),
+                            getY(), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
                             1f, new Texture("goo.png"),"goo", damage);
                     goos.add(goo);
                     this.timer = 0;
@@ -107,6 +116,7 @@ public class Fortress extends Entity implements Attack {
                 case "tower.png":
                 case "badlogic.jpg":
                     attack(MainGame.currentTruck, 0);
+                    System.out.println(this.getX());
                     break;
                 case "minster.png":
                     attack(MainGame.currentTruck, 0);
@@ -174,18 +184,6 @@ public class Fortress extends Entity implements Attack {
         batch.draw(barBg, getPosX() * width - 20, getPosY() * height + 30, 40, 3);
         batch.draw(barHealth, getPosX() * width - 20, getPosY() * height + 30, (getHealth() / this.maxHealth) * 40, 3);
         super.draw(batch);
-    }
-
-    /**
-     * Calculate the direction from the fortress to a point.
-     *
-     * @param x The x-coordinate of the point
-     * @param y The y-coordinate of the point
-     * @return The direction of the entity
-     */
-    @Override
-    public float directionTo(float x, float y) {
-        return (float) ((180 / Math.PI) * Math.atan2(x - (getX() + 384), y - (getY() + 384)));
     }
 
     float getPosX() { return this.posX; }
