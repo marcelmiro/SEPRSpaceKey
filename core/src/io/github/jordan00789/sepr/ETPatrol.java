@@ -23,9 +23,7 @@ public class ETPatrol extends Fortress implements Attack{
         } else if (this.movex - this.x <= 1 || this.movey - this.y <= 1 ) { //Patrol will select a new target
             this.movex = (float) (this.x + (Math.random() - 0.5) * 5);
             this.movey = (float) (this.y + (Math.random() - 0.5) * 5);
-            Vector2 moveVector = new Vector2(movex,movey);
-            this.direction = moveVector.angle();
-            System.out.println((Math.random() - 0.5) * 5);
+            this.direction = directionTo(movex,movey);
         } else { //Patrol will move
             this.velocity = 15;
             this.x = this.getX();

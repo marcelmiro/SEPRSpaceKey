@@ -66,13 +66,11 @@ public class Fortress extends Entity implements Attack {
                 goos.add(goo);
             } else if (this.textureDirectory.equals("tower.png") || this instanceof ETPatrol) {
                 this.timer += Gdx.graphics.getDeltaTime();
-
                 if (this.timer >= .15) {
                     Projectile goo = new Projectile((getX() + 384) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
-                            (getY() + 384 + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
+                            ((getY() + 384) + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
                             1f, new Texture("goo.png"),"goo", damage);
                     goos.add(goo);
-
                     this.timer = 0;
                 }
             }
