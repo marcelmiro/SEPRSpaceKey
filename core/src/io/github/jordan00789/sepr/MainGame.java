@@ -8,14 +8,13 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 
 public class MainGame implements Screen {
 	private final Kroy game;
-	public static OrthographicCamera camera;
+	static OrthographicCamera camera;
 
 	// Entities
 	private Firetruck camTruck;
