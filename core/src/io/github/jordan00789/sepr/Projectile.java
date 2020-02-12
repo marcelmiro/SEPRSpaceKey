@@ -81,7 +81,7 @@ public class Projectile extends Entity implements Moveable {
         for (int i = 0; i < MainGame.entities.size(); i++) {
             e = MainGame.entities.get(i);
             if (!disposable) {
-                if (((distanceTo(e) < 10f && (e instanceof Firetruck || e instanceof ETPatrol)) || (distanceTo(e) < 25f && (e instanceof Fortress))) && ((e instanceof Firetruck && this.type.equals("goo")) || (e instanceof Fortress && this.type.equals("water")))) {
+                if (((distanceTo(e) < 10f && (e instanceof Firetruck || e instanceof ETPatrol)) || (distanceTo(e) < 25f && (e instanceof Fortress && !(e instanceof ETPatrol)))) && ((e instanceof Firetruck && this.type.equals("goo")) || (e instanceof Fortress && this.type.equals("water")))) {
                     if (type.equals("goo")) {
                         e.takeDamage(MainGame.getFortDamage() + this.damage);
                     } else {
