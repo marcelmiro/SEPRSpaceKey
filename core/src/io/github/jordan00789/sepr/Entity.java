@@ -75,7 +75,7 @@ public class Entity extends Sprite{
 	 * @return The direction of the entity
 	 */
 	float directionTo(Entity e) {
-		return directionTo(e.getX() + getWidth() / 2, e.getY() + getHeight() / 2);
+		return directionTo(e.getX(), e.getY());
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class Entity extends Sprite{
 	 * @return The direction of the entity
 	 */
 	public float directionTo(float x, float y) {
-		return (float) ((180 / Math.PI) * Math.atan2(x - getX() - getWidth() / 2, y - getY() - getHeight() / 2));
+		return (float) ((180 / Math.PI) * Math.atan2(x - getX(), y - getY()));
 	}
 
 	/**
@@ -107,10 +107,15 @@ public class Entity extends Sprite{
 	 * @return The distance to the point
 	 */
 	private float distanceTo(float farx, float fary) {
-		Vector2 vector = new Vector2 (getX() + getWidth() / 2 - farx, getY() + getHeight() / 2 - fary);
+		Vector2 vector = new Vector2 (getX() - farx, getY() - fary);
 		return vector.len();
 	}
 
+	//Ensures all co-ordinates are relative to the centre of the entity rather than the corner of the unscaled sprite
 	@Override
-	public void setPosition(float x, float y){ super.setPosition(x - getWidth() / 2,y - getHeight()/2);}
+	public void setPosition(float x, float y){ super.setPosition(x - getWidth() / 2,y - getHeight() / 2);}
+	@Override
+	public float getX() {return super.getX() + getWidth() / 2;}
+	@Override
+	public float getY() {return super.getY() + getHeight() / 2;}
 }

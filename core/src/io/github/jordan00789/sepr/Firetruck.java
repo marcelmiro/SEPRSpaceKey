@@ -282,8 +282,8 @@ public class Firetruck extends Entity implements Attack, Moveable {
 				Vector2 directionVector = new Vector2(xDirection, -yDirection);
 				float shootDirection = directionVector.angle() + 90;
 				Projectile drop = new Projectile(
-						(getX()) + ((float) Math.sin(shootDirection * piConstant) * 10 - getWidth() / 2),
-						(getY()) + ((float) Math.cos(shootDirection * piConstant) * 10 - getHeight() / 2), shootDirection,
+						(getX()) + ((float) Math.sin(shootDirection * piConstant) * 10),
+						(getY()) + ((float) Math.cos(shootDirection * piConstant) * 10), shootDirection,
 						flowRate + velocity, range, new Texture("drop.png"), "water", this.damage);
 				drops.add(drop);
 			}
@@ -303,9 +303,5 @@ public class Firetruck extends Entity implements Attack, Moveable {
 
 	public float getStartX() { return this.STARTX; }
 	public float getStartY() { return this.STARTY; }
-	@Override
-	public float getX() {return super.getX() + getWidth() / 2;}
-	@Override
-	public float getY() {return super.getY() + getHeight() / 2;}
 	public int getMaxWater() { return this.maxWater; }
 }

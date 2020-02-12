@@ -93,7 +93,7 @@ public class MainGame implements Screen {
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
 
-		listPatrol.add(new ETPatrol(.80f,.90f,100));
+		listPatrol.add(new ETPatrol(.50f,.40f,100));
 
 		for (ETPatrol patrol : listPatrol) {
 			initEntity(patrol, patrol.getStartX() * width, patrol.getStartY() * height);
