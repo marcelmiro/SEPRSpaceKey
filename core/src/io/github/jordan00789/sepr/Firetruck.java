@@ -218,7 +218,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 *
 	 * @return Speed limit
 	 */
-	public float speedLimit() {
+	public  float speedLimit() {
 		int pixcolour;
 		// Checks either front or back of the truck sprite depending on whether the
 		// truck is moving forwards or backwards
@@ -264,6 +264,11 @@ public class Firetruck extends Entity implements Attack, Moveable {
 				return 100f;
 		}
 	}
+
+
+
+
+
 
 	/**
 	 * Creates a new water droplet and launches it from the truck's position

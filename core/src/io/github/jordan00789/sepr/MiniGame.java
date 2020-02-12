@@ -1,4 +1,4 @@
-/**package io.github.jordan00789.sepr;
+package io.github.jordan00789.sepr;
 
 
 import com.badlogic.gdx.Gdx;
@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
-public class MainWin implements Screen {
+public class MiniGame implements Screen {
     private final Kroy game;
     private OrthographicCamera camera;
     private Texture endImage = new Texture("winImage.png");
 
-    MainWin(final Kroy game) {
+    MiniGame(final Kroy game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -64,4 +64,4 @@ public class MainWin implements Screen {
     public void dispose() {
         // Auto-generated method stub
     }
-}**/
+}
