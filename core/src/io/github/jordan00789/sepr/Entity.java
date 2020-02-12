@@ -96,7 +96,7 @@ public class Entity extends Sprite{
 	 * @return The distance to the entity
 	 */
 	float distanceTo(Entity e) {
-	    return distanceTo(e.getX() + e.getWidth(), e.getY() + e.getHeight());
+	    return distanceTo(e.getX(), e.getY());
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class Entity extends Sprite{
 	 * @return The distance to the point
 	 */
 	private float distanceTo(float farx, float fary) {
-		Vector2 vector = new Vector2 (getX() + getWidth() - farx, getY() + getWidth() - fary);
+		Vector2 vector = new Vector2 (getX() + getWidth() / 2 - farx, getY() + getHeight() / 2 - fary);
 		return vector.len();
 	}
 
