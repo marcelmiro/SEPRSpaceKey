@@ -2,8 +2,9 @@ package io.github.jordan00789.sepr;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 
-public class Entity extends Sprite {
+public class Entity extends Sprite{
 
 	private int health;
 	private int maxHealth;
@@ -74,7 +75,7 @@ public class Entity extends Sprite {
 	 * @return The direction of the entity
 	 */
 	float directionTo(Entity e) {
-		return directionTo(e.getX() + (e.getOriginX() / 2), e.getY() + (e.getOriginY() / 2));
+		return directionTo(e.getX() + getWidth() / 2, e.getY() + getHeight() / 2);
 	}
 
 	/**
@@ -85,7 +86,7 @@ public class Entity extends Sprite {
 	 * @return The direction of the entity
 	 */
 	public float directionTo(float x, float y) {
-		return (float) ((180 / Math.PI) * Math.atan2(x - (this.getX() + this.getOriginX()), y - (this.getY() + this.getOriginY())));
+		return (float) ((180 / Math.PI) * Math.atan2(x - getX() - getWidth() / 2, y - getY() - getHeight() / 2));
 	}
 
 	/**
@@ -95,7 +96,7 @@ public class Entity extends Sprite {
 	 * @return The distance to the entity
 	 */
 	float distanceTo(Entity e) {
-		return distanceTo(e.getX() + (e.getOriginX()), e.getY() + (e.getOriginY()));
+	    return distanceTo(e.getX() + e.getWidth(), e.getY() + e.getHeight());
 	}
 
 	/**
@@ -106,6 +107,10 @@ public class Entity extends Sprite {
 	 * @return The distance to the point
 	 */
 	private float distanceTo(float farx, float fary) {
-		return (float) Math.sqrt(Math.pow((fary - (getY() + getOriginY())), 2) + Math.pow((farx - (getX() + getOriginX())), 2));
+		Vector2 vector = new Vector2 (getX() + getWidth() - farx, getY() + getWidth() - fary);
+		return vector.len();
 	}
+
+	@Override
+	public void setPosition(float x, float y){ super.setPosition(x - getWidth() / 2,y - getHeight()/2);}
 }

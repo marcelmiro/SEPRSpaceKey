@@ -3,15 +3,12 @@ package io.github.jordan00789.sepr;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
-import java.util.ArrayList;
 
 public class ETPatrol extends Fortress implements Attack{
     private float x, y, movex, movey, direction, velocity, movetimer;
 
     public ETPatrol (float x, float y, int health){
         super(x,y,health, new Texture("badlogic.jpg"), 10);
-
         this.movex = this.x;
         this.movey = this.y;
     }
@@ -19,8 +16,8 @@ public class ETPatrol extends Fortress implements Attack{
     public void update(float delta){
 
         this.movetimer += Gdx.graphics.getDeltaTime();
-        this.x = getX() + getOriginX();
-        this.y = getY() + getOriginY();
+        this.x = getX();
+        this.y = getY();
         //If in range of the truck the ETPatrol will stop moving
         if(distanceTo(MainGame.currentTruck) < 100f) {
             this.velocity = 0;

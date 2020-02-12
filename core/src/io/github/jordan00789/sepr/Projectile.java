@@ -1,5 +1,6 @@
 package io.github.jordan00789.sepr;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.time.Duration;
@@ -27,7 +28,7 @@ public class Projectile extends Entity implements Moveable {
      */
     public Projectile(float x, float y, float direction, float velocity, float lifeTime, Texture texture, String type, float damage) {
         super(1, texture);
-        this.setPosition(x, y);
+
         this.setScale(0.05f);
         this.type = type;
         this.direction = direction;
@@ -36,10 +37,16 @@ public class Projectile extends Entity implements Moveable {
         this.lifeTime = lifeTime;
         startTime = Instant.now();
         this.damage = damage;
+        if (this.type == "goo") {
+            this.setPosition(x + 256, y + 256);
 
+        } else {
+            this.setPosition(x + 256,y + 256);
+        }
+        Gdx.app.debug("Projectile", "Projectile successfully created at (" + getX() + "," + getY() + ")");
+    }
         // System.out.printf("Projectile: x=%f, y=%f, direction=%f, v=%f,
         // lifetime=%f%n", x,y,direction,velocity,lifeTime);
-    }
 
     @Override
     public void turnLeft() {
@@ -69,13 +76,14 @@ public class Projectile extends Entity implements Moveable {
     @Override
     public void update(float delta) {
 
-        setPosition((float) (getX() + (Math.sin(Math.toRadians(direction)) * delta * velocity)),
-                (float) (getY() + (Math.cos(Math.toRadians(direction)) * delta * velocity)));
-
-        String col = MainGame.getPixelColour(getX() + getOriginX(), getY() + getOriginY());
-        if (col.equals("#6040f0") || col.equals("#6050f0")) {
+        setOriginCenter();
+        setPosition((float) (getX() + (Math.sin(Math.toRadians(direction)) * delta * velocity + getWidth() / 2)),
+                (float) (getY() + (Math.cos(Math.toRadians(direction)) * delta * velocity + getHeight() / 2)));
+        String col = MainGame.getPixelColour(getX() + getWidth() / 2, getY() + getHeight() / 2);
+        if (col.equals("#6040f0") || col.equals("#6050f0") || col.equals("#e0f0f0")||col.equals("#c0f0f0")||col.equals("#0") ) {
             disposable = true;
         }
+
         Entity e;
         for (int i = 0; i < MainGame.entities.size(); i++) {
             e = MainGame.entities.get(i);
@@ -110,4 +118,6 @@ public class Projectile extends Entity implements Moveable {
     public float getVelocity() {
         return velocity;
     }
+
+
 }
