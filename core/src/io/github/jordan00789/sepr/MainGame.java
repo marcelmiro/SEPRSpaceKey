@@ -35,6 +35,7 @@ public class MainGame implements Screen {
 	private boolean changeTruck = false;
 	static boolean isFireStationDestroyed = false;
 	public static boolean cameraFlag = false;
+	private boolean checkinRed = false;
 
 	public MainGame(final Kroy game) {
 		this.game = game;
@@ -185,10 +186,8 @@ public class MainGame implements Screen {
 		} else if (checkLoose()) {
 			game.setScreen(new MainLose(game));
 			dispose();
-		}
-		else if (checkinred()){
+		} else if (checkinRed) {
 			game.setScreen(new MiniGame(game));
-
 		}
 
 		// Adds truck to listTruckDead if health = 0. Countdown timer of 1s to change to non-dead truck automatically.
@@ -220,15 +219,6 @@ public class MainGame implements Screen {
 		batch.end();
 	}
 
-
-
-	public boolean checkinred(){
-		if (currentTruck.speedLimit()==29f){
-			return true;
-		}
-		return false;
-
-	}
 	// Checks if all forts are destroyed and returns true if so.
 	private static boolean checkWin() {
 		for (Fortress fort : listFort) {
@@ -283,6 +273,11 @@ public class MainGame implements Screen {
 			Gdx.app.debug("Truck Position", "Truck is located at (" + currentTruck.getStartX() + "," + currentTruck.getStartY() + ")");
 		} if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			currentTruck.attack();
+		} if (Gdx.input.isKeyPressed(Keys.Q)) {
+			if (currentTruck.speedLimit() == 29f){
+				checkinRed = true;
+				cameraFlag = false;
+			}
 		}
 		switchTrucks();
 	}
