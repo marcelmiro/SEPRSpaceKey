@@ -12,7 +12,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 public class MiniGame implements Screen {
     private final Kroy game;
     private OrthographicCamera camera;
-    private Texture endImage = new Texture("winImage.png");
+
+    private Texture pink = new Texture("pink.jpg");
 
     MiniGame(final Kroy game) {
         this.game = game;
@@ -31,7 +32,7 @@ public class MiniGame implements Screen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         Batch batch = game.batch;
         batch.begin();
-        batch.draw(endImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(pink, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
