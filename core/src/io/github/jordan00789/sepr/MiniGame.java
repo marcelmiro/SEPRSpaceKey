@@ -14,7 +14,8 @@ public class MiniGame implements Screen {
     private OrthographicCamera camera;
 
     private Texture pink = new Texture("pink.jpg");
-
+    private Texture toppipe = new Texture("pipe_straight.png");
+    private Texture bottompipe = new Texture("pipe_straight.png");
     MiniGame(final Kroy game) {
         this.game = game;
         camera = new OrthographicCamera();
@@ -33,6 +34,8 @@ public class MiniGame implements Screen {
         Batch batch = game.batch;
         batch.begin();
         batch.draw(pink, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(toppipe, 0, 0, Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/5);
+        batch.draw(bottompipe, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
