@@ -93,7 +93,7 @@ public class MainGame implements Screen {
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
 
-		listFort.add(new ETPatrol(.80f,.90f,100));
+		listPatrol.add(new ETPatrol(.80f,.90f,100));
 
 		for (ETPatrol patrol : listPatrol) {
 			initEntity(patrol, patrol.getStartX() * width, patrol.getStartY() * height);
@@ -279,7 +279,6 @@ public class MainGame implements Screen {
 			changeToTruck(listTruck.get(2));
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_4) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(3)) )) {
-			System.out.println(currentTruck.getX());
 			changeToTruck(listTruck.get(3));
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {

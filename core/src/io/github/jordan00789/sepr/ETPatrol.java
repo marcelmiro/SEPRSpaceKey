@@ -9,7 +9,6 @@ public class ETPatrol extends Fortress implements Attack{
 
     public ETPatrol (float x, float y, int health){
         super(x,y,health, new Texture("badlogic.jpg"), 10);
-
         this.movex = this.x;
         this.movey = this.y;
     }
