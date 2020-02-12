@@ -71,7 +71,7 @@ public class MainGame implements Screen {
 	private void loadTrucks() {
 	    listTruck.add(new Firetruck(317, 295, 100, 400, new Texture("firetruck_red.png"), 3, 10, "default")); //Default truck
 	    listTruck.add(new Firetruck(300, 275, 50, 800, new Texture("firetruck_purple.png"), 5, 10,"default")); //Low health high water truck
-		listTruck.add(new Firetruck(283, 255, 200, 1000, new Texture("firetruck_blue.png"), 4, 3, "default")); //high health, high water, high damage, low speed
+		listTruck.add(new Firetruck(283, 255, 175, 900, new Texture("firetruck_blue.png"), 4, 4, "default")); //high health, high water, high damage, low speed
 		listTruck.add(new Firetruck(265, 235, 60, 400, new Texture("firetruck_yellow.png"), 3, 12, "default")); //Rapid truck
 
 	    for (Firetruck truck : listTruck) {
@@ -106,11 +106,11 @@ public class MainGame implements Screen {
 			Gdx.app.debug("Patrol Creation", "Patrol successfully created at (" + patrol.getStartX() * width + "," + patrol.getStartY() * height + ")");
 		}
 
-		listFort.add(new Fortress(.53f, .26f,150, new Texture("clifford.png"), 20));
-		listFort.add(new Fortress(.22f, .54f,200, new Texture("station.png"), 20));
-		listFort.add(new Fortress(.47f, .82f,300, new Texture("minster.png"), 20));
+		listFort.add(new Fortress(.53f, .26f,150, new Texture("clifford.png"), 30));
+		listFort.add(new Fortress(.22f, .54f,200, new Texture("station.png"), 30));
+		listFort.add(new Fortress(.47f, .82f,300, new Texture("minster.png"), 30));
 		listFort.add(new Fortress(.93f, .07f,250, new Texture("university.png"), 20));
-		listFort.add(new Fortress(.25f, .86f,200, new Texture("museum.png"), 20));
+		listFort.add(new Fortress(.25f, .86f,200, new Texture("museum.png"), 30));
 		listFort.add(new Fortress(.25f, .05f,200, new Texture("tower.png"), 20));
 
 		for (Fortress fort : listFort) {

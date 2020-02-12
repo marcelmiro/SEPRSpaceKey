@@ -58,22 +58,16 @@ public class Fortress extends Entity implements Attack {
      */
     public void attack(Entity e, int n) {
         if (e != null) {
-            float piConstant = (float) Math.PI / 180;
+            this.timer += Gdx.graphics.getDeltaTime();
             if (ableToAttack) { //Will create new goo at the fortress targeting the Trucks
-                Projectile goo = new Projectile(getX() + (float) Math.sin(directionTo(e) * piConstant) * 10,
-                        getY() + (float) Math.cos(directionTo(e) * piConstant) * 10, directionTo(e) + n, MainGame.getFortProjectileSpeed(),
-                        1f, new Texture("goo.png"),"goo", damage);
-                goos.add(goo);
-            } else if (this.textureDirectory.equals("tower.png")) {
-                this.timer += Gdx.graphics.getDeltaTime();
-                if (this.timer >= .15) {
-                    Projectile goo = new Projectile((getX()) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
-                            ((getY()) + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
-                            1f, new Texture("goo.png"),"goo", damage);
-                    goos.add(goo);
-                    this.timer = 0;
+                if (this.timer >= .05) {
+                    addGoo(e, n);
                 }
-            }else if (this instanceof ETPatrol) {
+            } else if (this.textureDirectory.equals("tower.png")) {
+                if (this.timer >= .15) {
+                    addGoo(e, n);
+                }
+            } else if (this instanceof ETPatrol) {
                 this.timer += Gdx.graphics.getDeltaTime();
                 if (this.timer >= .15) {
                     Projectile goo = new Projectile(getX(),
@@ -139,7 +133,7 @@ public class Fortress extends Entity implements Attack {
         goos.removeIf(Projectile::isDisposable);
         goos.forEach(goo -> goo.update(delta));
 
-        if (goos.size() < 1) {
+        if (goos.size() < 5) {
             ableToAttack = true;
         }
     }
@@ -163,7 +157,7 @@ public class Fortress extends Entity implements Attack {
     }
 
     private void attackRandom() {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 12; i++) {
             double degree = Math.random() * 361;
             attack((float) degree);
         }
@@ -196,5 +190,14 @@ public class Fortress extends Entity implements Attack {
             super.directionTo(e);
         }
         return directionTo(e.getX(), e.getY());
+    }
+
+    private void addGoo(Entity e, float n){
+        float piConstant = (float) Math.PI / 180;
+        Projectile goo = new Projectile((getX()) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
+                ((getY()) + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
+                1f, new Texture("goo.png"),"goo", damage);
+        goos.add(goo);
+        this.timer = 0;
     }
 }
