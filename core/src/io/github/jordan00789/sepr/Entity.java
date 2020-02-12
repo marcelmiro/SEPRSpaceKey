@@ -75,7 +75,7 @@ public class Entity extends Sprite{
 	 * @return The direction of the entity
 	 */
 	float directionTo(Entity e) {
-		return directionTo(e.getX(), e.getY());
+		return directionTo(e.getX() + getWidth() / 2, e.getY() + getHeight() / 2);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class Entity extends Sprite{
 	 * @return The direction of the entity
 	 */
 	public float directionTo(float x, float y) {
-		return (float) ((180 / Math.PI) * Math.atan2(x - (getX()), y - (getY())));
+		return (float) ((180 / Math.PI) * Math.atan2(x - getX() - getWidth() / 2, y - getY() - getHeight() / 2));
 	}
 
 	/**
