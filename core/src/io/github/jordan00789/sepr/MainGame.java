@@ -180,10 +180,10 @@ public class MainGame implements Screen {
 			game.setScreen(new MainLose(game));
 			dispose();
 		}
-		else if (checkinred()){
+		/**else if (checkinred()){
 			game.setScreen(new MiniGame(game));
 
-		}
+		}**/
 
 		// Adds truck to listTruckDead if health = 0. Countdown timer of 1s to change to non-dead truck automatically.
 		for (Firetruck truck : listTruck) {
