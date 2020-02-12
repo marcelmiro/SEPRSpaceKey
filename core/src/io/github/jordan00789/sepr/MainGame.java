@@ -69,10 +69,10 @@ public class MainGame implements Screen {
 
 	// Create all trucks
 	private void loadTrucks() {
-	    listTruck.add(new Firetruck(317, 295, 100, 400, new Texture("firetruck_red.png"), 2, 10, "default")); //Default truck
-	    listTruck.add(new Firetruck(300, 275, 50, 800, new Texture("firetruck_purple.png"), 2, 10,"default")); //Low health high water truck
-		listTruck.add(new Firetruck(283, 255, 200, 1000, new Texture("firetruck_blue.png"), 5, 4, "bigBoi")); //Rian's stupid truck
-		listTruck.add(new Firetruck(265, 235, 60, 400, new Texture("firetruck_yellow.png"), 3, 16, "default")); //Rapid truck
+	    listTruck.add(new Firetruck(317, 295, 100, 400, new Texture("firetruck_red.png"), 3, 10, "default")); //Default truck
+	    listTruck.add(new Firetruck(300, 275, 50, 800, new Texture("firetruck_purple.png"), 5, 10,"default")); //Low health high water truck
+		listTruck.add(new Firetruck(283, 255, 200, 1000, new Texture("firetruck_blue.png"), 4, 3, "default")); //high health, high water, high damage, low speed
+		listTruck.add(new Firetruck(265, 235, 60, 400, new Texture("firetruck_yellow.png"), 3, 12, "default")); //Rapid truck
 
 	    for (Firetruck truck : listTruck) {
 	        initEntity(truck, truck.getStartX(), truck.getStartY());
@@ -93,8 +93,14 @@ public class MainGame implements Screen {
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
 
-		listPatrol.add(new ETPatrol(.50f,.40f,100));
-
+		listPatrol.add(new ETPatrol(.53f,.26f,75));
+		listPatrol.add(new ETPatrol(.47f,.82f,75));
+		listPatrol.add(new ETPatrol(.22f,.54f,75));
+		listPatrol.add(new ETPatrol(.93f,.07f,75));
+		listPatrol.add(new ETPatrol(.25f,.86f,75));
+		listPatrol.add(new ETPatrol(.25f,.05f,75));
+		listPatrol.add(new ETPatrol(.60f,.60f,75));
+		listPatrol.add(new ETPatrol(.80f,.80f,75));
 		for (ETPatrol patrol : listPatrol) {
 			initEntity(patrol, patrol.getStartX() * width, patrol.getStartY() * height);
 			Gdx.app.debug("Patrol Creation", "Patrol successfully created at (" + patrol.getStartX() * width + "," + patrol.getStartY() * height + ")");

@@ -7,7 +7,7 @@ public class ETPatrol extends Fortress implements Attack{
     private float x, y, movex, movey, direction, velocity, movetimer;
 
     public ETPatrol (float x, float y, int health){
-        super(x,y,health, new Texture("badlogic.jpg"), 10);
+        super(x,y,health, new Texture("ufo.png"), 10);
         this.movex = this.x;
         this.movey = this.y;
     }

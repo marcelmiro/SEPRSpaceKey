@@ -114,7 +114,7 @@ public class Fortress extends Entity implements Attack {
             switch (this.textureDirectory) {
                 case "clifford.png":
                 case "tower.png":
-                case "badlogic.jpg":
+                case "ufo.png":
                     attack(MainGame.currentTruck, 0);
                     break;
                 case "minster.png":
