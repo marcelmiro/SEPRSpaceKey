@@ -303,5 +303,9 @@ public class Firetruck extends Entity implements Attack, Moveable {
 
 	public float getStartX() { return this.STARTX; }
 	public float getStartY() { return this.STARTY; }
+	@Override
+	public float getX() {return super.getX() + getWidth() / 2;}
+	@Override
+	public float getY() {return super.getY() + getHeight() / 2;}
 	public int getMaxWater() { return this.maxWater; }
 }

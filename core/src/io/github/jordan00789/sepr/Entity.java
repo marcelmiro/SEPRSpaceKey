@@ -110,5 +110,6 @@ public class Entity extends Sprite{
 	}
 
 	@Override
-	public void setPosition(float x, float y){ super.setPosition(x - getWidth() / 2,y - getHeight()/2); }
+	public void setPosition(float x, float y){ super.setPosition(x - getWidth() / 2,y - getHeight()/2);
+	}
 }

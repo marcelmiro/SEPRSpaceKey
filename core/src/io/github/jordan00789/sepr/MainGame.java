@@ -1,5 +1,6 @@
 package io.github.jordan00789.sepr;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -37,6 +38,9 @@ public class MainGame implements Screen {
 	public MainGame(final Kroy game) {
 		this.game = game;
 
+		//Initialise debugging log
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+
 		// This is a pixmap used to get the pixel RGBA values at specified coordinates.
 		speedMap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), pMap.getFormat());
 		speedMap.drawPixmap(pMap, 0, 0, pMap.getWidth(), pMap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
@@ -65,18 +69,19 @@ public class MainGame implements Screen {
 	// Create all trucks
 	private void loadTrucks() {
 		int height = Gdx.graphics.getHeight();
-	    listTruck.add(new Firetruck(318, 295, 100, 400, new Texture("firetruck_red.png"), 2, 10, "default")); //Default truck
+	    listTruck.add(new Firetruck(317, 295, 100, 400, new Texture("firetruck_red.png"), 2, 10, "default")); //Default truck
 	    listTruck.add(new Firetruck(300, 275, 50, 800, new Texture("firetruck_purple.png"), 2, 10,"default")); //Low health high water truck
 		listTruck.add(new Firetruck(283, 255, 200, 1000, new Texture("firetruck_blue.png"), 5, 4, "bigBoi")); //Rian's stupid truck
 		listTruck.add(new Firetruck(265, 235, 60, 400, new Texture("firetruck_yellow.png"), 3, 16, "default")); //Rapid truck
 
 	    for (Firetruck truck : listTruck) {
-	        initEntity(truck, truck.getStartX(), -height+truck.getStartY());
+	        initEntity(truck, truck.getStartX(), truck.getStartY());
+			Gdx.app.debug("Truck Creation", "Truck successfully created at (" + truck.getStartX() + "," + truck.getStartY() + ")");
         }
 
 		// camTruck is located at the centre of the screen. It is not rendered, but used
 		// to switch to the full map view.
-		camTruck = new Firetruck((Gdx.graphics.getWidth() / 2f), (Gdx.graphics.getHeight() / 2f), -10, 1, new Texture("badlogic.jpg"), 0, 0,"none");
+		camTruck = new Firetruck((Gdx.graphics.getWidth() / 2f), (Gdx.graphics.getHeight() / 2f), -10, 1, new Texture("blank.png"), 0, 0,"none");
 		camTruck.setX(camTruck.getStartX());
 		camTruck.setY(camTruck.getStartY());
 
@@ -92,6 +97,7 @@ public class MainGame implements Screen {
 
 		for (ETPatrol patrol : listPatrol) {
 			initEntity(patrol, patrol.getStartX() * width, patrol.getStartY() * height);
+			Gdx.app.debug("Patrol Creation", "Patrol successfully created at (" + patrol.getStartX() * width + "," + patrol.getStartY() * height + ")");
 		}
 
 		listFort.add(new Fortress(.53f, .26f,150, new Texture("clifford.png"), 20));
@@ -103,6 +109,7 @@ public class MainGame implements Screen {
 
 		for (Fortress fort : listFort) {
 			initEntity(fort, fort.getStartX() * width, fort.getStartY() * height);
+			Gdx.app.debug("Fort Creation", "Fortress successfully created at (" + fort.getStartX() * width + "," + fort.getStartY() * height + ")");
 		}
 
 		// This entity is used to fill the end of the entity array.
@@ -146,8 +153,7 @@ public class MainGame implements Screen {
 				Math.min(currentTruck.getY(), 0.875f * Gdx.graphics.getHeight()));
 
 		SpriteBatch batch = game.batch;
-		//camera.position.set(cameraX, cameraY, 0);]
-		camera.position.set(currentTruck.getX(),currentTruck.getY(),0);
+		camera.position.set(cameraX, cameraY, 0);
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
@@ -254,6 +260,7 @@ public class MainGame implements Screen {
 			currentTruck.turnRight();
 		} if (Gdx.input.isKeyPressed(Keys.E)) {
 			currentTruck.brake();
+			Gdx.app.debug("Truck Position", "Truck is located at (" + currentTruck.getStartX() + "," + currentTruck.getStartY() + ")");
 		} if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			currentTruck.attack();
 		}
@@ -322,17 +329,10 @@ public class MainGame implements Screen {
 	static float getFortDamage() { return fortDamage; }
 	static float getFortProjectileSpeed() { return fortProjectileSpeed; }
 
+
+	//Resizing the screen is disable so this method should never run
 	@Override
-	public void resize(int width, int height) {
-		camera.setToOrtho(false, width, height);
-		speedMap.drawPixmap(pMap, 0, 0, pMap.getWidth(), pMap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight());
-		
-		// getOriginX() and getOriginY() is 512 for all fortresses
-		for (Fortress fort : listFort) {
-			fort.setPosition((fort.getStartX() * width), (fort.getStartY() * height));
-		}
-	}
+	public void resize(int width, int height) {	}
 
 	@Override
 	public void show() {}
