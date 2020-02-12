@@ -180,6 +180,10 @@ public class MainGame implements Screen {
 			game.setScreen(new MainLose(game));
 			dispose();
 		}
+		/**else if (checkinred()){
+			game.setScreen(new MainWin(game));
+
+		}**/
 
 		// Adds truck to listTruckDead if health = 0. Countdown timer of 1s to change to non-dead truck automatically.
 		for (Firetruck truck : listTruck) {
@@ -210,6 +214,15 @@ public class MainGame implements Screen {
 		batch.end();
 	}
 
+
+
+	/**public boolean checkinred(){
+		if (currentTruck.speedLimit()==29f){
+			return true;
+		}
+		return false;
+
+	}**/
 	// Checks if all forts are destroyed and returns true if so.
 	private static boolean checkWin() {
 		for (Fortress fort : listFort) {
@@ -237,6 +250,7 @@ public class MainGame implements Screen {
 			return false;
 		}
 	}
+
 
 	// Changes automatically to first non-dead truck in listTruck.
 	private static void changeTruckAuto() {
