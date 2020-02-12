@@ -37,12 +37,7 @@ public class Projectile extends Entity implements Moveable {
         this.lifeTime = lifeTime;
         startTime = Instant.now();
         this.damage = damage;
-        if (this.type == "goo") {
-            this.setPosition(x + 256, y + 256);
-
-        } else {
-            this.setPosition(x + 256,y + 256);
-        }
+        this.setPosition(x, y);
         Gdx.app.debug("Projectile", "Projectile successfully created at (" + getX() + "," + getY() + ")");
     }
         // System.out.printf("Projectile: x=%f, y=%f, direction=%f, v=%f,
@@ -59,9 +54,7 @@ public class Projectile extends Entity implements Moveable {
     }
 
     @Override
-    public void goForward() {
-        velocity++;
-    }
+    public void goForward() { velocity++; }
 
     @Override
     public void goBackward() {
@@ -77,9 +70,9 @@ public class Projectile extends Entity implements Moveable {
     public void update(float delta) {
 
         setOriginCenter();
-        setPosition((float) (getX() + (Math.sin(Math.toRadians(direction)) * delta * velocity + getWidth() / 2)),
-                (float) (getY() + (Math.cos(Math.toRadians(direction)) * delta * velocity + getHeight() / 2)));
-        String col = MainGame.getPixelColour(getX() + getWidth() / 2, getY() + getHeight() / 2);
+        setPosition((float) (getX() + (Math.sin(Math.toRadians(direction)) * delta * velocity)),
+                (float) (getY() + (Math.cos(Math.toRadians(direction)) * delta * velocity)));
+        String col = MainGame.getPixelColour(getX(), getY());
         if (col.equals("#6040f0") || col.equals("#6050f0") || col.equals("#e0f0f0")||col.equals("#c0f0f0")||col.equals("#0") ) {
             disposable = true;
         }
@@ -88,7 +81,7 @@ public class Projectile extends Entity implements Moveable {
         for (int i = 0; i < MainGame.entities.size(); i++) {
             e = MainGame.entities.get(i);
             if (!disposable) {
-                if (distanceTo(e) < 10f && ((e instanceof Firetruck && this.type.equals("goo")) || (e instanceof Fortress && this.type.equals("water")))) {
+                if (((distanceTo(e) < 10f && (e instanceof Firetruck || e instanceof ETPatrol)) || (distanceTo(e) < 25f && (e instanceof Fortress && !(e instanceof ETPatrol)))) && ((e instanceof Firetruck && this.type.equals("goo")) || (e instanceof Fortress && this.type.equals("water")))) {
                     if (type.equals("goo")) {
                         e.takeDamage(MainGame.getFortDamage() + this.damage);
                     } else {
@@ -105,7 +98,7 @@ public class Projectile extends Entity implements Moveable {
 	/**
 	 * Returns whether the projectile is disposable or not.
 
-	 * @return True if the projectile is disposable
+	 * @return True if the projectile is disposable)
 	 */
     boolean isDisposable() {
 		return ((Duration.between(startTime, Instant.now()).getSeconds()) > lifeTime || disposable);

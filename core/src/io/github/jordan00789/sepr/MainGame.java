@@ -34,6 +34,7 @@ public class MainGame implements Screen {
 	private static final double damageIncrease = 0.05, speedIncrease = 0.2;
 	private boolean changeTruck = false;
 	static boolean isFireStationDestroyed = false;
+	public static boolean cameraFlag = false;
 
 	public MainGame(final Kroy game) {
 		this.game = game;
@@ -68,7 +69,6 @@ public class MainGame implements Screen {
 
 	// Create all trucks
 	private void loadTrucks() {
-		int height = Gdx.graphics.getHeight();
 	    listTruck.add(new Firetruck(317, 295, 100, 400, new Texture("firetruck_red.png"), 2, 10, "default")); //Default truck
 	    listTruck.add(new Firetruck(300, 275, 50, 800, new Texture("firetruck_purple.png"), 2, 10,"default")); //Low health high water truck
 		listTruck.add(new Firetruck(283, 255, 200, 1000, new Texture("firetruck_blue.png"), 5, 4, "bigBoi")); //Rian's stupid truck
@@ -93,7 +93,7 @@ public class MainGame implements Screen {
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
 
-		listPatrol.add(new ETPatrol(.80f,.90f,100));
+		listPatrol.add(new ETPatrol(.50f,.40f,100));
 
 		for (ETPatrol patrol : listPatrol) {
 			initEntity(patrol, patrol.getStartX() * width, patrol.getStartY() * height);
@@ -285,15 +285,19 @@ public class MainGame implements Screen {
 	private void switchTrucks() {
 		if (Gdx.input.isKeyPressed(Keys.NUM_1) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(0)) )) {
 			changeToTruck(listTruck.get(0));
+			cameraFlag = false;
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_2) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(1)) )) {
 			changeToTruck(listTruck.get(1));
+			cameraFlag = false;
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_3) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(2)) )) {
 			changeToTruck(listTruck.get(2));
+			cameraFlag = false;
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_4) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(3)) )) {
 			changeToTruck(listTruck.get(3));
+			cameraFlag = false;
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {
 			// currentTruck.setColor(Color.WHITE);
@@ -303,6 +307,8 @@ public class MainGame implements Screen {
 			currentTruck.setVelocity(0);
 			currentTruck = camTruck;
 			camera.zoom = 1f;
+			//Set the flag to stop physics
+			cameraFlag = true;
 		}
 	}
 

@@ -278,7 +278,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 		if (this.checkAttack()) {
 			if (drops.size() < 200 && water > 0) {
 				takeWater(1);
-				float flowRate = 40f;
+				float flowRate = 100f;
 				float range = 1f;
 
 				Vector3 mousePosInWorld = MainGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
@@ -287,9 +287,9 @@ public class Firetruck extends Entity implements Attack, Moveable {
 				Vector2 directionVector = new Vector2(xDirection, -yDirection);
 				float shootDirection = directionVector.angle() + 90;
 				Projectile drop = new Projectile(
-						(getX()) + ((float) Math.sin(shootDirection * piConstant) * 10 - getWidth() / 2),
-						(getY()) + ((float) Math.cos(shootDirection * piConstant) * 10 - getHeight() / 2), shootDirection,
-						flowRate + velocity, range, new Texture("drop.png"), "water", this.damage);
+						(getX()) + ((float) Math.sin(shootDirection * piConstant) * 10),
+						(getY()) + ((float) Math.cos(shootDirection * piConstant) * 10), shootDirection,
+						flowRate, range, new Texture("drop.png"), "water", this.damage);
 				drops.add(drop);
 			}
 			if (water == 0) {
@@ -308,9 +308,5 @@ public class Firetruck extends Entity implements Attack, Moveable {
 
 	public float getStartX() { return this.STARTX; }
 	public float getStartY() { return this.STARTY; }
-	@Override
-	public float getX() {return super.getX() + getWidth() / 2;}
-	@Override
-	public float getY() {return super.getY() + getHeight() / 2;}
 	public int getMaxWater() { return this.maxWater; }
 }

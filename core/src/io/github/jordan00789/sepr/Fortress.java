@@ -60,15 +60,15 @@ public class Fortress extends Entity implements Attack {
         if (e != null) {
             float piConstant = (float) Math.PI / 180;
             if (ableToAttack) { //Will create new goo at the fortress targeting the Trucks
-                Projectile goo = new Projectile(getX() + (float) Math.sin(directionTo(e) * piConstant) * 10 + getWidth() / 4,
-                        getY() + (float) Math.cos(directionTo(e) * piConstant) * 10 + getHeight() / 4, directionTo(e) + n, MainGame.getFortProjectileSpeed(),
+                Projectile goo = new Projectile(getX() + (float) Math.sin(directionTo(e) * piConstant) * 10,
+                        getY() + (float) Math.cos(directionTo(e) * piConstant) * 10, directionTo(e) + n, MainGame.getFortProjectileSpeed(),
                         1f, new Texture("goo.png"),"goo", damage);
                 goos.add(goo);
             } else if (this.textureDirectory.equals("tower.png")) {
                 this.timer += Gdx.graphics.getDeltaTime();
                 if (this.timer >= .15) {
-                    Projectile goo = new Projectile((getX()) + ((float) Math.sin(directionTo(e) * piConstant) * 10 + getWidth() / 4 ),
-                            ((getY()) + ((float) Math.cos(directionTo(e) * piConstant) * 10) + getHeight() / 4), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
+                    Projectile goo = new Projectile((getX()) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
+                            ((getY()) + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
                             1f, new Texture("goo.png"),"goo", damage);
                     goos.add(goo);
                     this.timer = 0;
@@ -76,8 +76,8 @@ public class Fortress extends Entity implements Attack {
             }else if (this instanceof ETPatrol) {
                 this.timer += Gdx.graphics.getDeltaTime();
                 if (this.timer >= .15) {
-                    Projectile goo = new Projectile(getX() + getWidth() / 2,
-                            getY() + getHeight() / 2, directionTo(e) + n, MainGame.getFortProjectileSpeed(),
+                    Projectile goo = new Projectile(getX(),
+                            getY(), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
                             1f, new Texture("goo.png"),"goo", damage);
                     goos.add(goo);
                     this.timer = 0;
@@ -89,7 +89,7 @@ public class Fortress extends Entity implements Attack {
     }
     private void attack(float n) {
         if (ableToAttack || this.textureDirectory.equals("university.png")) {
-            Projectile goo = new Projectile(getX() + getWidth() / 4, getY() + getHeight() / 4, n, MainGame.getFortProjectileSpeed(),1f, new Texture("goo.png"),"goo", damage);
+            Projectile goo = new Projectile(getX(), getY(), n, MainGame.getFortProjectileSpeed(),1f, new Texture("goo.png"),"goo", damage);
             goos.add(goo);
         }
     }
@@ -176,12 +176,9 @@ public class Fortress extends Entity implements Attack {
      */
     @Override
     public void draw(Batch batch) {
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
-
         goos.forEach(goo -> goo.draw(batch));
-        batch.draw(barBg, this.getX() * width - 20, this.getY() * height + 30, 40, 3);
-        batch.draw(barHealth, this.getX() * width - 20, this.getY() * height + 30, (getHealth() / this.maxHealth) * 40, 3);
+        batch.draw(barBg, this.getX() - 20, this.getY() + 30, 40, 3);
+        batch.draw(barHealth, this.getX() - 20, this.getY() + 30, (getHealth() / this.maxHealth) * 40, 3);
         super.draw(batch);
     }
 
