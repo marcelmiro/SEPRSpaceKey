@@ -270,7 +270,7 @@ public class MainGame implements Screen {
 		} if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			currentTruck.attack();
 		} if (Gdx.input.isKeyPressed(Keys.Q)) {
-			if (currentTruck.speedLimit() == 29f){
+			if (currentTruck.speedLimit() == 29f && !(isFireStationDestroyed)){
 				checkinRed = true;
 				cameraFlag = false;
 			}
