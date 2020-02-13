@@ -36,7 +36,7 @@ public class ETPatrol extends Fortress implements Attack{
         }
     }
 
-    public void chooseTarget(){
+    private void chooseTarget(){
 
         //Pick a random position
         this.movex = (float) (this.x + (Math.random() - 0.5) * 75);
