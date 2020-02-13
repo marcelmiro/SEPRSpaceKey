@@ -104,10 +104,10 @@ public class MiniGame implements Screen {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-            Gdx.app.exit();
+            dispose();
         }
         if(checkforWin()){
-            Gdx.app.exit();
+            dispose();
         }
     }
 
