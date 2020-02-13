@@ -63,7 +63,7 @@ public class Fortress extends Entity implements Attack {
                 if (this.timer >= .05) {
                     addGoo(e, n);
                 }
-            } else if (this.textureDirectory.equals("tower.png")) {
+            } else if (!(this instanceof ETPatrol)) {
                 if (this.timer >= .15) {
                     addGoo(e, n);
                 }
