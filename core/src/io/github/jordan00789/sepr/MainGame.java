@@ -186,9 +186,9 @@ public class MainGame implements Screen {
 		} else if (checkLoose()) {
 			game.setScreen(new MainLose(game));
 			dispose();
-		} //else if (checkinred()) {
-			//game.setScreen(new MiniGame(game));
-		//a}
+		}else if (checkinred() && Gdx.input.isKeyPressed(Keys.Q)) {
+			game.setScreen(new MiniGame(game));
+		}
 
 		// Adds truck to listTruckDead if health = 0. Countdown timer of 1s to change to non-dead truck automatically.
 		for (Firetruck truck : listTruck) {

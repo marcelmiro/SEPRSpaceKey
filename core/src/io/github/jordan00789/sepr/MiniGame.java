@@ -31,7 +31,7 @@ public class MiniGame implements Screen {
     private Texture waypipe4 = new Texture("pipe_4_way.png");
     static ArrayList<Texture> correct = new ArrayList<>();
 
-    private int level = 0;
+
 
     MiniGame(final Kroy game) {
         this.game = game;
@@ -52,8 +52,8 @@ public class MiniGame implements Screen {
         batch.begin();
 
         batch.draw(pink, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        correct.add(truck);
-        if (level==0){
+
+
         // draw pipes
         batch.draw(truck, ((Gdx.graphics.getWidth() / 2) - (pipe1.getWidth() / 2)), 0, Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 10);
         batch.draw(alien1, ((Gdx.graphics.getWidth() / 2) - (pipe1.getWidth() / 2)), ((Gdx.graphics.getHeight()) - (pipe1.getHeight() / 2)), Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 10);
@@ -89,11 +89,11 @@ public class MiniGame implements Screen {
             drawpipe4 = false;
             drawpipe5 = false;
             correct.remove(drawpipe1 && drawpipe2 && drawpipe3 && drawpipe4 && drawpipe5);
-            level+=1;
 
-        }}
 
-    if(level==1){
+        }
+
+
         // draw pipes
         batch.draw(truck, ((Gdx.graphics.getWidth() / 2) - (pipe1.getWidth() / 2)), 0, Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 10);
         batch.draw(alien1, ((Gdx.graphics.getWidth() / 2) - (pipe1.getWidth() / 2)), ((Gdx.graphics.getHeight()) - (pipe1.getHeight() / 2)), Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 10);
@@ -129,10 +129,7 @@ public class MiniGame implements Screen {
             drawpipe4 = false;
             drawpipe5 = false;
             correct.remove(drawpipe1 && drawpipe2 && drawpipe3 && drawpipe4 && drawpipe5);
-
-
-
-        }}
+        }
 
 
 
@@ -147,7 +144,7 @@ public class MiniGame implements Screen {
         if(Gdx.input.isKeyPressed(Keys.ESCAPE))
 
     {
-        Gdx.app.exit();
+        game.setScreen(new MainGame(game));
 
     }
 
