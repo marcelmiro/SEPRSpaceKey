@@ -33,8 +33,8 @@ public class MainGame implements Screen {
 	private static final double damageIncrease = 0.1;
 	private boolean changeTruck = false;
 	static boolean isFireStationDestroyed = false;
+	public static boolean cameraFlag = false;
 	private boolean checkinRed = false;
-	public static boolean pause = false;
 
 	public MainGame(final Kroy game) {
 		this.game = game;
@@ -145,40 +145,41 @@ public class MainGame implements Screen {
 	 * @param delta The current delta time
 	 */
 	public void render(float delta) {
-		if (!pause) {
-			takeInputs();
-			Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-			Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+		takeInputs();
 
-			// Ensures viewport edges stay within the bounds of the map.
 
-			float cameraX = Math.max(0.125f * Gdx.graphics.getWidth(),
-					Math.min(currentTruck.getX(), 0.875f * Gdx.graphics.getWidth()));
-			float cameraY = Math.max(0.125f * Gdx.graphics.getHeight(),
-					Math.min(currentTruck.getY(), 0.875f * Gdx.graphics.getHeight()));
+		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-			SpriteBatch batch = game.batch;
-			camera.position.set(cameraX, cameraY, 0);
-			camera.update();
-			batch.setProjectionMatrix(camera.combined);
-			batch.begin();
-			batch.draw(map, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			// Updates and draws each entity in the entities array.
-			entities.forEach(e -> {
-				e.update(delta);
-				e.draw(batch);
+		// Ensures viewport edges stay within the bounds of the map.
 
-				// Moves the entity to the screen centre when it is destroyed.
-				if (e.isDestroyed()) {
-					e.setPosition((Gdx.graphics.getWidth() / 2f),
-							(Gdx.graphics.getHeight() / 2f));
-				}
-			});
+		float cameraX = Math.max(0.125f * Gdx.graphics.getWidth(),
+				Math.min(currentTruck.getX(), 0.875f * Gdx.graphics.getWidth()));
+		float cameraY = Math.max(0.125f * Gdx.graphics.getHeight(),
+				Math.min(currentTruck.getY(), 0.875f * Gdx.graphics.getHeight()));
 
-			// Removes entity from list if dead. Checks if game is won or lost.
-			entities.removeIf(Entity::isDestroyed);
-			if (checkWin()) {
-				game.setScreen(new MainWin(game));
+		SpriteBatch batch = game.batch;
+		camera.position.set(cameraX, cameraY, 0);
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		batch.draw(map,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		// Updates and draws each entity in the entities array.
+		entities.forEach(e -> {
+			e.update(delta);
+			e.draw(batch);
+
+			// Moves the entity to the screen centre when it is destroyed.
+			if (e.isDestroyed()) {
+				e.setPosition((Gdx.graphics.getWidth() / 2f),
+						(Gdx.graphics.getHeight() / 2f));
+			}
+		});
+
+		// Removes entity from list if dead. Checks if game is won or lost.
+		entities.removeIf(Entity::isDestroyed);
+		if (checkWin()) {
+			game.setScreen(new MainWin(game));
 
 				dispose();
 			} else if (checkLoose()) {
@@ -188,35 +189,35 @@ public class MainGame implements Screen {
 				game.setScreen(new MiniGame(game));
 			}
 
-			// Adds truck to listTruckDead if health = 0. Countdown timer of 1s to change to non-dead truck automatically.
-			for (Firetruck truck : listTruck) {
-				if (truck.getHealth() <= 0 && !listTruckDead.contains(truck)) {
-					listTruckDead.add(truck);
-					changeTruck = true;
-				}
+		// Adds truck to listTruckDead if health = 0. Countdown timer of 1s to change to non-dead truck automatically.
+		for (Firetruck truck : listTruck) {
+			if (truck.getHealth() <= 0 && !listTruckDead.contains(truck)) {
+				listTruckDead.add(truck);
+				changeTruck = true;
 			}
-			if (changeTruck) {
-				timer1 += Gdx.graphics.getDeltaTime();
-
-				if (timer1 >= 1) {
-					changeTruck = false;
-					timer1 = 0;
-					changeTruckAuto();
-				}
-			}
-
-			// Update game timer
-			if (!isFireStationDestroyed) {
-				gameTimer(delta);
-			}
-
-			// Update fort stats and firetruck's menu
-			updateFortStats(delta);
-			FiretruckMenu.update(delta);
-
-			batch.end();
 		}
+		if (changeTruck) {
+			timer1 += Gdx.graphics.getDeltaTime();
+
+			if (timer1 >= 1) {
+				changeTruck = false;
+				timer1 = 0;
+				changeTruckAuto();
+			}
+		}
+
+		// Update game timer
+		if (!isFireStationDestroyed) {
+			gameTimer(delta);
+		}
+
+		// Update fort stats and firetruck's menu
+		updateFortStats(delta);
+		FiretruckMenu.update(delta);
+
+		batch.end();
 	}
+
 
 		// Checks if all forts are destroyed and returns true if so.
 		private static boolean checkWin() {
@@ -277,7 +278,7 @@ public class MainGame implements Screen {
 		} if (Gdx.input.isKeyPressed(Keys.Q)) {
 			if (currentTruck.speedLimit() == 29f){
 				checkinRed = true;
-				pause = true;
+				cameraFlag = false;
 			}
 		}
 		switchTrucks();
@@ -287,19 +288,19 @@ public class MainGame implements Screen {
 	private void switchTrucks() {
 		if (Gdx.input.isKeyPressed(Keys.NUM_1) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(0)) )) {
 			changeToTruck(listTruck.get(0));
-			pause = false;
+			cameraFlag = false;
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_2) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(1)) )) {
 			changeToTruck(listTruck.get(1));
-			pause = false;
+			cameraFlag = false;
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_3) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(2)) )) {
 			changeToTruck(listTruck.get(2));
-			pause = false;
+			cameraFlag = false;
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_4) && ((currentTruck.speedLimit() == 29f) || (currentTruck == camTruck && prevTruck == listTruck.get(3)) )) {
 			changeToTruck(listTruck.get(3));
-			pause = false;
+			cameraFlag = false;
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_0)) {
 			// currentTruck.setColor(Color.WHITE);
@@ -310,7 +311,7 @@ public class MainGame implements Screen {
 			currentTruck = camTruck;
 			camera.zoom = 1f;
 			//Set the flag to stop physics
-			pause = false;
+			cameraFlag = true;
 		}
 	}
 
