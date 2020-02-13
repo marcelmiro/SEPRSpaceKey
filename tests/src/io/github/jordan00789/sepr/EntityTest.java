@@ -1,7 +1,12 @@
 package io.github.jordan00789.sepr;
 
+import static org.junit.Assert.*;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import jdk.internal.jline.internal.TestAccessible;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
@@ -11,6 +16,7 @@ public class EntityTest {
 
     private Entity entity;
 
+    /*
     @Before
     public void init() {
         entity = new Entity(100, new Texture("../core/assets/truck1.png"));
@@ -44,4 +50,46 @@ public class EntityTest {
         entity.setHealth(100);
         assertTrue(!entity.isDestroyed());
     }
+
+     */
+
+    /**
+     * Initialise the entity
+     */
+    @Before
+    public void init() {
+        entity = new Entity(100, new Texture(Gdx.files.internal("../core/assets/blank.png")));
+    }
+
+    /**
+     * Test that we can chek the health of the entity
+     */
+    @Test
+    public void getHealth() {
+        assertTrue("The health should be 100", entity.getHealth() == 100);
+    }
+
+    /**
+     * Test that the entity can take damage
+     */
+    @Test
+    public void testTakeDamage() {
+        entity.takeDamage(50);
+        assertTrue("The health should now be 50", entity.getHealth() == 50);
+    }
+
+    /**
+     * Test that we can correctly destroy the entity
+     */
+    @Test
+    public void testIsDestroyed() {
+        entity.setHealth(0);
+        assertTrue("The entity should be destroyed", entity.isDestroyed());
+        entity.takeDamage(10);
+        assertTrue("The entity should be destroyed", entity.isDestroyed());
+        entity.setHealth(100);
+        assertTrue("The entity should not be destroyed", !entity.isDestroyed());
+    }
+
+
 }
