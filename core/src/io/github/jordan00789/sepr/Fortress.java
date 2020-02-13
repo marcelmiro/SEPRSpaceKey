@@ -70,11 +70,7 @@ public class Fortress extends Entity implements Attack {
             } else if (this instanceof ETPatrol) {
                 this.timer += Gdx.graphics.getDeltaTime();
                 if (this.timer >= .15) {
-                    Projectile goo = new Projectile(getX(),
-                            getY(), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
-                            1f, new Texture("goo.png"),"goo", damage);
-                    goos.add(goo);
-                    this.timer = 0;
+                    addGoo(e, n);
                 }
             }
         } else {
@@ -133,7 +129,7 @@ public class Fortress extends Entity implements Attack {
         goos.removeIf(Projectile::isDisposable);
         goos.forEach(goo -> goo.update(delta));
 
-        if (goos.size() < 5) {
+        if (goos.size() < 3) {
             ableToAttack = true;
         }
     }

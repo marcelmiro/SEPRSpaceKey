@@ -15,7 +15,7 @@ public class MiniGame implements Screen {
     private final Kroy game;
     private OrthographicCamera camera;
 
-    private Texture pink = new Texture("pink.jpg");
+    //private Texture pink = new Texture("pink.jpg");
     private Texture alien1 = new Texture("badlogic.jpg");
     private Texture alien3 = new Texture("badlogic.jpg");
     private Texture alien2 = new Texture("badlogic.jpg");
@@ -51,7 +51,7 @@ public class MiniGame implements Screen {
         Batch batch = game.batch;
         batch.begin();
 
-        batch.draw(pink, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //batch.draw(pink, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         correct.add(truck);
         if (level==0){
         // draw pipes
