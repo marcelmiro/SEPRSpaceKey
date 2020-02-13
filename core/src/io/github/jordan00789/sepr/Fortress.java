@@ -105,11 +105,7 @@ public class Fortress extends Entity implements Attack {
                     if (ableToAttack) {
                     attack(MainGame.currentTruck, 0);
                     }
-                    if (goos.size() < 5) {
-                        ableToAttack = true;
-                    } else {
-                        ableToAttack = false;
-                    }
+                    ableToAttack = goos.size() < 5;
                     break;
                 case "tower.png":
                 case "ufo.png":
@@ -120,11 +116,8 @@ public class Fortress extends Entity implements Attack {
                         attack(MainGame.currentTruck, 0);
                         attack(MainGame.currentTruck, -20);
                         attack(MainGame.currentTruck, 20);
-                    } if (goos.size() < 3) {
-                        ableToAttack = true;
-                    } else {
-                        ableToAttack = false;
                     }
+                    ableToAttack = goos.size() < 3;
                     break;
                 case "museum.png":
                     for (int i = 0; i <= 360; i += 24) {
@@ -132,19 +125,11 @@ public class Fortress extends Entity implements Attack {
                             attack(i);
                         }
                     }
-                    if (goos.size() < 1) {
-                        ableToAttack = true;
-                    } else {
-                        ableToAttack = false;
-                    }
+                    ableToAttack = goos.size() < 1;
                     break;
                 case "station.png":
                     attackRandom();
-                    if (goos.size() < 1) {
-                        ableToAttack = true;
-                    } else {
-                        ableToAttack = false;
-                    }
+                    ableToAttack = goos.size() < 1;
                     break;
                 case "university.png":
                     attackSpiral();
