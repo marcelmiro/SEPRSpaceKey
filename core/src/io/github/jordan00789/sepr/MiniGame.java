@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MiniGame implements Screen {
-    private final Kroy game;
     private OrthographicCamera camera;
 
     //private Texture pink = new Texture("pink.jpg");
@@ -23,32 +22,38 @@ public class MiniGame implements Screen {
     private Sprite alien2 = new Sprite (new Texture("ufo.png"));
     private Sprite truck = new Sprite (new Texture("truck1.png"));
     private Sprite selector = new Sprite (new Texture("selector.png"));
-    private static ArrayList<Sprite> pipes = new ArrayList<>();
-    private static ArrayList<Sprite> correctpipes = new ArrayList<>();
+    private static ArrayList<Sprite> pipes;
+    private static ArrayList<Sprite> correctpipes;
     private int currentPipe = 0;
 
     private int level;
 
     MiniGame(final Kroy game) {
+    }
+
+    @Override
+    public void show() {
+        pipes = new ArrayList<>();
+        correctpipes  = new ArrayList<>();
+
         Random rand = new Random();
-        this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-         for (int i = 0; i < 9; i++){
+        for (int i = 0; i < 9; i++){
             pipes.add(new Sprite(new Texture("pipe_broken.png")));
         }
         truck.setScale((float)0.3);
-         alien1.setScale((float)0.2);
+        alien1.setScale((float)0.2);
 
-         level = rand.nextInt(2);
-         if (level==0){
-             truck.setPosition(Gdx.graphics.getWidth() / 2 - 408 - truck.getWidth() / 2,
-                     Gdx.graphics.getHeight() / 2 - truck.getHeight() / 2);
-             truck.rotate90(true);
-             alien1.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
-                     Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
-             getSolution(0);
-         }
+        level = rand.nextInt(2);
+        if (level==0){
+            truck.setPosition(Gdx.graphics.getWidth() / 2 - 408 - truck.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - truck.getHeight() / 2);
+            truck.rotate90(true);
+            alien1.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
+            getSolution(0);
+        }
 
         if(level==1){
             truck.setScale((float)0.3);
@@ -78,15 +83,10 @@ public class MiniGame implements Screen {
     }
 
     @Override
-    public void show() {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        Batch batch = game.batch;
+        Batch batch = MainGame.game.batch;
         batch.begin();
 
         //batch.draw(pink, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -104,9 +104,12 @@ public class MiniGame implements Screen {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+            MainGame.game.setScreen(new MainGame(MainGame.game));
             dispose();
         }
         if(checkforWin()){
+            MainGame.currentTruck.refill();
+            MainGame.game.setScreen(new MainGame(MainGame.game));
             dispose();
         }
     }

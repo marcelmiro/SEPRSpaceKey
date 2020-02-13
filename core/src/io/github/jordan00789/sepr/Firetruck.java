@@ -70,12 +70,11 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	}
 
 	/**
-	 * Refills the truck to the maximum amount of water.
+	 * Refills the truck to the maximum amount of water and health.
 	 */
 	public void refill() {
-		if (water < maxWater) {
-			setWater(water + 1);
-		}
+		this.water = maxWater;
+		this.setHealth(this.getMaxHealth());
 	}
 
 	/**
@@ -254,11 +253,6 @@ public class Firetruck extends Entity implements Attack, Moveable {
 				setVelocity(0);
 				return 0f;
 			case "#8070f0":
-				if (!MainGame.isFireStationDestroyed) {
-					if (water > 0) { setColor(Color.WHITE); }
-					refill();
-					setHealth((int) (getHealth() + 1));
-				}
 				return 29f;
 			default:
 				return 100f;

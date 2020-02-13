@@ -111,6 +111,8 @@ public class Entity extends Sprite{
 		return vector.len();
 	}
 
+	public int getMaxHealth(){return this.maxHealth;}
+
 	//Ensures all co-ordinates are relative to the centre of the entity rather than the corner of the unscaled sprite
 	@Override
 	public void setPosition(float x, float y){ super.setPosition(x - getWidth() / 2,y - getHeight() / 2);}

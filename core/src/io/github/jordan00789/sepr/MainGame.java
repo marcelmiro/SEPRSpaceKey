@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 
 public class MainGame implements Screen {
-	private final Kroy game;
+	public static Kroy game;
 	public static OrthographicCamera camera;
 
 	// Entities
@@ -38,22 +38,17 @@ public class MainGame implements Screen {
 
 	public MainGame(final Kroy game) {
 		this.game = game;
-
 		//Initialise debugging log
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-
 		// This is a pixmap used to get the pixel RGBA values at specified coordinates.
 		speedMap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), pMap.getFormat());
 		speedMap.drawPixmap(pMap, 0, 0, pMap.getWidth(), pMap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
-
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
 		loadTrucks();
 		loadForts();
 		FiretruckMenu.create();
-
 		map = new Texture("map_3.png");
 	}
 
@@ -180,14 +175,13 @@ public class MainGame implements Screen {
 		entities.removeIf(Entity::isDestroyed);
 		if (checkWin()) {
 			game.setScreen(new MainWin(game));
-
-				dispose();
-			} else if (checkLoose()) {
-				game.setScreen(new MainLose(game));
-				dispose();
-			} else if (checkinRed) {
-				game.setScreen(new MiniGame(game));
-			}
+			dispose();
+		} else if (checkLoose()) {
+		    game.setScreen(new MainLose(game));
+		    dispose();
+		} else if (checkinRed) {
+		    game.setScreen(new MiniGame(game));
+		}
 
 		// Adds truck to listTruckDead if health = 0. Countdown timer of 1s to change to non-dead truck automatically.
 		for (Firetruck truck : listTruck) {
