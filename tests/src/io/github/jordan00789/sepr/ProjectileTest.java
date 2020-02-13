@@ -13,7 +13,7 @@ public class ProjectileTest {
 
     @Before
     public void init() {
-        projectile = new Projectile(0, 0, 0, 0, 10, new Texture("../core/assets/badlogic.png"));
+        projectile = new Projectile(.0f, .0f, .0f, .1f, .10f, new Texture("../core/assets/badlogic.png"), "goo", 1);
     }
 
     @org.junit.Test
