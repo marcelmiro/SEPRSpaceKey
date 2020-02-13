@@ -65,9 +65,16 @@ public class EntityTest {
      * Test that we can chek the health of the entity
      */
     @Test
-    public void getHealth() {
+    public void testgetHealth() {
         assertTrue("The health should be 100", entity.getHealth() == 100);
     }
+
+    @Test
+    public void testsetHealth() {
+        entity.setHealth(50);
+        assertTrue(entity.getHealth() == 50);
+    }
+
 
     /**
      * Test that the entity can take damage
