@@ -56,7 +56,7 @@ public class Fortress extends Entity implements Attack {
      * @param e The entity to aim at.
      * @param n The offset of the projectile from the entity in degrees
      */
-    public void attack(Entity e, int n) {
+    private void attack(Entity e, int n) {
         if (e != null) {
             this.timer += Gdx.graphics.getDeltaTime();
             if (!this.textureDirectory.equals("tower.png")) { //Will create new goo at the fortress targeting the Trucks
@@ -67,7 +67,7 @@ public class Fortress extends Entity implements Attack {
                 if (this.timer >= .15) {
                     addGoo(e, n);
                 }
-            } else if (this instanceof ETPatrol) {
+            } else {
                 this.timer += Gdx.graphics.getDeltaTime();
                 if (this.timer >= .3) {
                     addGoo(e, n);
