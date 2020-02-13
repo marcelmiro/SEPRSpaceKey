@@ -13,27 +13,23 @@ public class ETPatrol extends Fortress implements Attack{
     }
 
     public void update(float delta){
-        if (!(MainGame.cameraFlag)) {
-            this.movetimer += Gdx.graphics.getDeltaTime();
-            this.x = getX();
-            this.y = getY();
-            //If in range of the truck the ETPatrol will stop moving
-            if (distanceTo(MainGame.currentTruck) < 100f) {
-                this.velocity = 0;
-            } else if ((java.lang.Math.abs(this.movex - this.x) <= 1) || (java.lang.Math.abs(this.movey - this.y) <= 1) || this.movetimer > 5) { //Patrol will select a new target
-                chooseTarget();
-                this.direction = directionTo(movex, movey);
-                this.movetimer = 0;
-                this.velocity = 0;
-            } else { //Patrol will move
-                this.velocity = 15;
-            }
-            super.update(delta);
-            setPosition((float) (getX() + (Math.sin(Math.toRadians(direction)) * delta * velocity)),
-                    (float) (getY() + (Math.cos(Math.toRadians(direction)) * delta * velocity)));
-        } else {
-            velocity = 0;
+        this.movetimer += Gdx.graphics.getDeltaTime();
+        this.x = getX();
+        this.y = getY();
+        //If in range of the truck the ETPatrol will stop moving
+        if (distanceTo(MainGame.currentTruck) < 100f) {
+            this.velocity = 0;
+        } else if ((java.lang.Math.abs(this.movex - this.x) <= 1) || (java.lang.Math.abs(this.movey - this.y) <= 1) || this.movetimer > 5) { //Patrol will select a new target
+            chooseTarget();
+            this.direction = directionTo(movex, movey);
+            this.movetimer = 0;
+            this.velocity = 0;
+        } else { //Patrol will move
+            this.velocity = 15;
         }
+        super.update(delta);
+        setPosition((float) (getX() + (Math.sin(Math.toRadians(direction)) * delta * velocity)),
+                    (float) (getY() + (Math.cos(Math.toRadians(direction)) * delta * velocity)));
     }
 
     private void chooseTarget(){
