@@ -36,7 +36,7 @@ public class Entity extends Sprite{
 	 * @param health The value to set health to
 	 */
 	protected void setHealth(int health) {
-		if (health < maxHealth) {
+		if (health <= maxHealth) {
 			this.health = health;
 		}
 	}

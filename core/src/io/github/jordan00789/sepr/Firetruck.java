@@ -52,7 +52,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 *
 	 * @param amount The amount that the water variable is set to
 	 */
-	private void setWater(int amount) {
+	public void setWater(int amount) {
 		if (amount <= maxWater && amount > 0) {
 			water = amount;
 		}

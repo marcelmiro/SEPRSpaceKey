@@ -112,5 +112,9 @@ public class Projectile extends Entity implements Moveable {
         return velocity;
     }
 
+    public void setVelocity(float vel) {
+        this.velocity = vel;
+    }
+
 
 }
