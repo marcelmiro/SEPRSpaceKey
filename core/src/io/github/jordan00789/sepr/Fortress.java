@@ -59,7 +59,7 @@ public class Fortress extends Entity implements Attack {
     public void attack(Entity e, int n) {
         if (e != null) {
             this.timer += Gdx.graphics.getDeltaTime();
-            if (ableToAttack) { //Will create new goo at the fortress targeting the Trucks
+            if (!this.textureDirectory.equals("tower.png")) { //Will create new goo at the fortress targeting the Trucks
                 if (this.timer >= .05) {
                     addGoo(e, n);
                 }
@@ -69,12 +69,10 @@ public class Fortress extends Entity implements Attack {
                 }
             } else if (this instanceof ETPatrol) {
                 this.timer += Gdx.graphics.getDeltaTime();
-                if (this.timer >= .15) {
+                if (this.timer >= .3) {
                     addGoo(e, n);
                 }
             }
-        } else {
-            System.err.println("Fortresses must target an entity");
         }
     }
     private void attack(float n) {
@@ -99,39 +97,64 @@ public class Fortress extends Entity implements Attack {
      */
     @Override
     public void update(float delta) {
+
         if (distanceTo(MainGame.currentTruck) < 100f) {
             // choose different attack method for each fortress
             switch (this.textureDirectory) {
                 case "clifford.png":
+                    if (ableToAttack) {
+                    attack(MainGame.currentTruck, 0);
+                    }
+                    if (goos.size() < 5) {
+                        ableToAttack = true;
+                    } else {
+                        ableToAttack = false;
+                    }
+                    break;
                 case "tower.png":
                 case "ufo.png":
                     attack(MainGame.currentTruck, 0);
                     break;
                 case "minster.png":
-                    attack(MainGame.currentTruck, 0);
-                    attack(MainGame.currentTruck, -20);
-                    attack(MainGame.currentTruck, 20);
+                    if (ableToAttack){
+                        attack(MainGame.currentTruck, 0);
+                        attack(MainGame.currentTruck, -20);
+                        attack(MainGame.currentTruck, 20);
+                    } if (goos.size() < 3) {
+                        ableToAttack = true;
+                    } else {
+                        ableToAttack = false;
+                    }
                     break;
                 case "museum.png":
                     for (int i = 0; i <= 360; i += 24) {
-                        attack(i);
+                        if(ableToAttack) {
+                            attack(i);
+                        }
+                    }
+                    if (goos.size() < 1) {
+                        ableToAttack = true;
+                    } else {
+                        ableToAttack = false;
                     }
                     break;
                 case "station.png":
                     attackRandom();
+                    if (goos.size() < 1) {
+                        ableToAttack = true;
+                    } else {
+                        ableToAttack = false;
+                    }
                     break;
                 case "university.png":
                     attackSpiral();
                     break;
             }
-            ableToAttack = false;
+
         }
         goos.removeIf(Projectile::isDisposable);
         goos.forEach(goo -> goo.update(delta));
 
-        if (goos.size() < 3) {
-            ableToAttack = true;
-        }
     }
 
     private float temp = 0;
