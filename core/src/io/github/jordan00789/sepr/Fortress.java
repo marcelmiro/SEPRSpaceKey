@@ -98,7 +98,7 @@ public class Fortress extends Entity implements Attack {
     @Override
     public void update(float delta) {
 
-        if (distanceTo(MainGame.currentTruck) < 100f) {
+        if (distanceTo(MainGame.currentTruck) < 120f) {
             // choose different attack method for each fortress
             switch (this.textureDirectory) {
                 case "clifford.png":

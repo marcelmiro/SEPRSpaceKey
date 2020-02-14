@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 public class ETPatrol extends Fortress implements Attack{
     private float x, y, movex, movey, direction, velocity, movetimer;
 
-    public ETPatrol (float x, float y, int health){
-        super(x,y,health, new Texture("ufo.png"), 1);
+    public ETPatrol (float x, float y){
+        super(x,y,150, new Texture("ufo.png"), 1);
         this.movex = this.x;
         this.movey = this.y;
     }

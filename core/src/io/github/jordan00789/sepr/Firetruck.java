@@ -274,7 +274,7 @@ public class Firetruck extends Entity implements Attack, Moveable {
 			if (drops.size() < 200 && water > 0) {
 				takeWater(1);
 				float flowRate = 100f;
-				float range = 1f;
+				float range = 0.7f;
 
 				Vector3 mousePosInWorld = MainGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 				float xDirection = mousePosInWorld.x - (getX());

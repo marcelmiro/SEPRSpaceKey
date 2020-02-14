@@ -40,8 +40,6 @@ public class Projectile extends Entity implements Moveable {
         this.setPosition(x, y);
         Gdx.app.debug("Projectile", "Projectile successfully created at (" + getX() + "," + getY() + ")");
     }
-        // System.out.printf("Projectile: x=%f, y=%f, direction=%f, v=%f,
-        // lifetime=%f%n", x,y,direction,velocity,lifeTime);
 
     @Override
     public void turnLeft() {

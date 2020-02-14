@@ -49,7 +49,7 @@ public class MiniGame implements Screen {
         alien3.setScale((float)0.2);
 
         //Select a random level
-        level = rand.nextInt(2);
+        level = rand.nextInt(3);
 
         getSolution(level);
 
@@ -85,6 +85,8 @@ public class MiniGame implements Screen {
         drawPipes(batch);
         truck.draw(batch);
         alien1.draw(batch);
+        alien2.draw(batch);
+        alien3.draw(batch);
         batch.end();
 
         camera.update();
@@ -170,6 +172,10 @@ public class MiniGame implements Screen {
 
             alien1.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
                     Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
+            alien2.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
+            alien3.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
 
             correctpipes.add(new Sprite(new Texture("blank.png")));
             correctpipes.add(new Sprite(new Texture("blank.png")));
@@ -187,6 +193,10 @@ public class MiniGame implements Screen {
                     Gdx.graphics.getHeight() / 2 - truck.getHeight() / 2);
             alien1.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
                     Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
+            alien2.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
+            alien3.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
 
             correctpipes.add(new Sprite(new Texture("pipe_curvert.png")));
             correctpipes.add(new Sprite(new Texture("pipe_straight.png")));
@@ -197,6 +207,27 @@ public class MiniGame implements Screen {
             correctpipes.add(new Sprite(new Texture("blank.png")));
             correctpipes.add(new Sprite(new Texture("blank.png")));
             correctpipes.add(new Sprite(new Texture("blank.png")));
+        }
+
+        if(level==2){
+            truck.setPosition(Gdx.graphics.getWidth() / 2 - 408 - truck.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - truck.getHeight() / 2 + 204);
+            alien1.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
+            alien2.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2 + 204);
+            alien3.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2 + 204);
+
+            correctpipes.add(new Sprite(new Texture("blank.png")));
+            correctpipes.add(new Sprite(new Texture("blank.png")));
+            correctpipes.add(new Sprite(new Texture("blank.png")));
+            correctpipes.add(new Sprite(new Texture("blank.png")));
+            correctpipes.add(new Sprite(new Texture("blank.png")));
+            correctpipes.add(new Sprite(new Texture("pipe_curvert.png")));
+            correctpipes.add(new Sprite(new Texture("pipe_straight.png")));
+            correctpipes.add(new Sprite(new Texture("pipe_straight.png")));
+            correctpipes.add(new Sprite(new Texture("pipe_lrb.png")));
         }
     }
 
