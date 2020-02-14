@@ -37,19 +37,29 @@ public class MainGame implements Screen {
 	private boolean checkinRed = false;
 
 	public MainGame(final Kroy game) {
+
+		cameraFlag = false;
 		this.game = game;
+		map = new Texture("map_3.png");
+		// camTruck is located at the centre of the screen. It is not rendered, but used
+		// to switch to the full map view.
+		camTruck = new Firetruck((Gdx.graphics.getWidth() / 2f), (Gdx.graphics.getHeight() / 2f), -10, 1, new Texture("blank.png"), 0, 0,"none");
+		camTruck.setX(camTruck.getStartX());
+		camTruck.setY(camTruck.getStartY());
+		if (listFort.isEmpty()) {
 		//Initialise debugging log
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		// This is a pixmap used to get the pixel RGBA values at specified coordinates.
-		speedMap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), pMap.getFormat());
-		speedMap.drawPixmap(pMap, 0, 0, pMap.getWidth(), pMap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
+			speedMap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), pMap.getFormat());
+			speedMap.drawPixmap(pMap, 0, 0, pMap.getWidth(), pMap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		loadTrucks();
-		loadForts();
-		FiretruckMenu.create();
-		map = new Texture("map_3.png");
+			camera = new OrthographicCamera();
+			camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			loadTrucks();
+			loadForts();
+			FiretruckMenu.create();
+		}
+
 	}
 
 	static String getPixelColour(float x, float y) {
@@ -73,12 +83,6 @@ public class MainGame implements Screen {
 	        initEntity(truck, truck.getStartX(), truck.getStartY());
 			Gdx.app.debug("Truck Creation", "Truck successfully created at (" + truck.getStartX() + "," + truck.getStartY() + ")");
         }
-
-		// camTruck is located at the centre of the screen. It is not rendered, but used
-		// to switch to the full map view.
-		camTruck = new Firetruck((Gdx.graphics.getWidth() / 2f), (Gdx.graphics.getHeight() / 2f), -10, 1, new Texture("blank.png"), 0, 0,"none");
-		camTruck.setX(camTruck.getStartX());
-		camTruck.setY(camTruck.getStartY());
 
 		changeToTruck(listTruck.get(0));
 	}
@@ -160,16 +164,18 @@ public class MainGame implements Screen {
 		batch.begin();
 		batch.draw(map,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		// Updates and draws each entity in the entities array.
-		entities.forEach(e -> {
-			e.update(delta);
-			e.draw(batch);
+			entities.forEach(e -> {
+				if (!(cameraFlag)) {
+					e.update(delta);
+				}
+				e.draw(batch);
 
-			// Moves the entity to the screen centre when it is destroyed.
-			if (e.isDestroyed()) {
-				e.setPosition((Gdx.graphics.getWidth() / 2f),
-						(Gdx.graphics.getHeight() / 2f));
-			}
-		});
+				// Moves the entity to the screen centre when it is destroyed.
+				if (e.isDestroyed()) {
+					e.setPosition((Gdx.graphics.getWidth() / 2f),
+							(Gdx.graphics.getHeight() / 2f));
+				}
+			});
 
 		// Removes entity from list if dead. Checks if game is won or lost.
 		entities.removeIf(Entity::isDestroyed);
