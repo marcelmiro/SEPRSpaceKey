@@ -43,29 +43,15 @@ public class MiniGame implements Screen {
             pipes.add(new Sprite(new Texture("pipe_broken.png")));
         }
         truck.setScale((float)0.3);
+        truck.rotate90(true);
         alien1.setScale((float)0.2);
+        alien2.setScale((float)0.2);
+        alien3.setScale((float)0.2);
 
+        //Select a random level
         level = rand.nextInt(2);
-        if (level==0){
-            truck.setPosition(Gdx.graphics.getWidth() / 2 - 408 - truck.getWidth() / 2,
-                    Gdx.graphics.getHeight() / 2 - truck.getHeight() / 2);
-            truck.rotate90(true);
-            alien1.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
-                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
-            getSolution(0);
-        }
 
-        if(level==1){
-            truck.setScale((float)0.3);
-            truck.setPosition(Gdx.graphics.getWidth() / 2 - 408 - truck.getWidth() / 2,
-                    Gdx.graphics.getHeight() / 2 - truck.getHeight() / 2);
-            truck.rotate90(true);
-            alien1.setScale((float)0.2);
-            alien1.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
-                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
-            getSolution(1);
-        }
-
+        getSolution(level);
 
         for (int i = 0; i < 9; i++){
             if (correctpipes.get(i).getTexture().toString() == ("blank.png")){
@@ -163,7 +149,7 @@ public class MiniGame implements Screen {
     private boolean checkforWin(){
         for (int i = 0; i < 9; i++){
             //If all non-blank pipes are the same as the one in the correct pipes
-            if (!(correctpipes.get(i).getTexture().toString().equals(pipes.get(i).getTexture().toString()) || correctpipes.get(i).getTexture().toString().equals("blank.png"))){
+            if (!(correctpipes.get(i).getTexture().toString().equals(pipes.get(i).getTexture().toString()) || correctpipes.get(i).getTexture().toString().equals("pipe_broken.png"))){
                 return false;
             }
         }
@@ -177,13 +163,37 @@ public class MiniGame implements Screen {
     }
 
     private void getSolution(int level){
-        if (level == 0 || level == 1){
+
+        if (level==0){
+            truck.setPosition(Gdx.graphics.getWidth() / 2 - 408 - truck.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - truck.getHeight() / 2);
+
+            alien1.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
+
             correctpipes.add(new Sprite(new Texture("blank.png")));
             correctpipes.add(new Sprite(new Texture("blank.png")));
-            correctpipes.add(new Sprite(new Texture("blank.png")));
+            correctpipes.add(new Sprite(new Texture("pipe_broken.png")));
             correctpipes.add(new Sprite(new Texture("pipe_straight.png")));
             correctpipes.add(new Sprite(new Texture("pipe_straight.png")));
             correctpipes.add(new Sprite(new Texture("pipe_straight.png")));
+            correctpipes.add(new Sprite(new Texture("blank.png")));
+            correctpipes.add(new Sprite(new Texture("blank.png")));
+            correctpipes.add(new Sprite(new Texture("blank.png")));
+        }
+
+        if(level==1){
+            truck.setPosition(Gdx.graphics.getWidth() / 2 - 408 - truck.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - truck.getHeight() / 2);
+            alien1.setPosition(Gdx.graphics.getWidth() / 2 + 408 - alien1.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - alien1.getHeight() / 2);
+
+            correctpipes.add(new Sprite(new Texture("pipe_curvert.png")));
+            correctpipes.add(new Sprite(new Texture("pipe_straight.png")));
+            correctpipes.add(new Sprite(new Texture("pipe_curvelt.png")));
+            correctpipes.add(new Sprite(new Texture("pipe_curvelb.png")));
+            correctpipes.add(new Sprite(new Texture("blank.png")));
+            correctpipes.add(new Sprite(new Texture("pipe_curverb.png")));
             correctpipes.add(new Sprite(new Texture("blank.png")));
             correctpipes.add(new Sprite(new Texture("blank.png")));
             correctpipes.add(new Sprite(new Texture("blank.png")));
