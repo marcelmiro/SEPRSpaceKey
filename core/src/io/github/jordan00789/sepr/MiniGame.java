@@ -124,25 +124,25 @@ public class MiniGame implements Screen {
     }
 
     private void handleInput(){
-        if (Gdx.input.isKeyJustPressed(Keys.Q)) {
+        if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
             pipes.set(currentPipe,new Sprite (new Texture ("pipe_straight.png")));
-        }else if (Gdx.input.isKeyJustPressed(Keys.W)) {
+        }else if (Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
             pipes.set(currentPipe,new Sprite (new Texture ("pipe_curvelb.png")));
-        }else if (Gdx.input.isKeyJustPressed(Keys.E)) {
+        }else if (Gdx.input.isKeyJustPressed(Keys.NUM_3)) {
             pipes.set(currentPipe,new Sprite (new Texture ("pipe_curvert.png")));
-        }else if (Gdx.input.isKeyJustPressed(Keys.R)) {
+        }else if (Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
             pipes.set(currentPipe,new Sprite (new Texture ("pipe_curvelt.png")));
-        }else if (Gdx.input.isKeyJustPressed(Keys.T)) {
+        }else if (Gdx.input.isKeyJustPressed(Keys.NUM_5)) {
             pipes.set(currentPipe,new Sprite (new Texture ("pipe_curverb.png")));
-        }else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
+        }else if (Gdx.input.isKeyJustPressed(Keys.NUM_6)) {
             pipes.set(currentPipe,new Sprite (new Texture ("pipe_4_way.png")));
-        }else if (Gdx.input.isKeyJustPressed(Keys.U)) {
+        }else if (Gdx.input.isKeyJustPressed(Keys.NUM_7)) {
             pipes.set(currentPipe,new Sprite (new Texture ("pipe_ltb.png")));
-        } else if (Gdx.input.isKeyJustPressed(Keys.I)) {
+        } else if (Gdx.input.isKeyJustPressed(Keys.NUM_8)) {
             pipes.set(currentPipe,new Sprite (new Texture ("pipe_rtb.png")));
-        }else if (Gdx.input.isKeyJustPressed(Keys.O)) {
+        }else if (Gdx.input.isKeyJustPressed(Keys.NUM_9)) {
             pipes.set(currentPipe,new Sprite (new Texture ("pipe_lrb.png")));
-        }else if (Gdx.input.isKeyJustPressed(Keys.P)) {
+        }else if (Gdx.input.isKeyJustPressed(Keys.NUM_0)) {
             pipes.set(currentPipe,new Sprite (new Texture ("pipe_lrt.png")));
         }
         if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {

@@ -180,6 +180,7 @@ public class MainGame implements Screen {
 		    game.setScreen(new MainLose(game));
 		    dispose();
 		} else if (checkinRed) {
+			checkinRed = false;
 		    game.setScreen(new MiniGame(game));
 		}
 
@@ -269,7 +270,7 @@ public class MainGame implements Screen {
 			Gdx.app.debug("Truck Position", "Truck is located at (" + currentTruck.getStartX() + "," + currentTruck.getStartY() + ")");
 		} if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			currentTruck.attack();
-		} if (Gdx.input.isKeyPressed(Keys.Q)) {
+		} if (Gdx.input.isKeyJustPressed(Keys.Q)) {
 			if (currentTruck.speedLimit() == 29f && !(isFireStationDestroyed)){
 				checkinRed = true;
 				cameraFlag = false;
