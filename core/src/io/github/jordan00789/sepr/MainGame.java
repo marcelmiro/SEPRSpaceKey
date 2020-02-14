@@ -46,10 +46,12 @@ public class MainGame implements Screen {
 		camTruck = new Firetruck((Gdx.graphics.getWidth() / 2f), (Gdx.graphics.getHeight() / 2f), -10, 1, new Texture("blank.png"), 0, 0,"none");
 		camTruck.setX(camTruck.getStartX());
 		camTruck.setY(camTruck.getStartY());
+
+		//Will not reload the game if everything already exists
 		if (listFort.isEmpty()) {
-		//Initialise debugging log
-		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		// This is a pixmap used to get the pixel RGBA values at specified coordinates.
+			//Initialise debugging log
+			Gdx.app.setLogLevel(Application.LOG_DEBUG);
+			// This is a pixmap used to get the pixel RGBA values at specified coordinates.
 			speedMap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), pMap.getFormat());
 			speedMap.drawPixmap(pMap, 0, 0, pMap.getWidth(), pMap.getHeight(), 0, 0, Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
