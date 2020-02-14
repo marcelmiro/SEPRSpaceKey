@@ -73,8 +73,9 @@ public class Firetruck extends Entity implements Attack, Moveable {
 	 * Refills the truck to the maximum amount of water and health.
 	 */
 	public void refill() {
-		this.water = maxWater;
-		this.setHealth(this.getMaxHealth());
+		water = maxWater;
+		setHealth(this.getMaxHealth());
+		setColor(Color.WHITE);
 	}
 
 	/**
