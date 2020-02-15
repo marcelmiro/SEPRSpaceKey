@@ -109,12 +109,12 @@ public class MainGame implements Screen {
 
 
 		//Creative liberties have been taken with the locations of these places in York
-		listFort.add(new Fortress(.53f, .26f,1000, new Texture("clifford.png"), 30));
-		listFort.add(new Fortress(.15f, .64f,550, new Texture("station.png"), 30));
-		listFort.add(new Fortress(.47f, .80f,750, new Texture("minster.png"), 30));
-		listFort.add(new Fortress(.87f, .18f,650, new Texture("university.png"), 30));
-		listFort.add(new Fortress(.30f, .86f,550, new Texture("museum.png"), 40));
-		listFort.add(new Fortress(.25f, .05f,600, new Texture("tower.png"), 20));
+		listFort.add(new Fortress(.53f, .26f,1200, new Texture("clifford.png"), 30));
+		listFort.add(new Fortress(.15f, .64f,700, new Texture("station.png"), 30));
+		listFort.add(new Fortress(.47f, .80f,900, new Texture("minster.png"), 30));
+		listFort.add(new Fortress(.87f, .18f,1000, new Texture("university.png"), 30));
+		listFort.add(new Fortress(.30f, .86f,700, new Texture("museum.png"), 40));
+		listFort.add(new Fortress(.25f, .05f,700, new Texture("tower.png"), 20));
 
 		for (Fortress fort : listFort) {
 			initEntity(fort, fort.getStartX() * width, fort.getStartY() * height);
@@ -335,7 +335,7 @@ public class MainGame implements Screen {
 	// Game timer to destroy FireStation after 5 seconds
 	private void gameTimer (float delta) {
 		timer5 += delta;
-		if (timer5 >= 180) {
+		if (timer5 >= 300) {
 			isFireStationDestroyed = true;
 			this.map = new Texture("map_3_destroyed.png");
 			this.pMap = new Pixmap(Gdx.files.internal("map_3_destroyed.png"));
