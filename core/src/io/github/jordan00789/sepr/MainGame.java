@@ -76,10 +76,10 @@ public class MainGame implements Screen {
 
 	// Create all trucks
 	private void loadTrucks() {
-	    listTruck.add(new Firetruck(317, 295, 100, 400, new Texture("firetruck_red.png"), 3, 10, "default")); //Default truck
-	    listTruck.add(new Firetruck(300, 275, 60, 800, new Texture("firetruck_purple.png"), 5, 10,"default")); //Low health high water, high damage truck
-		listTruck.add(new Firetruck(283, 255, 200, 700, new Texture("firetruck_blue.png"), 4, 3, "default")); //high health, high water, high damage, very low speed
-		listTruck.add(new Firetruck(265, 235, 80, 400, new Texture("firetruck_yellow.png"), 4, 12, "default")); //Low health, high damage, high speed
+	    listTruck.add(new Firetruck(317, 295, 130, 400, new Texture("firetruck_red.png"), 3, 5, "default")); //Default truck
+	    listTruck.add(new Firetruck(300, 275, 100, 800, new Texture("firetruck_purple.png"), 5, 5,"default")); //Low health high water, high damage truck
+		listTruck.add(new Firetruck(283, 255, 250, 700, new Texture("firetruck_blue.png"), 4, 4, "default")); //high health, high water, high damage, very low speed
+		listTruck.add(new Firetruck(265, 235, 110, 400, new Texture("firetruck_yellow.png"), 4, 7, "default")); //Low health, high damage, high speed
 
 	    for (Firetruck truck : listTruck) {
 	        initEntity(truck, truck.getStartX(), truck.getStartY());
