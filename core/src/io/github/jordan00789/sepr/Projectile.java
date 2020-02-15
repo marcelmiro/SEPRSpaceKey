@@ -3,18 +3,16 @@ package io.github.jordan00789.sepr;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-import java.time.Duration;
-import java.time.Instant;
-
 public class Projectile extends Entity implements Moveable {
 
     private float direction;
     private float velocity;
     private float lifeTime;
-    private Instant startTime;
+    private float startTime;
     private boolean disposable = false;
     private final String type;
     private float damage;
+    private float timeElapsed;
 
     /**
      * Initialises a projectile using the provided parameters
@@ -29,13 +27,13 @@ public class Projectile extends Entity implements Moveable {
     public Projectile(float x, float y, float direction, float velocity, float lifeTime, Texture texture, String type, float damage) {
         super(1, texture);
 
+        this.timeElapsed = 0;
         this.setScale(0.05f);
         this.type = type;
         this.direction = direction;
         setRotation(180 - direction);
         this.velocity = velocity;
         this.lifeTime = lifeTime;
-        startTime = Instant.now();
         this.damage = damage;
         this.setPosition(x, y);
         Gdx.app.debug("Projectile", "Projectile successfully created at (" + getX() + "," + getY() + ")");
@@ -66,6 +64,9 @@ public class Projectile extends Entity implements Moveable {
      */
     @Override
     public void update(float delta) {
+
+
+        this.timeElapsed += Gdx.graphics.getDeltaTime();
 
         setOriginCenter();
         setPosition((float) (getX() + (Math.sin(Math.toRadians(direction)) * delta * velocity)),
@@ -99,7 +100,7 @@ public class Projectile extends Entity implements Moveable {
 	 * @return True if the projectile is disposable)
 	 */
     boolean isDisposable() {
-		return ((Duration.between(startTime, Instant.now()).getSeconds()) > lifeTime || disposable);
+		return (timeElapsed > lifeTime|| disposable);
 	}
 
     public float getDirection() {
