@@ -96,7 +96,7 @@ public class MiniGame implements Screen {
             dispose();
         }
         if(checkforWin()){
-            MainGame.currentTruck.refill();
+            MainGame.refill();
             MainGame.game.setScreen(new MainGame(MainGame.game));
             dispose();
         }

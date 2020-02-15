@@ -352,6 +352,14 @@ public class MainGame implements Screen {
 		}
 	}
 
+	public void refill() {
+		for (Firetruck truck : listTruck) {
+			if (truck.getHealth() > 0) {
+				truck.refill();
+			}
+		}
+	}
+
 	static float getFortDamage() { return fortDamage; }
 	static float getFortProjectileSpeed() { return fortProjectileSpeed; }
 
