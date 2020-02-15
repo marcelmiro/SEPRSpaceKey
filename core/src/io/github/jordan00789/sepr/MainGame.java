@@ -352,7 +352,7 @@ public class MainGame implements Screen {
 		}
 	}
 
-	public void refill() {
+	public static void refill() {
 		for (Firetruck truck : listTruck) {
 			if (truck.getHealth() > 0) {
 				truck.refill();
