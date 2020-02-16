@@ -5,11 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.util.ArrayList;
 
@@ -29,12 +29,17 @@ public class MainGame implements Screen {
 	private static ArrayList<Fortress> listFort = new ArrayList<>();
 	static ArrayList<Firetruck> listTruck = new ArrayList<>();
 	private static ArrayList<Firetruck> listTruckDead = new ArrayList<>();;
-	private static float timer1 = 0, timer2 = 0, timer3 = 0, timer4 = 0, timer5 = 0, fortDamage = 0, fortProjectileSpeed = 50;
+	private static float timer1 = 0, timer2 = 0, timer3 = 0, timer4 = 0, timer5 = 0, timer6 = 0, fortDamage = 0, fortProjectileSpeed = 50;
 	private static final double damageIncrease = 0.1;
 	private boolean changeTruck = false;
 	static boolean isFireStationDestroyed = false;
 	public static boolean cameraFlag = false;
-	private boolean checkinRed = false;
+	private boolean checkinRed = false, fireStationFlag = false;
+	private SpriteBatch fontBatch;
+	private FreeTypeFontGenerator fontGenerator;
+	private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+	private BitmapFont font;
+	private float fontWidth;
 
 	public MainGame(final Kroy game) {
 
@@ -60,6 +65,7 @@ public class MainGame implements Screen {
 			loadTrucks();
 			loadForts();
 			FiretruckMenu.create();
+			loadFonts();
 		}
 
 	}
@@ -125,6 +131,20 @@ public class MainGame implements Screen {
 		// The last entity in entities is not rendered due to a UI bug.
 		Entity nullEntity = new Entity(1, new Texture("badlogic.jpg"));
 		initEntity(nullEntity, 1000, 500);
+	}
+
+	// Function to load text
+	private void loadFonts() {
+		fontBatch = new SpriteBatch();
+
+		fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Mighty Brush Demo.ttf"));
+		fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		fontParameter.size = 56;
+		fontParameter.color = Color.RED;
+		font = fontGenerator.generateFont(fontParameter);
+
+		GlyphLayout layout = new GlyphLayout(font, "The aliens found and destroyed the Fire Station!");
+		this.fontWidth = layout.width;
 	}
 
 	/**
@@ -217,7 +237,12 @@ public class MainGame implements Screen {
 		// Update game timer
 		if (!isFireStationDestroyed) {
 			gameTimer(delta);
+		} else {
+			if (!fireStationFlag) {
+				fontAnimation();
+			}
 		}
+
 
 		// Update fort stats and firetruck's menu
 		updateFortStats(delta);
@@ -226,22 +251,33 @@ public class MainGame implements Screen {
 		batch.end();
 	}
 
+	private void fontAnimation() {
+		fontBatch.begin();
+		font.draw(fontBatch, "The aliens found and destroyed the Fire Station!", (Gdx.graphics.getWidth() - this.fontWidth) / 2, Gdx.graphics.getHeight() - 50);
+		fontBatch.end();
 
-		// Checks if all forts are destroyed and returns true if so.
-		private static boolean checkWin() {
-			for (Fortress fort : listFort) {
-				if (entities.contains(fort)) {
-					return false;
-				}
-			}
-			if (timer2 >= 1) {
-				timer2 = 0;
-				return true;
-			} else {
-				timer2 += Gdx.graphics.getDeltaTime();
+		if (timer6 > 5) {
+			this.fireStationFlag = true;
+		} else {
+			timer6 += Gdx.graphics.getDeltaTime();
+		}
+	}
+
+	// Checks if all forts are destroyed and returns true if so.
+	private static boolean checkWin() {
+		for (Fortress fort : listFort) {
+			if (entities.contains(fort)) {
 				return false;
 			}
 		}
+		if (timer2 >= 1) {
+			timer2 = 0;
+			return true;
+		} else {
+			timer2 += Gdx.graphics.getDeltaTime();
+			return false;
+		}
+	}
 
 	// Checks if all trucks are destroyed and return true if so.
 	private static boolean checkLoose() {
@@ -338,7 +374,8 @@ public class MainGame implements Screen {
 	// Game timer to destroy FireStation after 5 seconds
 	private void gameTimer (float delta) {
 		timer5 += delta;
-		if ((timer5 >= 300 && listFort.size() < 6) || (timer5 >= 420)) {
+
+		if ((timer5 >= 300 && listFort.size() < 6) || timer5 >= 420) {
 			isFireStationDestroyed = true;
 			this.map = new Texture("map_3_destroyed.png");
 			this.pMap = new Pixmap(Gdx.files.internal("map_3_destroyed.png"));
