@@ -179,7 +179,7 @@ public class MiniGame implements Screen {
 
             correctpipes.add(new Sprite(new Texture("blank.png")));
             correctpipes.add(new Sprite(new Texture("blank.png")));
-            correctpipes.add(new Sprite(new Texture("pipe_broken.png")));
+            correctpipes.add(new Sprite(new Texture("blank.png")));
             correctpipes.add(new Sprite(new Texture("pipe_straight.png")));
             correctpipes.add(new Sprite(new Texture("pipe_straight.png")));
             correctpipes.add(new Sprite(new Texture("pipe_straight.png")));
