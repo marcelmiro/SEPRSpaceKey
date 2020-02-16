@@ -143,7 +143,7 @@ public class MainGame implements Screen {
 		fontParameter.color = Color.RED;
 		font = fontGenerator.generateFont(fontParameter);
 
-		GlyphLayout layout = new GlyphLayout(font, "The aliens found and destroyed the Fire Station!");
+		GlyphLayout layout = new GlyphLayout(font, "The aliens have found and destroyed the Fire Station!");
 		this.fontWidth = layout.width;
 	}
 
@@ -375,7 +375,7 @@ public class MainGame implements Screen {
 	private void gameTimer (float delta) {
 		timer5 += delta;
 
-		if ((timer5 >= 300 && listFort.size() < 6) || timer5 >= 420) {
+		if ((timer5 >= 300 && listFort.size() < 6) || timer5 >= 10) {
 			isFireStationDestroyed = true;
 			this.map = new Texture("map_3_destroyed.png");
 			this.pMap = new Pixmap(Gdx.files.internal("map_3_destroyed.png"));

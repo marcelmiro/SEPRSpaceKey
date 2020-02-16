@@ -1,15 +1,12 @@
 package io.github.jordan00789.sepr;
 
-import static org.junit.Assert.*;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import jdk.internal.jline.internal.TestAccessible;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class EntityTest {
