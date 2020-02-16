@@ -335,7 +335,7 @@ public class MainGame implements Screen {
 	// Game timer to destroy FireStation after 5 seconds
 	private void gameTimer (float delta) {
 		timer5 += delta;
-		if (timer5 >= 300) {
+		if ((timer5 >= 300 && listFort.size() < 6) || (timer5 >= 420)) {
 			isFireStationDestroyed = true;
 			this.map = new Texture("map_3_destroyed.png");
 			this.pMap = new Pixmap(Gdx.files.internal("map_3_destroyed.png"));
