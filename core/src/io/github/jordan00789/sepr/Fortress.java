@@ -77,7 +77,7 @@ public class Fortress extends Entity implements Attack {
     }
     private void attack(float n) {
         if (ableToAttack || this.textureDirectory.equals("university.png")) {
-            Projectile goo = new Projectile(getX(), getY(), n, MainGame.getFortProjectileSpeed(),1f, new Texture("goo.png"),"goo", damage);
+            Projectile goo = new Projectile(getX(), getY(), n, 50,1f, new Texture("goo.png"),"goo", damage);
             goos.add(goo);
         }
     }
@@ -199,7 +199,7 @@ public class Fortress extends Entity implements Attack {
     private void addGoo(Entity e, float n){
         float piConstant = (float) Math.PI / 180;
         Projectile goo = new Projectile((getX()) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
-                ((getY()) + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
+                ((getY()) + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, 50,
                 2f, new Texture("goo.png"),"goo", damage);
         goos.add(goo);
         this.timer = 0;

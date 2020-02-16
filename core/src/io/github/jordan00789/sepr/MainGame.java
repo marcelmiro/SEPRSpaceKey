@@ -14,8 +14,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import java.util.ArrayList;
 
 public class MainGame implements Screen {
-	public static Kroy game;
-	public static OrthographicCamera camera;
+	static Kroy game;
+	static OrthographicCamera camera;
 
 	// Entities
 	private Firetruck camTruck;
@@ -28,23 +28,27 @@ public class MainGame implements Screen {
 	private static ArrayList<ETPatrol> listPatrol = new ArrayList<>();
 	private static ArrayList<Fortress> listFort = new ArrayList<>();
 	static ArrayList<Firetruck> listTruck = new ArrayList<>();
-	private static ArrayList<Firetruck> listTruckDead = new ArrayList<>();;
-	private static float timer1 = 0, timer2 = 0, timer3 = 0, timer4 = 0, timer5 = 0, timer6 = 0, fortDamage = 0, fortProjectileSpeed = 50;
+	private static ArrayList<Firetruck> listTruckDead = new ArrayList<>();
+	private static float timer1 = 0;
+	private static float timer2 = 0;
+	private static float timer3 = 0;
+	private static float timer4 = 0;
+	private static float timer5 = 0;
+	private static float timer6 = 0;
+	private static float fortDamage = 0;
 	private static final double damageIncrease = 0.1;
 	private boolean changeTruck = false;
-	static boolean isFireStationDestroyed = false;
-	public static boolean cameraFlag = false;
+	private static boolean isFireStationDestroyed = false;
+	private static boolean cameraFlag = false;
 	private boolean checkinRed = false, fireStationFlag = false;
 	private SpriteBatch fontBatch;
-	private FreeTypeFontGenerator fontGenerator;
-	private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
 	private BitmapFont font;
 	private float fontWidth;
 
-	public MainGame(final Kroy game) {
+	MainGame(final Kroy game) {
 
 		cameraFlag = false;
-		this.game = game;
+		MainGame.game = game;
 		map = new Texture("map_3.png");
 		// camTruck is located at the centre of the screen. It is not rendered, but used
 		// to switch to the full map view.
@@ -137,8 +141,8 @@ public class MainGame implements Screen {
 	private void loadFonts() {
 		fontBatch = new SpriteBatch();
 
-		fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Mighty Brush Demo.ttf"));
-		fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Mighty Brush Demo.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		fontParameter.size = 56;
 		fontParameter.color = Color.RED;
 		font = fontGenerator.generateFont(fontParameter);
@@ -392,7 +396,7 @@ public class MainGame implements Screen {
 		}
 	}
 
-	public static void refill() {
+	static void refill() {
 		for (Firetruck truck : listTruck) {
 			if (truck.getHealth() > 0) {
 				truck.refill();
@@ -401,8 +405,6 @@ public class MainGame implements Screen {
 	}
 
 	static float getFortDamage() { return fortDamage; }
-	static float getFortProjectileSpeed() { return fortProjectileSpeed; }
-
 
 	//Resizing the screen is disable so this method should never run
 	@Override

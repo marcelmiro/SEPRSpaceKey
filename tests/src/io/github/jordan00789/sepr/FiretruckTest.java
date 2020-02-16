@@ -1,15 +1,13 @@
 package io.github.jordan00789.sepr;
 
-import static org.junit.Assert.*;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.badlogic.gdx.graphics.Texture;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class FiretruckTest {
@@ -37,7 +35,7 @@ public class FiretruckTest {
         truck.takeWater(50);
         assertTrue(truck.getWater() == 50);
         truck.refill();
-        assertTrue(truck.getWater() == 51);
+        assertTrue(truck.getWater() == truck.getMaxWater());
     }
 
     @Test
