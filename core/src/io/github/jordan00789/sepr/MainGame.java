@@ -178,6 +178,9 @@ public class MainGame implements Screen {
 				if (e.isDestroyed()) {
 					e.setPosition((Gdx.graphics.getWidth() / 2f),
 							(Gdx.graphics.getHeight() / 2f));
+					if (e instanceof Fortress) {
+						listFort.remove(e);
+					}
 				}
 			});
 
