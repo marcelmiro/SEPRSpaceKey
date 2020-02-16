@@ -200,7 +200,7 @@ public class Fortress extends Entity implements Attack {
         float piConstant = (float) Math.PI / 180;
         Projectile goo = new Projectile((getX()) + ((float) Math.sin(directionTo(e) * piConstant) * 10),
                 ((getY()) + ((float) Math.cos(directionTo(e) * piConstant) * 10)), directionTo(e) + n, MainGame.getFortProjectileSpeed(),
-                1f, new Texture("goo.png"),"goo", damage);
+                2f, new Texture("goo.png"),"goo", damage);
         goos.add(goo);
         this.timer = 0;
     }

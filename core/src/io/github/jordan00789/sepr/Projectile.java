@@ -8,7 +8,6 @@ public class Projectile extends Entity implements Moveable {
     private float direction;
     private float velocity;
     private float lifeTime;
-    private float startTime;
     private boolean disposable = false;
     private final String type;
     private float damage;
