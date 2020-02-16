@@ -13,10 +13,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class MiniGame implements Screen {
     private OrthographicCamera camera;
 
-    //private Texture pink = new Texture("pink.jpg");
+    private Texture background = new Texture("miniback.jpg");
     private Sprite alien1 = new Sprite (new Texture("ufo.png"));
     private Sprite alien3 = new Sprite (new Texture("ufo.png"));
     private Sprite alien2 = new Sprite (new Texture("ufo.png"));
@@ -70,14 +71,26 @@ public class MiniGame implements Screen {
 
     @Override
     public void render(float delta) {
+        if(checkforWin()){
+            //Wait for 1 second to allow the player to see that they have won
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+                Gdx.app.debug("Minigame end", "Sleep was interrupted");
+            }
+            MainGame.refill();
+            MainGame.game.setScreen(new MainGame(MainGame.game));
+            dispose();
+        }
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         Batch batch = MainGame.game.batch;
         batch.begin();
-
-        //batch.draw(pink, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-
+        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         setPosition(currentPipe, selector);
         selector.draw(batch);
 
@@ -92,11 +105,6 @@ public class MiniGame implements Screen {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-            MainGame.game.setScreen(new MainGame(MainGame.game));
-            dispose();
-        }
-        if(checkforWin()){
-            MainGame.refill();
             MainGame.game.setScreen(new MainGame(MainGame.game));
             dispose();
         }
