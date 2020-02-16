@@ -28,7 +28,7 @@ public class MainGame implements Screen {
 	private static ArrayList<ETPatrol> listPatrol = new ArrayList<>();
 	private static ArrayList<Fortress> listFort = new ArrayList<>();
 	static ArrayList<Firetruck> listTruck = new ArrayList<>();
-	private static ArrayList<Firetruck> listTruckDead = new ArrayList<>();;
+	private static ArrayList<Firetruck> listTruckDead = new ArrayList<>();
 	private static float timer1 = 0;
 	private static float timer2 = 0;
 	private static float timer3 = 0;
